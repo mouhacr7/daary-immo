@@ -1,0 +1,63 @@
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+<ion-header>
+	<ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+		<ion-title class="ion-text-center custom-font">Verification</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+
+  <svg class="back-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#228b22" d="M68.6,-33.5C81.6,-17.2,79.6,13.8,65.7,37.6C51.8,61.3,25.9,77.8,2.1,76.6C-21.7,75.4,-43.5,56.5,-54.2,34.6C-65,12.7,-64.8,-12.3,-53.9,-27.4C-43,-42.4,-21.5,-47.6,3.2,-49.4C27.9,-51.2,55.7,-49.7,68.6,-33.5Z" transform="translate(100 100)" />
+</svg>
+
+<ion-grid fixed class="ion-padding">
+  <ion-row>
+     <ion-col size="12"> 
+       <p style="text-align: -webkit-center;font-size: x-large; font-weight: bolder;"> Retrouver votre compte</p>
+      </ion-col>
+     </ion-row>
+   <ion-row>
+     <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+           <ion-card-title> Veuillez saisir votre numéro de téléphone.</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form [formGroup]="ionicForm" (ngSubmit)="verificationCode()" novalidate>
+                  <ion-list>
+                    <ion-item lines="full">
+                      <ion-label position="floating">Code de vérification</ion-label>
+                      <ion-input formControlName="verification_code" type="text"></ion-input>
+                    </ion-item>
+                    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.verification_code.errors?.required">
+                    Le code de vérification est requis.
+                    </span>
+                    <span  class="error ion-padding" *ngIf="isSubmitted && errorControl.verification_code.errors?.pattern">
+                    Veuillez saisir un Code de vérification valide svp :)
+                    </span>
+                    <ion-item lines="full">
+                      <ion-label position="floating">Numéro de téléphone</ion-label>
+                      <ion-input formControlName="phone_number" type="number"></ion-input>
+                    </ion-item>
+                    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.required">
+                    Le numéro de téléphone est requis.
+                    </span>
+                    <span  class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.pattern">
+                    Veuillez saisir un numéro de téléphone valide svp :)
+                    </span>
+                  </ion-list>
+                <ion-button class="custom-font" color="success" type="submit" [disabled]="!ionicForm.valid" expand="block">Valider</ion-button>   
+                <p style="text-align: -webkit-center;font-size: inherit; font-weight: bolder;" (click)="loginLoad()">Revenir en arrière</p>
+            </form>
+          </ion-card-content>
+        </ion-card>
+     </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>

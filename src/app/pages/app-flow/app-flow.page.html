@@ -1,0 +1,94 @@
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet"> 
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="custom-font">Accueil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  class="custom-font ion-padding">
+  <br>
+  <div class="container-form-btn">
+    <button class="form-btn custom-font" routerLink="/search-property">
+      Nouvelle recherche
+    </button>
+  </div>
+<div *ngIf="showData; else skeleton">
+  <ion-card class="custom-font" *ngFor="let prop of displayedList" routerLink="/property-details/{{prop.id}}">
+
+    <img class="img-prop" src="https://daary-immo.com/storage/property/{{prop.image}}" alt="ion">
+     
+   <ion-grid fixed>
+    <ion-row>
+      <ion-col size="8" class="ion-align-self-start"><ion-card-title class="property-price">{{prop?.price}} Mru</ion-card-title></ion-col>
+      <ion-col size="4" class="ion-align-self-start"><ion-badge color="danger" class="property-type">A {{prop?.purpose}}</ion-badge></ion-col>
+    </ion-row>
+  </ion-grid>
+    <ion-card-content>
+      <span class="property-title">{{ prop.title}}</span>
+      <ion-row>
+        <ion-col center text-center  class="col-align">
+  
+            <ion-icon class="desc-icons" name="bed-outline"></ion-icon>
+            <span class="icon-label ion-align-self-end">{{ prop.bedroom}}ch.</span>
+                  
+        </ion-col>
+        <ion-col center text-center class="col-align">
+          
+          <ion-icon class="desc-icons" src="assets/icon/door.svg"></ion-icon>
+        
+            <span class="icon-label">{{ prop.bathroom}}p.</span>
+        </ion-col>
+        <ion-col center text-center  class="col-align">
+
+            <ion-icon class="desc-icons" src="assets/icon/area.svg"></ion-icon>
+            <span class="icon-label">{{ prop.area}}</span>
+
+        </ion-col>
+      </ion-row>
+      <br>
+      <p class="desc-location" [innerHTML]="prop.nearby"></p>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<ion-infinite-scroll threshold="150px" (ionInfinite)="loadMorePosts($event)">
+  <ion-infinite-scroll-content
+    loadingSpinner="crescent"
+    loadingText="Chargement...">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+<ng-template #skeleton>
+  <div *ngFor="let item of [1, 2, 3, 4, 5]">
+    <ion-card class="custom-font">
+      <ion-grid fixed>
+      <ion-skeleton-text animated style="line-height: 13px; width: 100%; height: 200px;--background-rgb: 230,40,50;--border-radius: 20px;"></ion-skeleton-text>
+      <ion-row>
+        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+      </ion-row>
+      </ion-grid>
+      <ion-card-content>
+        <ion-row>
+          <ion-col center text-center  class="col-align">
+          <ion-skeleton-text animated style="width: 75%;
+          height: 40px;"></ion-skeleton-text>
+          </ion-col>
+          <ion-col center text-center class="col-align">
+          <ion-skeleton-text animated style="width: 75%;
+          height: 40px;"></ion-skeleton-text>
+          </ion-col>
+          <ion-col center text-center  class="col-align">
+          <ion-skeleton-text animated style="width: 75%;
+          height: 40px;"></ion-skeleton-text>
+          </ion-col>
+        </ion-row>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ng-template>
+</ion-content>

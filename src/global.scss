@@ -12,6 +12,7 @@
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
 
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /* Basic CSS for apps built with Ionic */
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
@@ -24,3 +25,54 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+body {
+    padding: 15px !important;
+}
+ion-toolbar {
+    color: forestgreen;
+}
+ion-row {
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+
+ion-list-header {
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+body {
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+ion-button {
+    font-family: 'Josefin Sans', sans-serif;
+}
+ion-label {
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+ion-app {
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+
+ion-toolbar ion-menu-button {
+    color: forestgreen;
+}
+
+ion-toolbar ion-back-button {
+    color: forestgreen
+}
+
+ion-menu.md ion-item.selected ion-icon {
+    color: var(--ion-color-success) !important;
+}
+
+ion-toolbar ion-button {
+    color: var(--ion-color-primary-contrast);
+}
+ion-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Josefin Sans';
+    letter-spacing: -2px;
+    font-size: larger;
+}

@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="custom-font">Infos Agent</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card class="custom-font custom-card">
+    <ion-row class="row-agent">
+      <ion-col size="4">
+        <ion-avatar class="custom-avatar">
+          <img class="custom-img" src="assets/images/avatar.png">
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="6">    
+        <h1 class="custom-font agent-name">{{agent?.name}}</h1>
+        <span class="agent-email">{{agent?.email}}</span>
+        <p class="agent-phone">{{agent?.phone_number}}</p>
+      </ion-col>
+      <ion-item-divider class="custom-font divider-back">
+        <ion-icon class="icon-contact" name="keypad-outline"></ion-icon>
+        {{ "contacter l'agent" | uppercase }}
+      </ion-item-divider>
+      <ion-col size="12">
+        <form [formGroup]="ionicForm" (ngSubmit)="sendMessage()" novalidate>
+             
+          <ion-list>
+            <ion-item lines="full">
+              <ion-label position="floating">Nom</ion-label>
+              <ion-input formControlName="name" type="text"></ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
+            Le nom est requis.
+            </span>
+            <ion-item lines="full">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input formControlName="email" type="text"></ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+            Votre email est requis.
+            </span>
+            <ion-item lines="full">
+              <ion-label position="floating">Numéro de téléphone</ion-label>
+              <ion-input formControlName="phone" type="number"></ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone.errors?.required">
+            Le numéro de téléphone est requis.
+            </span>
+            <span  class="error ion-padding" *ngIf="isSubmitted && errorControl.phone.errors?.pattern">
+             Veuillez saisir un numéro de téléphone valide svp :)
+            </span>
+            <ion-item lines="full">
+              <ion-label position="floating">Message</ion-label>
+              <ion-textarea formControlName="message"></ion-textarea>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.message.errors?.required">
+              Le message est requis.
+            </span>
+          </ion-list>
+          <ion-col size="6">
+      
+            <ion-button class="custom-font" color="success" type="submit" [disabled]="!ionicForm.valid" expand="block">
+              <ion-icon slot="start" name="mail"></ion-icon>
+              Envoyer
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+      
+            <ion-button class="btn-search" color="success" expand="block" fill="outline"  (click)="callAgent()">
+              <ion-icon slot="start" name="call"></ion-icon>
+              Appeler
+            </ion-button>
+          </ion-col>
+           
+        </form>
+    </ion-col>
+  </ion-row>
+  <ion-item-divider class="custom-font divider-back">
+      {{ "Liste des propriétés de l'agent " | uppercase }}
+  </ion-item-divider>
+  <ion-row class="row-prop" *ngFor="let prop of displayedList" routerLink="/property-details/{{prop.id}}">
+    <ion-col size="4">
+        <img class="prop-img" src="https://daary-immo.com/storage/property/{{prop.image}}">
+    </ion-col>
+    <ion-col size="8">    
+      <p class="custom-font prop-title">{{prop?.title}}</p>
+      <span class="prop-price">{{prop.price}}</span>
+      <p class="prop-city">{{prop.city}}</p>
+    </ion-col>
+  </ion-row>
+  <ion-infinite-scroll threshold="150px" (ionInfinite)="loadMorePosts($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      loadingText="Chargement...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-card>
+
+</ion-content>

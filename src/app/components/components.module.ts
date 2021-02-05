@@ -1,0 +1,41 @@
+import { AgUpdatePropertyComponent } from './ag-update-property/ag-update-property.component';
+import { AgUpdateProfileComponent } from './ag-update-profile/ag-update-profile.component';
+import { AgMessagesComponent } from './ag-messages/ag-messages.component';
+import { AgProfileComponent } from './ag-profile/ag-profile.component';
+import { AgUploadComponent } from './ag-upload/ag-upload.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { AgPropertiesComponent } from './ag-properties/ag-properties.component';
+import { AgEditPasswordComponent } from './ag-edit-password/ag-edit-password.component';
+
+
+@NgModule({
+  declarations: [
+    AgUploadComponent,
+    AgPropertiesComponent,
+    AgEditPasswordComponent,
+    AgProfileComponent,
+    AgMessagesComponent,
+    AgUpdateProfileComponent,
+    AgUpdatePropertyComponent
+
+  ],
+  exports: [
+    AgUploadComponent,
+    AgPropertiesComponent,
+    AgEditPasswordComponent,
+    AgProfileComponent,
+    AgMessagesComponent,
+    AgUpdateProfileComponent,
+    AgUpdatePropertyComponent
+  ],
+  imports: [
+    CommonModule,
+    IonicModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ]
+})
+export class ComponentsModule { }

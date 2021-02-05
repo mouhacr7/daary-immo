@@ -1,0 +1,119 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="custom-font">Détails propriétés</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card class="custom-font">
+    <ion-slides [options]="sliderConfig" pager="true" #slideWithNav
+    (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
+      <ion-slide *ngFor="let i of property.gallery">
+          <img height="300px" class="img-prop" src="https://daary-immo.com/storage/property/gallery/{{i?.name}}" alt="{{  i?.name }}">
+      </ion-slide>
+    </ion-slides>
+    <div>
+      <ion-icon ion-button icon-only (click)="unFavoriteProperty()" *ngIf="isFavorite" class="fav-like" src="assets/icon/heart-red.svg"></ion-icon>
+      <ion-icon ion-button icon-only (click)="favoriteProperty()" *ngIf="!isFavorite" class="fav-unlike" src="assets/icon/heart-outline.svg"></ion-icon>
+    </div>
+      <ion-card-content>
+          <ion-row>
+            <ion-col size="8" class="ion-align-self-start"><ion-card-title class="property-price">{{property?.price}} Mru</ion-card-title></ion-col>
+            <ion-col size="4" class="ion-align-self-start"><ion-badge color="success" class="property-type">à {{property?.purpose}}</ion-badge></ion-col>
+          </ion-row>
+      <span class="property-title">{{property?.title}}</span>
+     
+      <ion-row>
+        <ion-col center text-center  class="col-align">
+  
+            <ion-icon class="desc-icons" name="bed-outline"></ion-icon>
+            <span class="icon-label ion-align-self-end">{{property?.bedroom}}ch.</span>
+                  
+        </ion-col>
+        <ion-col center text-center class="col-align">
+          
+          <ion-icon class="desc-icons" src="assets/icon/door.svg"></ion-icon>
+        
+            <span class="icon-label">{{property?.bathroom}}p.</span>
+        </ion-col>
+        <ion-col center text-center  class="col-align">
+
+            <ion-icon class="desc-icons" src="assets/icon/area.svg"></ion-icon>
+            <span class="icon-label">{{property?.area}}</span>
+
+        </ion-col>
+      </ion-row>
+      <br>
+      <!-- <p class="desc-location"> -->
+        <div class="desc-location" [innerHtml]="property.nearby">
+        </div>
+      <!-- </p> -->
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="custom-font">
+    <ion-card-header>
+     <h2>Description</h2>
+    </ion-card-header>
+    <ion-card-content>
+      <div [innerHtml]="property.description">
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="custom-font">
+    <ion-card-header>
+      <h2>Localisation</h2>
+    </ion-card-header>
+    <ion-card-content>
+      <img src="https://daary-immo.com/storage/property/{{property?.floor_plan}}" alt="ion">
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="custom-font custom-card">
+    <ion-row>
+      <ion-col size="4">
+        <ion-avatar class="custom-avatar">
+          <img class="custom-img" src="assets/images/avatar.png">
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="8">    
+        <h1 class="custom-font">{{property?.user.name}}</h1>
+        <span>{{property?.user.email}}</span>
+        <p>{{property?.user.phone_number}}</p>
+      </ion-col>
+      <ion-col size="12">
+          <div class="wrap-input">
+            <input class="input" type="text" [(ngModel)]="name"  placeholder="Nom">
+            </div>
+            <div class="wrap-input">
+            <input class="input" type="number" [(ngModel)]="phone" placeholder="Numéro">
+            </div>
+            <div class="wrap-input">
+            <input class="input" type="email" [(ngModel)]="email" placeholder="Email">
+            </div>
+            <div class="wrap-input">
+            <textarea class="input" type="text" cols="30" rows="10" [(ngModel)]="my_message" placeholder="Message"></textarea>
+          </div>
+      
+          <div class="container-form-btn">
+            <ion-row>
+              <ion-col size="6">
+                
+            <ion-button class="btn-search" color="success" expand="block" (click)="sendMessage()">
+               <ion-icon slot="start" name="mail"></ion-icon>
+                Envoyer
+            </ion-button>
+            </ion-col>
+             <ion-col size="6">
+        
+              <ion-button class="btn-search" color="success" expand="block" fill="outline"  (click)="callAgent()">
+                <ion-icon slot="start" name="call"></ion-icon>
+                Appeler
+              </ion-button>
+            </ion-col>
+            </ion-row>
+          </div>    
+      </ion-col>
+    </ion-row>
+</ion-card>
+</ion-content>

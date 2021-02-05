@@ -1,18 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MenuController, NavController, Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { TokenSessionStorageService } from './services/token-session-storage.service';
+import { timer } from 'rxjs';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  showSplash: boolean = true;
+  connectedStatus: boolean = false;
+  public selectedIndex = 0;
   public appPages = [
-    { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
+    {
+      title: 'Mon accueil',
+      url: '/app-flow',
+      icon: 'home'
+    },
+    {
+      title: 'Mes recherches',
+      url: '/search-property',
+      icon: 'paper-plane'
+    },
+    {
+      title: 'Mes favoris',
+      url: '/favorites',
+      icon: 'heart'
+    },
+    {
+      title: 'Trouver une agence',
+      url: '/find-agents',
+      icon: 'archive'
+    },
+    // {
+    //   title: 'Vendre mon bien',
+    //   url: '/upload-property',
+    //   icon: 'cash'
+    // },
+    {
+      title: 'Mon compte',
+      url: '/login',
+      icon: 'person'
+    },
+    {
+      title: 'Infos pratiques',
+      url: '/infos',
+      icon: 'information-circle'
+    }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+  isLoggedIn: boolean = false;
+  // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
+  constructor(
+    private platform: Platform,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
+    private navCtrl: NavController,
+    private menuCtrl: MenuController,
+    private tokenSession: TokenSessionStorageService,
+  ) {
+    this.initializeApp();
+  }
+  logout() {
+    this.tokenSession.signOut();
+    // window.location.reload();
+    this.navCtrl.navigateRoot('app-flow')
+    this.menuCtrl.close();
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleLightContent();
+        this.splashScreen.hide();
+        timer(5000).subscribe(() => this.showSplash = false)
+    });
+  }
+
+
 }

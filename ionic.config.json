@@ -1,0 +1,7 @@
+{
+  "name": "daary-immo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

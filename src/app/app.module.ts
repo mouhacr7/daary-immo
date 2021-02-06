@@ -15,6 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ValuesPipe } from './pipes/values.pipe';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 // app.module.ts
 
 @NgModule({
@@ -29,6 +31,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     StatusBar,
@@ -37,7 +40,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
     Network,
     CallNumber,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true,},
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},
     NativeStorage
   ],
   bootstrap: [AppComponent]

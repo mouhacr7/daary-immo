@@ -1,5 +1,6 @@
 export interface Properties {
   id: number;
+  name: string;
   title: string;
   slug: string;
   agent_id: number;
@@ -21,6 +22,7 @@ export interface Properties {
   location_latitude: number;
   location_longitude: number;
   nearby: string;
-  gallery: string;
+  // tslint:disable-next-line: ban-types
+  gallery?: String;
   user: any;
 }

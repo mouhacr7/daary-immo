@@ -10,8 +10,8 @@
   <ion-card class="custom-font">
     <ion-slides [options]="sliderConfig" pager="true" #slideWithNav
     (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
-      <ion-slide *ngFor="let i of property.gallery">
-          <img height="300px" class="img-prop" src="https://daary-immo.com/storage/property/gallery/{{i?.name}}" alt="{{  i?.name }}">
+      <ion-slide *ngFor="let pic of property.gallery">
+          <img height="300px" class="img-prop" src="{{imagepath}}/{{ pic['name'] }}" alt="img">
       </ion-slide>
     </ion-slides>
     <div>

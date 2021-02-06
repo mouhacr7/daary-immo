@@ -18,7 +18,7 @@ import { AlertService } from 'src/app/services/alert.service';
 })
 export class PropertyDetailsPage implements OnInit {
 
-  name: any;
+  name: string;
   email: any;
   phone: any;
   my_message: any;
@@ -30,6 +30,7 @@ export class PropertyDetailsPage implements OnInit {
   count: number = 0;
   property: Properties;
   prop: Properties;
+  imagepath: string = "https://daary-immo.com/storage/property/gallery";
   showData = false;
   desc: string;
   user: any[];
@@ -81,9 +82,9 @@ export class PropertyDetailsPage implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { property: Properties[] }) => {
         console.log(data);
-        
+
         this.property = data.property['property'];
-       console.log(this.property);
+       console.log(this.property.gallery);
        
         this.showData = true;
       });

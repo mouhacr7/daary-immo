@@ -42,9 +42,9 @@ export class AppFlowPage implements OnInit {
 
   async getAllProperties() {
     this.propertiesServices.getPostsPaginated(this.currentPage).subscribe(async (data: Properties[]) => {
-      this.propertiesList = data['properties']
+      this.propertiesList = data['properties']['data'];
       this.displayedList = [...this.propertiesList];
-      // this.paginate = data['properties'];
+      this.paginate = data['properties'];
       console.log(this.paginate);
       for (let i = 0; i < 5; i++) { 
         this.posts.push(this.propertiesList[i]);

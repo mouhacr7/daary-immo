@@ -37,7 +37,7 @@ export class FavoritesPage implements OnInit {
   
   ngOnInit() {
     this.propertyService.getPosts().subscribe((properties:  Properties[] ) => {
-      this.propertiesList = properties['properties'];
+      this.propertiesList = properties['properties']['data'];
     })
     this.favService.getAllFavoriteProperties().then(resultats => {
       this.favIdList = resultats;

@@ -21,7 +21,7 @@ const TOKEN_KEY = 'auth-user';
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
 
-    protected url   = 'http://daary.test.lissabarber.fr/api';
+    protected url   = 'https://daary-immo.com/api';
     protected debug = true;
 
     constructor(

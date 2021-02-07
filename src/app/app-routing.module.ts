@@ -112,7 +112,11 @@ const routes: Routes = [
   {
     path: 'verification-code',
     loadChildren: () => import('./auth/verification-code/verification-code.module').then( m => m.VerificationCodePageModule)
+  },  {
+    path: 'intro',
+    loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule)
   }
+
 
 ];
 

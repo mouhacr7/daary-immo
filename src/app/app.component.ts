@@ -32,16 +32,6 @@ export class AppComponent {
       icon: 'heart'
     },
     {
-      title: 'Trouver une agence',
-      url: '/find-agents',
-      icon: 'archive'
-    },
-    // {
-    //   title: 'Vendre mon bien',
-    //   url: '/upload-property',
-    //   icon: 'cash'
-    // },
-    {
       title: 'Mon compte',
       url: '/login',
       icon: 'person'
@@ -51,6 +41,16 @@ export class AppComponent {
       url: '/infos',
       icon: 'information-circle'
     }
+    // {
+    //   title: 'Trouver une agence',
+    //   url: '/find-agents',
+    //   icon: 'archive'
+    // },
+    // {
+    //   title: 'Vendre mon bien',
+    //   url: '/upload-property',
+    //   icon: 'cash'
+    // },
   ];
   isLoggedIn: boolean = false;
   // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];

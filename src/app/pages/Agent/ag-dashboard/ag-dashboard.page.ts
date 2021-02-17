@@ -54,6 +54,7 @@ export class AgDashboardPage implements OnInit {
   constructor(
     private menu: MenuController,
     public loadingController: LoadingController,
+    private navCtrl: NavController,
     private alertCtrl: AlertController,
     private propertiesServices: PropertiesService,
     public toastController: ToastController,
@@ -82,8 +83,10 @@ export class AgDashboardPage implements OnInit {
     this.alertService.presentLoading();
     this.propertyService.addProperty(data).subscribe(
       response => {
-        this.alertService.dismissLoading()
-        this.alertService.presentToast('Popriété insérée avec succés :) ', 'success')
+        this.alertService.dismissLoading();
+        this.alertService.presentToast('Popriété insérée avec succés :) ', 'success');
+        this.displayedList = [...this.displayedList];
+        this.navCtrl.navigateRoot('/a');
         console.log(response)
       },
       error => {
@@ -107,11 +110,17 @@ export class AgDashboardPage implements OnInit {
 
   receiveUpdatedDate(data) {
     console.log(data);
+        //call service/api to post message
+    this.alertService.presentLoading();
     this.propertyService.updateAgentData(data).subscribe(
       data => {
+        this.alertService.dismissLoading();
+        this.alertService.presentToast('Informations modifiées avec succés :) ', 'success');
         console.log('Profile succesfully edited', data);
       },
       error => {
+        this.alertService.presentToast('Les informations saisies sont incomplètes :(, veuillez resaisir les informations correctement ', 'danger');
+        this.alertService.dismissLoading();
         console.log('Something went wrong!', error);
       }
     );
@@ -181,20 +190,25 @@ export class AgDashboardPage implements OnInit {
   }
   onDelete(id: number) {
     let extras;
-    this.alertService.presentLoading()
+    this.alertService.presentLoading();
     this.propertyService.deleteProperty(id, extras)
-      .subscribe(res => {
+      .subscribe(
+        () => {
         this.alertService.dismissLoading()
-        this.alertService.presentToast('Popriété supprimée avec succés :) ', 'success')
-        console.log(res);
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      }, err => {
+        this.alertService.presentToast('Popriété supprimée avec succés :) ', 'success');
+
+        this.displayedList = this.displayedList.filter((item) => {
+          return item.id !== id;
+        });
+        this.displayedList = [...this.displayedList];
+
+      }, 
+      err => {
         this.alertService.presentToast('Une erreur s\'est produite :( !! veuillez réessayer ', 'danger')
         this.alertService.dismissLoading()
         console.log(err);
       });
+
   }
 
 

@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationExtras, Router  } from '@angular/router';
 import { MenuController, NavController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Properties } from 'src/app/models/properties';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-update-property',
@@ -85,7 +86,8 @@ property: Properties;
 
  constructor(
    private route: ActivatedRoute, 
-   private propertyService: PropertiesService
+   private propertyService: PropertiesService,
+   private alertService: AlertService
 ) {}
 
   ngOnInit() {
@@ -278,12 +280,17 @@ uploadGallery(event) {
     nearby: this.property.nearby,
     gallaryimage: this.selectedFiles
   };
-
+ //call service/api to post message
+ this.alertService.presentLoading();
     this.propertyService.updatePropertyData(this.property.id, this.data).subscribe(
       data => {      
+        this.alertService.dismissLoading();
+        this.alertService.presentToast('Popriété modifiée avec succés :) ', 'success');
         console.log('Property succesfully updated', data);
       },
       error => {
+        this.alertService.dismissLoading();
+        this.alertService.presentToast('Vous avez oubliez certains champs :( !! vérifier à nouveau les données entrées :) ', 'danger');
         console.log('Something went wrong!', error);
     })
 }

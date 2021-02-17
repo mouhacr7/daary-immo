@@ -1,7 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 @Component({
   selector: 'app-ag-upload',
@@ -135,7 +132,7 @@ export class AgUploadComponent implements OnInit {
     reader.onload = () => {
       this.gallery_preview = reader.result as string
     }
-    reader.readAsDataURL(files);
+    // reader.readAsDataURL(files);
   }
   sendUpload() {
 

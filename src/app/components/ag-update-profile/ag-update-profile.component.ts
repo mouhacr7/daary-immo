@@ -15,10 +15,7 @@ export class AgUpdateProfileComponent implements OnInit {
   data : any;
   ionicForm: FormGroup;
   @Output() updateDataEvent = new EventEmitter();
- // Param headers for edit password system
-//  currentpassword: string = '';
-//  newpassword  : string = '';
-//  newpassword_confirmation  : string = '';
+
 errorMessage = '';
 isSubmitted: boolean = false;
   users: any;

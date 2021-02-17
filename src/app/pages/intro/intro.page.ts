@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
+import { NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular'
 @Component({
   selector: 'app-intro',
   templateUrl: './intro.page.html',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IntroPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private storage: Storage,
+    private router: Router
+  ) { }
+
+  @ViewChild(IonSlides)
+  slides: IonSlides;
 
   ngOnInit() {
+  }
+
+  async finish() {
+    await this.storage.set('introComplete', true);
+    this.router.navigateByUrl('/app-flow');
+  }
+
+  next() {
+    this.slides.slideNext();
   }
 
 }

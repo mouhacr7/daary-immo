@@ -5,13 +5,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guard/auth.guard';
 import { AgentResolverService } from './services/agent-resolver.service';
 import { MessageResolverService } from './services/message-resolver.service';
+import { IntroGuard } from './guard/intro.guard';
 
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'app-flow',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [IntroGuard]
   },
   {
     path: 'signup',
@@ -27,7 +29,8 @@ const routes: Routes = [
   },
   {
     path: 'app-flow',
-    loadChildren: () => import('./pages/app-flow/app-flow.module').then( m => m.AppFlowPageModule)
+    loadChildren: () => import('./pages/app-flow/app-flow.module').then( m => m.AppFlowPageModule),
+    canActivate: [IntroGuard]
   },
   {
     path: 'search-property',
@@ -112,7 +115,8 @@ const routes: Routes = [
   {
     path: 'verification-code',
     loadChildren: () => import('./auth/verification-code/verification-code.module').then( m => m.VerificationCodePageModule)
-  },  {
+  },
+  {
     path: 'intro',
     loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule)
   }

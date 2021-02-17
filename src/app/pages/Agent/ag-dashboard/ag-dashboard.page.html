@@ -212,13 +212,13 @@
               <ion-item-divider class="custom-font divider-back">
                 {{ "Mes propriétés" | uppercase }}
             </ion-item-divider>
-            <ion-row class="row-prop" *ngFor="let prop of displayedList , let i = index">
+            <ion-row class="row-prop" *ngFor="let prop of displayedList , index as i">
               <ion-col size="4">
                   <img class="prop-img" src="https://daary-immo.com/storage/property/{{prop.image}}">
               </ion-col>
               <ion-col size="8">    
                 <p class="custom-font prop-title"><strong>{{i + 1}}. </strong>{{prop?.title}}</p>
-                <span class="prop-price">{{prop.price}} - </span><span class="prop-city">{{prop.city}}</span>
+                <span class="prop-price">{{prop.price}} MRU - </span><span class="prop-city">{{prop.city}}</span>
               </ion-col>
                 <ion-col size="4">
                   <ion-button color="warning" class="prop-button"  routerLink="/property-details/{{prop.id}}">  

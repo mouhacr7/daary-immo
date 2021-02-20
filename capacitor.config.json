@@ -1,12 +1,16 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.daary_immo.startup",
   "appName": "daary-immo",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 0
+      "launchAutoHide": false,
+      "androidScaleType": "CENTER_CROP",
+      "splashFullScreen": true,
+      "splashImmersive": false,
+      "backgroundColor": "#ffffff"
     }
   },
   "cordova": {}

@@ -1,5 +1,4 @@
 import { Network } from '@ionic-native/network/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,7 +13,6 @@ import { HttpConfigInterceptor } from './services/httpinterceptor.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ValuesPipe } from './pipes/values.pipe';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 // app.module.ts
@@ -34,8 +32,6 @@ import { environment } from '../environments/environment';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
     CallNumber,
     Network,
     CallNumber,

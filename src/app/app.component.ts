@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController, Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TokenSessionStorageService } from './services/token-session-storage.service';
-import { timer } from 'rxjs';
-
+import { Plugins } from '@capacitor/core'
+const { SplashScreen, StatusBar} = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -57,8 +55,6 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private tokenSession: TokenSessionStorageService,
@@ -73,10 +69,13 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-        this.splashScreen.hide();
-        timer(5000).subscribe(() => this.showSplash = false)
+    this.platform.ready().then(async () => {
+      SplashScreen.show({
+        showDuration: 2000,
+        autoHide: true
+      });
+      // Display content under transparent status bar (Android only)
+      StatusBar.setOverlaysWebView({ overlay: true });
     });
   }
 

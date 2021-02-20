@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.daary_immo.startup;
 
 import android.os.Bundle;
 

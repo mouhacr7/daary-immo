@@ -51,7 +51,6 @@ export class AppComponent {
     // },
   ];
   isLoggedIn: boolean = false;
-  // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   constructor(
     private platform: Platform,
@@ -70,10 +69,11 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(async () => {
-      SplashScreen.show({
-        showDuration: 2000,
-        autoHide: true
-      });
+      // SplashScreen.show({
+      //   showDuration: 2000,
+      //   autoHide: true
+      // });
+      SplashScreen.hide();
       // Display content under transparent status bar (Android only)
       StatusBar.setOverlaysWebView({ overlay: true });
     });

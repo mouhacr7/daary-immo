@@ -48,7 +48,7 @@
         </ion-button>
       </div>
         <ion-list *ngIf="showCity">
-          <ion-item (click)="selectVal(item.city)" *ngFor="let item of citiesData">
+          <ion-item (click)="selectVal(item.city)" *ngFor="let item of cityList">
             {{ item.city }}
           </ion-item>
         </ion-list>

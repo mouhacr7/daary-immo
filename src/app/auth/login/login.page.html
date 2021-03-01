@@ -34,7 +34,7 @@
               <ion-list>
                 <ion-item lines="full">
                   <ion-label position="floating">Numéro de téléphone</ion-label>
-                  <ion-input formControlName="phone_number" type="number"></ion-input>
+                  <ion-input formControlName="phone_number" type="number" pattern="\d*"></ion-input>
                 </ion-item>
                 <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.required">
                 Le numéro de téléphone est requis.

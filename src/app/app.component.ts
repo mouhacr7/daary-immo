@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuController, NavController, Platform } from '@ionic/angular';
 import { TokenSessionStorageService } from './services/token-session-storage.service';
-import { Plugins } from '@capacitor/core'
-const { SplashScreen, StatusBar} = Plugins;
+import { Plugins, StatusBarStyle } from '@capacitor/core';
+
 
 @Component({
   selector: 'app-root',
@@ -51,6 +51,7 @@ export class AppComponent {
     // },
   ];
   isLoggedIn: boolean = false;
+  // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   constructor(
     private platform: Platform,
@@ -67,17 +68,16 @@ export class AppComponent {
     this.menuCtrl.close();
   }
 
-  initializeApp() {
-    this.platform.ready().then(async () => {
-      // SplashScreen.show({
-      //   showDuration: 2000,
-      //   autoHide: true
-      // });
-      SplashScreen.hide();
-      // Display content under transparent status bar (Android only)
-      StatusBar.setOverlaysWebView({ overlay: true });
-    });
+  async initializeApp() {
+    const { SplashScreen, StatusBar } = Plugins;
+    try {
+      await SplashScreen.hide();
+      await StatusBar.setStyle({ style: StatusBarStyle.Light });
+      if (this.platform.is('android')) {
+        StatusBar.setBackgroundColor({ color: '#CDCDCD' });
+      }
+    } catch (err) {
+      console.log('This is normal in a browser', err);
+    }
   }
-
-
 }

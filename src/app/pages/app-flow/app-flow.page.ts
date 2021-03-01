@@ -32,12 +32,14 @@ export class AppFlowPage implements OnInit {
     private propertiesServices: PropertiesService,
     public loadingController: LoadingController,
     public toastController: ToastController,
-  ) {    
-  }
-
-  async ngOnInit() {
-    this.getAllProperties()
+    ) {    
     this.menuCtrl.enable(true);
+  }
+  ngOnInit() {
+    
+  }
+  ionViewWillEnter(){
+    this.getAllProperties()
   }
 
   async getAllProperties() {

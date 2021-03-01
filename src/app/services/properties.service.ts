@@ -32,16 +32,11 @@ export class PropertiesService {
     // console.log(this.token);
   }
   
-  get refreshNeeded$() {
-    return this._refreshNeeded$;
-  }
   getPosts(): Observable<Properties[]> {
     return this.http.get<Properties[]>(`/mobile/properties`, {})
     .pipe(
       tap(() => {
-        this._refreshNeeded$.next();
         console.log("properties loaded");
-        
       }),
       catchError(this.handleError)
     );
@@ -90,9 +85,24 @@ export class PropertiesService {
     input.append('floor_plan',data.floor_plan)
     input.append('description',data.description)
     input.append('nearby',data.nearby)
-    for(var i =  0; i <  data.gallaryimage.length; i++)  {  
-      input.append("gallaryimage[]",  data.gallaryimage[i]);
-     } 
+    if (data.image === '') {
+      // input.append('image','')
+    } else {
+      input.append('image',data.image)
+    }
+    if (data.floor_plan === '') {
+      // input.append('floor_plan','')
+    } else {
+      input.append('floor_plan',data.floor_plan)
+    }
+
+    if (typeof data.gallaryimage === 'undefined') {
+      input.append("gallaryimage[]",  '');
+    } else {
+      for(var i =  0; i <  data.gallaryimage.length; i++)  {  
+        input.append("gallaryimage[]",  data.gallaryimage[i]);
+      } 
+    }
     console.log(input.getAll(data));
     // this.alertService.presentLoading();
     return this.http.post('/mobile/add_property', input)
@@ -127,18 +137,32 @@ export class PropertiesService {
     input.append('price',data.price)
     input.append('cuisine',data.cuisine)
     input.append('douche',data.douche)
-    input.append('image',data.image)
     input.append('bedroom',data.bedroom)
     input.append('bathroom',data.bathroom)
     input.append('city',data.city)
     input.append('address',data.address)
     input.append('area',data.area)
-    input.append('floor_plan',data.floor_plan)
     input.append('description',data.description)
     input.append('nearby',data.nearby)
-    for(var i =  0; i <  data.gallaryimage.length; i++)  {  
-      input.append("gallaryimage[]",  data.gallaryimage[i]);
-     } 
+    
+    if (data.image === '') {
+      // input.append('image','')
+    } else {
+      input.append('image',data.image)
+    }
+    if (data.floor_plan === '') {
+      // input.append('floor_plan','')
+    } else {
+      input.append('floor_plan',data.floor_plan)
+    }
+
+    if (typeof data.gallaryimage === 'undefined') {
+      input.append("gallaryimage[]",  '');
+    } else {
+      for(var i =  0; i <  data.gallaryimage.length; i++)  {  
+        input.append("gallaryimage[]",  data.gallaryimage[i]);
+      } 
+    }
     console.log(input.getAll(data));
 
     return this.http.post(`/mobile/update_property/${id}`, input).pipe(

@@ -119,7 +119,11 @@ const routes: Routes = [
   {
     path: 'intro',
     loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule)
+  },  {
+    path: 'image-modal',
+    loadChildren: () => import('./image-modal/image-modal.module').then( m => m.ImageModalPageModule)
   }
+
 
 
 ];

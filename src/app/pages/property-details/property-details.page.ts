@@ -1,13 +1,41 @@
-import { PropertiesService } from 'src/app/services/properties.service';
-import { Properties } from './../../models/properties';
-import { Component, OnInit } from '@angular/core';
-import { IonSlides, MenuController, NavController } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CallNumber } from '@ionic-native/call-number/ngx';
-import { FavoriteService } from 'src/app/services/favorite.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MessagesService } from 'src/app/services/messages.service';
-import { AlertService } from 'src/app/services/alert.service';
+import {
+  PropertiesService
+} from 'src/app/services/properties.service';
+import {
+  Properties
+} from './../../models/properties';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  IonSlides,
+  MenuController,
+  ModalController,
+  NavController
+} from '@ionic/angular';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import {
+  CallNumber
+} from '@ionic-native/call-number/ngx';
+import {
+  FavoriteService
+} from 'src/app/services/favorite.service';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+import {
+  MessagesService
+} from 'src/app/services/messages.service';
+import {
+  AlertService
+} from 'src/app/services/alert.service';
+import { ImageModalPage } from 'src/app/image-modal/image-modal.page';
 
 
 // @ViewChild('slideWithNav', { static: false }) slideWithNav: IonSlides;
@@ -41,26 +69,26 @@ export class PropertyDetailsPage implements OnInit {
     spaceBetween: 20,
     autoplay: true
 
-  };  
-  
+  };
+  per_month: boolean = false;
+
 
   constructor(private route: ActivatedRoute,
     private menuCtrl: MenuController,
+    private modalCtrl: ModalController,
     private alertService: AlertService,
     public formBuilder: FormBuilder,
     private messageService: MessagesService,
     private navController: NavController,
     private favService: FavoriteService,
     private callNumber: CallNumber
-    ) {
-   
-                //Item object for Nature
-    this.sliderOne =
-    {
+  ) {
+
+    //Item object for Nature
+    this.sliderOne = {
       isBeginningSlide: true,
       isEndSlide: false,
-      slidesItems: [
-        {
+      slidesItems: [{
           id: 995
         },
         {
@@ -80,58 +108,73 @@ export class PropertyDetailsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { property: Properties[] }) => {
-        console.log(data);
+    this.route.data.subscribe((data: {
+      property: Properties[]
+    }) => {
+      console.log(data);
 
-        this.property = data.property['property'];
-       console.log(this.property.gallery);
-       
-        this.showData = true;
-      });
-      this.like = false;
-      // console.log(this.count);
-      this.menuCtrl.enable(true);
-      this.favService.isFavorite(this.property.id).then(isFav => {
-        this.isFavorite = isFav;
-      });
+      this.property = data.property['property'];
+      console.log(this.property.gallery);
+
+      this.showData = true;
+    });
+    this.like = false;
+    // console.log(this.count);
+    this.menuCtrl.enable(true);
+    this.favService.isFavorite(this.property.id).then(isFav => {
+      this.isFavorite = isFav;
+    });
+
+    if(this.property.purpose = 'Louer') {
+      this.per_month = true;
+    }
   }
-  sendMessage() { 
-      this.data = {
-        agent_id:  this.property.agent_id,
-        property_id:  this.property.id,
-        name:  this.name,
-        email:  this.email,
-        phone: this.phone,
-        message: this.my_message,
+
+  onPreview(img) {
+    this.modalCtrl.create({
+      component: ImageModalPage,
+      componentProps: {
+        img: img
       }
-      console.log(this.data);
-      
-      this.alertService.presentLoading();
-      this.messageService.SendMessage(this.data).subscribe(
-          data => {
-            this.alertService.presentToast('Message envoyé avec succés :) !!', 'success');
-            this.alertService.dismissLoading()
-            console.log(data);
-              },
-              err => {
-                this.alertService.presentToast('Une erreur s\'est pproduit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
-                this.alertService.dismissLoading()
-                this.errorMessage = err.error;
-                console.log(this.errorMessage)
-              }
-        );
+    }).then(modal => modal.present());
+  }
+  sendMessage() {
+    this.data = {
+      agent_id: this.property.agent_id,
+      property_id: this.property.id,
+      name: this.name,
+      email: this.email,
+      phone: this.phone,
+      message: this.my_message,
+    }
+    console.log(this.data);
+
+    this.alertService.presentLoading();
+    this.messageService.SendMessage(this.data).subscribe(
+      data => {
+        this.alertService.presentToast('Message envoyé avec succés :) !!', 'success');
+        this.alertService.dismissLoading()
+        console.log(data);
+      },
+      err => {
+        this.alertService.presentToast('Une erreur s\'est pproduit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
+        this.alertService.dismissLoading()
+        this.errorMessage = err.error;
+        console.log(this.errorMessage)
+      }
+    );
   }
   callAgent() {
     return this.callNumber.callNumber(this.property.user.phone_number.toString(), true)
-    .then(res => console.log('Launched dialer! Number called = ' + this.property.user.phone_number.toString(), res))
-    .catch(err => console.log('Error launching dialer ! Number called = ' + this.property.user.phone_number.toString(), err))
+      .then(res => console.log('Launched dialer! Number called = ' + this.property.user.phone_number.toString(), res))
+      .catch(err => console.log('Error launching dialer ! Number called = ' + this.property.user.phone_number.toString(), err))
   }
   favoriteProperty() {
     this.favService.favoriteProperty(this.property.id).then(() => {
       this.isFavorite = true;
     });
   }
- 
+
   unFavoriteProperty() {
     this.favService.unfavoriteProperty(this.property.id).then(() => {
       this.isFavorite = false;
@@ -156,8 +199,8 @@ export class PropertyDetailsPage implements OnInit {
     this.checkIfNavDisabled(object, slideView);
   }
 
-   //Call methods to check if slide is first or last to enable disbale navigation  
-   checkIfNavDisabled(object, slideView) {
+  //Call methods to check if slide is first or last to enable disbale navigation  
+  checkIfNavDisabled(object, slideView) {
     this.checkisBeginning(object, slideView);
     this.checkisEnd(object, slideView);
   }
@@ -183,6 +226,6 @@ export class PropertyDetailsPage implements OnInit {
 
   back() {
     this.navController.back();
-}
+  }
 
 }

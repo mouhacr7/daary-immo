@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { PropertiesService } from './../../services/properties.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -5,6 +6,7 @@ import { NavigationExtras, Router  } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { Properties } from 'src/app/models/properties';
 
 @Component({
   selector: 'app-search-property',
@@ -62,33 +64,46 @@ export class SearchPropertyPage implements OnInit {
   citiesData: any = [];
   showCity: boolean = false;
   showCityBadge: boolean = false;
-
+  dataList = [];
+  allCityList = [];
+  cityList = [];
   constructor(
     public formBuilder: FormBuilder,
+    private propertiesServices: PropertiesService,
     public navCtrl: NavController,
     public router: Router,
     @Inject(DOCUMENT) private document: Document
-  ) { 
+  ) {}
+
+  ngOnInit() {
     this.listCitiesData();
+    this.loadCities(); 
   }
   
-  listCitiesData(){
-    this.citiesData = [
-      {"city":"Nouakchott"},
-      {"city":"Nouadhibou"},
-      {"city":"Rosso"},
-      {"city":"Kaedi"},
-      {"city":"Boghé"},
-    ]
+  async loadCities() {
+      await this.propertiesServices.getPosts().subscribe( (data: Properties[]) => {
+        this.dataList = data['properties']['data'];
+        this.dataList.forEach(data => {
+          this.allCityList.push(data.city)
+        })
+        let uniqueArray = this.allCityList.filter((item, index) => this.allCityList.indexOf(item) === index);
+        uniqueArray.map(city => {
+        this.citiesData.push({"city": city})
+      });
+    })
+  }
+  
+  async listCitiesData() {
+    this.cityList = [...this.citiesData];
+    console.log(this.cityList);
   }
 
   filterJsonData(ev: any) {
- 
     this.listCitiesData();
     const val = ev.target.value;
     if (val && val.trim() != '') {
       this.showCity = true;
-      this.citiesData = this.citiesData.filter((item) => {
+      this.cityList  = this.cityList.filter((item) => {
         return (item.city.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     } else {
@@ -110,10 +125,6 @@ export class SearchPropertyPage implements OnInit {
       this.showCity = false;
       this.local.next('');
     }
-
-  ngOnInit() {
-
-  }
   doRefresh(event: any) { 
     setTimeout(() => {
       this.document.location.reload();

@@ -1,129 +1,161 @@
 .custom-font {
-    font-family: 'Josefin Sans', sans-serif;
-  }
-  .fav-like {
-   
-    z-index: 4;
-    position: relative;
-    margin-top: -82px;
-    margin-right: 10px;
-    float: right;
-    // background: rgb(255 255 255 / 57%);
-    border-radius: 18px;
-    font-size: xxx-large;
-    padding: 7px;
-    
-  }
-  .fav-unlike {
-   
-    z-index: 4;
-    position: relative;
-    margin-top: -82px;
-    margin-right: 10px;
-    float: right;
-    background: rgb(255 255 255 / 57%);
-    border-radius: 18px;
-    font-size: xxx-large;
-    padding: 7px;
-    
-  }
+  font-family: 'Josefin Sans', sans-serif;
+}
 
-  // Card design 
-  .property-title {
-  
-    font-weight: bold !important;
-    font-size: x-large;
-  }
-  .property-type {
-    font-weight: bold !important;
-    font-size: large !important;
-  }
-  .icon-label {
-    font-size: x-large;
-    font-weight: bolder;
-    color: forestgreen;
-  }
-  .property-price {
-    font-size: x-large;
-    font-weight: bolder;
-    color: forestgreen;
-  }
-  .desc-location {
-      font-size: 16px;
-  }
-  .img-prop {
-    height: 240px !important;
-    border-bottom-right-radius: 30px !important;
-    border-bottom-left-radius: 30px;
-    width: -webkit-fill-available;
-  }
-  .desc-icons {
+.fav-like {
 
-    position: relative;
-    float: right;
-    font-size: 30px;
-    // display: inline-flex !important;
-    
-  }
-  .row-align {
-    display: -webkit-box;
-  }
-  .col-align {
-    display: -webkit-inline-box;
-  }
-  // fin Card design
-  .ionicon {
-    stroke: forestgreen !important;
+  z-index: 4;
+  position: relative;
+  margin-top: -82px;
+  margin-right: 10px;
+  float: right;
+  // background: rgb(255 255 255 / 57%);
+  border-radius: 18px;
+  font-size: xxx-large;
+  padding: 7px;
+
+}
+
+.fav-unlike {
+
+  z-index: 4;
+  position: relative;
+  margin-top: -82px;
+  margin-right: 10px;
+  float: right;
+  background: rgb(255 255 255 / 57%);
+  border-radius: 18px;
+  font-size: xxx-large;
+  padding: 7px;
+
+}
+
+// Card design 
+.property-title {
+
+  font-weight: bold !important;
+    font-size: larger;
+    color: #404040;
+}
+
+.property-type {
+  font-weight: bold !important;
+  font-size: large !important;
+}
+
+.icon-label {
+  font-size: x-large;
+  font-weight: bolder;
+  color: forestgreen;
+}
+
+.property-price {
+  color: forestgreen;
+  letter-spacing: -2px;
+  font-weight: bolder;
+}
+
+.desc-location {
+  font-size: 16px;
+}
+
+.img-prop {
+  height: 240px !important;
+  border-bottom-right-radius: 30px !important;
+  border-bottom-left-radius: 30px;
+  width: -webkit-fill-available;
+}
+
+.desc-icons {
+
+  position: relative;
+  float: right;
+  font-size: 40px;
+  // display: inline-flex !important;
+
+}
+
+.row-align {
+  display: -webkit-box;
+}
+
+.col-align {
+  display: inline-grid;
+}
+
+// fin Card design
+.ionicon {
+  stroke: forestgreen !important;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+
+ion-content {
+
+  ion-card-content {
     display: block;
-    height: 100%;
+    position: relative;
+    text-align: justify;
+  }
+
+  .wrap-input {
+    background-color: rgba(255, 255, 255, .8);
+    border-radius: 20px;
+    margin-bottom: 26px;
+    box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.12);
+  }
+
+  .input {
+    display: block;
     width: 100%;
-    }   
-  
-  ion-content {
-
-    ion-card-content {
-      display: block;
-      position: relative;
-      text-align: justify;
-  }
-  
-    .container-form-btn {
-      display: flex;
-      justify-content: center;
-    }
-  
-    .form-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0 20px;
-      min-width: 160px;
-      height: 42px;
-      background-color: forestgreen;
-      border-radius: 5px;
-      font-size: 20px;
-      letter-spacing: -1px;
-      color: #FFFFFF;
-      padding-top: 5px;
-      transition: all 0.4s;
-      box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.5);
-    }
-  
-    .form-btn:hover {
-      background-color: #28333b;
-      box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.8);
-    }
-  
-  
+    background: transparent;
+    font-family: Josefin Sans;
+    font-size: 16px;
+    line-height: 1.2;
+    border: none;
+    outline: none;
+    height: 46px;
+    padding: 0 20px 0 23px;
   }
 
-  ion-skeleton-text {
-    line-height: 13px;
-    --background-rgb: 230,40,50;
-    --border-radius: 20px;
+  .container-form-btn {
+    display: flex;
+    justify-content: center;
   }
-  
-  .custom-skeleton ion-skeleton-text:last-child {
-    margin-bottom: 5px;
+
+  .form-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    min-width: 160px;
+    height: 42px;
+    background-color: forestgreen;
+    border-radius: 5px;
+    font-size: 20px;
+    letter-spacing: -1px;
+    color: #FFFFFF;
+    padding-top: 5px;
+    transition: all 0.4s;
+    box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.5);
   }
- 
+
+  .form-btn:hover {
+    background-color: #28333b;
+    box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.8);
+  }
+
+
+}
+
+ion-skeleton-text {
+  line-height: 13px;
+  --background-rgb: 230, 40, 50;
+  --border-radius: 20px;
+}
+
+.custom-skeleton ion-skeleton-text:last-child {
+  margin-bottom: 5px;
+}

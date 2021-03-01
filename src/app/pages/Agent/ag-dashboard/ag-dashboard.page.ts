@@ -50,6 +50,8 @@ export class AgDashboardPage implements OnInit {
   token: any;
   currentPage = 1;
   loading: HTMLIonLoadingElement;
+  collapse_trigger_prop = new BehaviorSubject<any>('');
+  collapse_trigger_mess = new BehaviorSubject<any>('');
 
   constructor(
     private menu: MenuController,
@@ -66,6 +68,8 @@ export class AgDashboardPage implements OnInit {
     @Inject(DOCUMENT) private document: Document
   ) {
     this.menu.enable(true);
+    this.collapse_trigger_prop.next('collapse');
+    this.collapse_trigger_mess.next('collapse');
   }
 
   doRefresh(event: any) {
@@ -85,8 +89,7 @@ export class AgDashboardPage implements OnInit {
       response => {
         this.alertService.dismissLoading();
         this.alertService.presentToast('Popriété insérée avec succés :) ', 'success');
-        this.displayedList = [...this.displayedList];
-        this.navCtrl.navigateRoot('/a');
+        this.document.location.reload();
         console.log(response)
       },
       error => {
@@ -98,11 +101,17 @@ export class AgDashboardPage implements OnInit {
   }
   receiveDataEditPassword(data) {
     console.log(data);
+    this.alertService.presentLoading();
     this.propertyService.changePassword(data).subscribe(
       data => {
+        this.alertService.dismissLoading();
+        this.alertService.presentToast('Mot de passe modifié avec succés :) ', 'success');
         console.log('Password succesfully edited', data);
+        this.document.location.reload();
       },
       error => {
+        this.alertService.presentToast('Erreur au moment de l\'insertion des données :) ', 'danger');
+        this.alertService.dismissLoading();
         console.log('Something went wrong!', error);
       }
     );
@@ -116,6 +125,7 @@ export class AgDashboardPage implements OnInit {
       data => {
         this.alertService.dismissLoading();
         this.alertService.presentToast('Informations modifiées avec succés :) ', 'success');
+        this.document.location.reload();
         console.log('Profile succesfully edited', data);
       },
       error => {
@@ -196,12 +206,11 @@ export class AgDashboardPage implements OnInit {
         () => {
         this.alertService.dismissLoading()
         this.alertService.presentToast('Popriété supprimée avec succés :) ', 'success');
-
         this.displayedList = this.displayedList.filter((item) => {
           return item.id !== id;
         });
         this.displayedList = [...this.displayedList];
-
+        this.document.location.reload();
       }, 
       err => {
         this.alertService.presentToast('Une erreur s\'est produite :( !! veuillez réessayer ', 'danger')
@@ -267,6 +276,16 @@ export class AgDashboardPage implements OnInit {
   }
   ScrollToTop() {
     this.content.scrollToTop(1500);
+  }
+  scrollProperties(el: HTMLElement) {
+    el.scrollIntoView();
+    this.isPropretiesUp = true;
+    this.collapse_trigger_prop.next('collapse show');
+  }
+  scrollMessages(el: HTMLElement) {
+    el.scrollIntoView();
+    this.isMessagesUp = true;
+    this.collapse_trigger_mess.next('collapse show');
   }
 
   toggleUp(section: string) {

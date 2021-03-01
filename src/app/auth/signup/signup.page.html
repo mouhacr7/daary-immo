@@ -40,7 +40,7 @@
                 </span>
                 <ion-item lines="full">
                   <ion-label position="floating">Téléphone</ion-label>
-                  <ion-input formControlName="phone_number" type="number"></ion-input>
+                  <ion-input formControlName="phone_number" type="number" pattern="\d*"></ion-input>
                 </ion-item>
                 <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.minlength">
                   Le mot de passe doit comporter au minimum 8 caractéres. 
@@ -57,6 +57,7 @@
                   <ion-label position="floating">Mot de passe de Confirmation</ion-label>
                   <ion-input formControlName="password_confirmation" type="password"></ion-input>
                 </ion-item>
+                
                 <div class="error ion-padding"  *ngIf="errorControl.password_confirmation && errorControl.password_confirmation.invalid" >
                   <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
                     Mot de passe est requis.
@@ -68,10 +69,7 @@
                     Les deux mots de passe sont différents.
                   </span>
               </div>
-                <!-- <ion-item>
-                  <ion-label>Agent ?</ion-label>
-                  <ion-checkbox formControlName="agent" [(ngModel)]="state"></ion-checkbox>
-                </ion-item> -->
+
               </ion-list>
                 <ion-button class="custom-font" color="success" type="submit" [disabled]="!ionicForm.valid" expand="block">M'inscrire</ion-button>
                 <p style="text-align: -webkit-center;

@@ -36,43 +36,61 @@
   
   // Card design 
   .property-title {
-  
     font-weight: bold !important;
-    font-size: x-large;
+    font-size: larger;
+    color: #404040;
   }
   .property-type {
-    font-weight: bold !important;
-    font-size: large !important;
+    font-weight: bolder !important; 
+    font-size: large !important; 
+    text-transform: uppercase;
   }
   .icon-label {
-    font-size: x-large;
+    font-size: larger;
     font-weight: bolder;
     color: forestgreen;
   }
   .property-price {
-      color: forestgreen;
+    color: forestgreen; 
+    letter-spacing: -2px; 
+    font-weight: bolder;
   }
   .desc-location {
-      font-size: 16px;
+    font-weight: bold !important;
+    font-size: medium;
+    color: #404040;
   }
   .img-prop {
     border-bottom-right-radius: 30px !important;
     border-bottom-left-radius: 30px;
+    height: 240px;
     width: -webkit-fill-available;
   }
   .desc-icons {
-  
+
     position: relative;
     float: right;
-    font-size: 30px;
+    font-size: 40px;
     // display: inline-flex !important;
-    
+  
   }
+  .desc-button {
+    font-size: smaller;
+    letter-spacing: initial;
+  }
+.card-content-md p {
+  font-size: 12px !important;
+}
+.card-content-ios p {
+  font-size: 12px !important;
+}
+  
   .row-align {
     display: -webkit-box;
   }
+  
   .col-align {
-    display: -webkit-inline-box;
+    display: inline-grid;
   }
   // fin Card design
   .ionicon {

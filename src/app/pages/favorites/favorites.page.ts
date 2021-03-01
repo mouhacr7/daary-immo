@@ -36,6 +36,9 @@ export class FavoritesPage implements OnInit {
   }
   
   ngOnInit() {
+      
+  }
+  ionViewWillEnter(){
     this.propertyService.getPosts().subscribe((properties:  Properties[] ) => {
       this.propertiesList = properties['properties']['data'];
     })
@@ -44,7 +47,7 @@ export class FavoritesPage implements OnInit {
     });
     setTimeout(() => {
       this.onFav();
-    }, 5000);    
+    }, 5000);  
   }
   doRefresh(event: any) { 
     setTimeout(() => {
@@ -63,21 +66,24 @@ export class FavoritesPage implements OnInit {
       }, 5000);
       return;
     } else {
-      
+    
       this.favIdList.map(fav => {
         this.showData = true;
         this.favList = this.propertiesList.filter(p => p.id === fav);
         if (this.data.indexOf(this.favList[0]) === -1) {   
           this.favService.favouriteProperty(fav, this.extra).subscribe( 
             data => {
-              console.log('New data collection added' + data);
+              console.log('New data collection added = ' + fav);
           },
           error => {
             console.log('Something went wrong' + error);
           }
           );
-          console.log('New data collection added : ' + fav)
-          this.data.push(this.favList[0]);
+          if (typeof this.favList[0] === 'undefined') {
+            return 0;
+          } else {
+            this.data.push(this.favList[0]);
+          }
           
         } else if (this.data.indexOf(this.favList[0]) > -1) {
           console.log('already exists in data collection added : ')

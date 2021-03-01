@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuController, LoadingController, IonInfiniteScroll, ToastController } from '@ionic/angular';
 import { PropertiesService } from './../../services/properties.service';
 import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-app-flow',
@@ -32,6 +34,7 @@ export class AppFlowPage implements OnInit {
     private propertiesServices: PropertiesService,
     public loadingController: LoadingController,
     public toastController: ToastController,
+    @Inject(DOCUMENT) private document: Document
     ) {    
     this.menuCtrl.enable(true);
   }
@@ -40,6 +43,12 @@ export class AppFlowPage implements OnInit {
   }
   ionViewWillEnter(){
     this.getAllProperties()
+  }
+  doRefresh(event: any) { 
+    setTimeout(() => {
+      this.document.location.reload();
+      event.target.complete();  // This is a must for us to perform the method
+    }, 1000);  // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
   }
 
   async getAllProperties() {

@@ -12,10 +12,8 @@
       <ion-slides [options]="sliderConfig" pager="true" #slideWithNav
         (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
         <ion-slide *ngFor="let pic of property.gallery">
-          <div>
             <img class="img-prop" src="{{imagepath}}/{{ pic['name']}}" tappable (click)="onPreview(pic['name'])"
               alt="img">
-          </div>
         </ion-slide>
       </ion-slides>
     </span>
@@ -92,7 +90,7 @@
       <!-- </p> -->
     </ion-card-content>
   </ion-card>
-  <ion-card style="color: black;" class="custom-font">
+  <ion-card class="custom-font">
     <ion-card-header>
       <h2>Description</h2>
     </ion-card-header>
@@ -114,7 +112,7 @@
       </span>
     </ion-card-content>
   </ion-card>
-  <ion-card style="color: black;" class="custom-font custom-card">
+  <ion-card  class="custom-font custom-card">
     <ion-row>
       <ion-col size="4">
         <ion-avatar class="custom-avatar">

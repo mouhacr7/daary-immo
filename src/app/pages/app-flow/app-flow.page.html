@@ -1,6 +1,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
 
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -9,7 +9,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="custom-font ion-padding">
+<ion-content class="custom-font ion-padding"> <ion-refresher ion-refresh-native slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content 
+    pullingIcon="arrow-down" 
+    pullingText="Tirer pour recharger la page" 
+    refreshingSpinner="crescent"
+      refreshingText="Chargement...">
+  </ion-refresher-content>
+</ion-refresher>
+
   <br>
   <div class="container-form-btn">
     <button class="form-btn custom-font" routerLink="/search-property">

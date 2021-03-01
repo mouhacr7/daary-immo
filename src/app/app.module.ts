@@ -15,7 +15,6 @@ import { ValuesPipe } from './pipes/values.pipe';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 // app.module.ts
 
@@ -36,7 +35,6 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
   providers: [
     CallNumber,
     Network,
-    PhotoViewer,
     CallNumber,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},

@@ -1,8 +1,22 @@
-import { Component } from '@angular/core';
-import { MenuController, NavController, Platform } from '@ionic/angular';
-import { TokenSessionStorageService } from './services/token-session-storage.service';
-import { Plugins, StatusBarStyle } from '@capacitor/core';
-
+import {
+  Component
+} from '@angular/core';
+import {
+  MenuController,
+  NavController,
+  Platform
+} from '@ionic/angular';
+import {
+  TokenSessionStorageService
+} from './services/token-session-storage.service';
+import {
+  Plugins,
+  StatusBarStyle
+} from '@capacitor/core';
+const {
+  StatusBar,
+  SplashScreen
+} = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -13,8 +27,7 @@ export class AppComponent {
   showSplash: boolean = true;
   connectedStatus: boolean = false;
   public selectedIndex = 0;
-  public appPages = [
-    {
+  public appPages = [{
       title: 'Mon accueil',
       url: '/app-flow',
       icon: 'home'
@@ -68,16 +81,15 @@ export class AppComponent {
     this.menuCtrl.close();
   }
 
-  async initializeApp() {
-    const { SplashScreen, StatusBar } = Plugins;
-    try {
-      await SplashScreen.hide();
-      await StatusBar.setStyle({ style: StatusBarStyle.Light });
-      if (this.platform.is('android')) {
-        StatusBar.setBackgroundColor({ color: '#CDCDCD' });
-      }
-    } catch (err) {
-      console.log('This is normal in a browser', err);
-    }
+
+  componentDidMount() {
+    this.platform.ready().then(() => {
+      SplashScreen.hide();
+    });
+  }
+  initializeApp() {
+    this.platform.ready().then(() => {
+     SplashScreen.hide();
+    });
   }
 }

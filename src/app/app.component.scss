@@ -17,6 +17,7 @@ ion-menu{
       .logo-section__logo{
           display: block;
           border-radius: 100%;
+          max-width: 76% !important;
       }
   }
 }
@@ -115,7 +116,7 @@ ion-menu.ios ion-item {
 }
 
 ion-menu.ios ion-item.selected ion-icon {
-  color: forestgreen !important;
+  color:  #39d6b6 !important;
 }
 
 ion-menu.ios ion-item ion-icon {
@@ -138,7 +139,7 @@ ion-menu.ios ion-note {
   font-size: large;
 }
 .button-inner {
-  color: forestgreen !important;
+  color:  #39d6b6  !important;
 }
 
 ion-note {
@@ -149,7 +150,7 @@ ion-note {
 }
 
 ion-item.selected {
-  color: forestgreen !important;
+  color:  #39d6b6 !important;
 }
 
 .splash {

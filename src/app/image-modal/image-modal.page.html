@@ -1,11 +1,11 @@
 <ion-content>
-  <ion-item class="close-fake" lines="none" text-center>
-    <ion-button (click)="close()" color="light" fill="clear">
-      <ion-icon slot="start" name="close"></ion-icon>
-      Retour
-    </ion-button>
-  </ion-item>
-  <div class="swiper-zoom-container">
-    <img src="{{imagepath}}/{{ img }}" alt="">
-  </div>
+  <ion-button (click)="close()" style="color: white;" fill="clear">
+    <ion-icon slot="start" name="close"></ion-icon>
+    Retour
+  </ion-button>
+  <!-- <div class="swiper-zoom-container"> -->
+    <ion-card>
+      <img src="{{imagepath}}/{{ img }}" alt="">
+    </ion-card>
+  <!-- </div> -->
 </ion-content>

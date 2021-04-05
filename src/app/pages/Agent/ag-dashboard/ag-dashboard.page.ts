@@ -1,16 +1,51 @@
-import { PropertiesService } from 'src/app/services/properties.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MenuController, NavController, AlertController, IonContent, ToastController, IonInfiniteScroll, LoadingController } from '@ionic/angular';
-import { User } from 'src/app/models/user';
-import { TokenSessionStorageService } from 'src/app/services/token-session-storage.service';
-import { Router } from '@angular/router';
-import { Properties } from 'src/app/models/properties';
-import { BehaviorSubject } from 'rxjs';
-import { MessagesService } from 'src/app/services/messages.service';
-import { DOCUMENT } from '@angular/common';
-import { AlertService } from 'src/app/services/alert.service';
-import { CallNumber } from '@ionic-native/call-number/ngx';
+import {
+  PropertiesService
+} from 'src/app/services/properties.service';
+import {
+  AuthService
+} from 'src/app/services/auth.service';
+import {
+  Component,
+  Inject,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
+  MenuController,
+  NavController,
+  AlertController,
+  IonContent,
+  ToastController,
+  IonInfiniteScroll,
+  LoadingController
+} from '@ionic/angular';
+import {
+  User
+} from 'src/app/models/user';
+import {
+  TokenSessionStorageService
+} from 'src/app/services/token-session-storage.service';
+import {
+  Router
+} from '@angular/router';
+import {
+  Properties
+} from 'src/app/models/properties';
+import {
+  BehaviorSubject
+} from 'rxjs';
+import {
+  MessagesService
+} from 'src/app/services/messages.service';
+import {
+  DOCUMENT
+} from '@angular/common';
+import {
+  AlertService
+} from 'src/app/services/alert.service';
+import {
+  CallNumber
+} from '@ionic-native/call-number/ngx';
 
 @Component({
   selector: 'app-ag-dashboard',
@@ -19,7 +54,9 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 })
 export class AgDashboardPage implements OnInit {
 
-  @ViewChild(IonContent, { static: false }) content: IonContent;
+  @ViewChild(IonContent, {
+    static: false
+  }) content: IonContent;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   propertiesList: Properties[] = [];
@@ -41,7 +78,7 @@ export class AgDashboardPage implements OnInit {
   isPasswordUp: boolean;
   sameShipping: boolean;
   agent_id: number;
-  idx = new BehaviorSubject<any>('');
+  idx = new BehaviorSubject < any > ('');
   propertyID: number;
   cpt_number: number = 1;
   // Format data to receive 
@@ -50,8 +87,8 @@ export class AgDashboardPage implements OnInit {
   token: any;
   currentPage = 1;
   loading: HTMLIonLoadingElement;
-  collapse_trigger_prop = new BehaviorSubject<any>('');
-  collapse_trigger_mess = new BehaviorSubject<any>('');
+  collapse_trigger_prop = new BehaviorSubject < any > ('');
+  collapse_trigger_mess = new BehaviorSubject < any > ('');
 
   constructor(
     private menu: MenuController,
@@ -75,8 +112,8 @@ export class AgDashboardPage implements OnInit {
   doRefresh(event: any) {
     setTimeout(() => {
       this.document.location.reload();
-      event.target.complete();  // This is a must for us to perform the method
-    }, 1000);  // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
+      event.target.complete(); // This is a must for us to perform the method
+    }, 1000); // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
   }
   receiveMessage(data) {
     this.users = this.tokenSession.getUser();
@@ -119,7 +156,7 @@ export class AgDashboardPage implements OnInit {
 
   receiveUpdatedDate(data) {
     console.log(data);
-        //call service/api to post message
+    //call service/api to post message
     this.alertService.presentLoading();
     this.propertyService.updateAgentData(data).subscribe(
       data => {
@@ -178,22 +215,20 @@ export class AgDashboardPage implements OnInit {
     const alert = await this.alertCtrl.create({
       header: 'Attention!',
       message: 'Vous confirmez la suppréssion la propriété ' + this.idx.getValue() + '?',
-      buttons: [
-        {
-          text: 'Annuler',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Annulation confirmée !');
-          }
-        }, {
-          text: 'Supprimer',
-          handler: () => {
-            this.onDelete(this.idx.getValue())
-            console.log('Suppréssion confirmée');
-          }
+      buttons: [{
+        text: 'Annuler',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Annulation confirmée !');
         }
-      ]
+      }, {
+        text: 'Supprimer',
+        handler: () => {
+          this.onDelete(this.idx.getValue())
+          console.log('Suppréssion confirmée');
+        }
+      }]
     });
 
     await alert.present();
@@ -204,19 +239,19 @@ export class AgDashboardPage implements OnInit {
     this.propertyService.deleteProperty(id, extras)
       .subscribe(
         () => {
-        this.alertService.dismissLoading()
-        this.alertService.presentToast('Popriété supprimée avec succés :) ', 'success');
-        this.displayedList = this.displayedList.filter((item) => {
-          return item.id !== id;
+          this.alertService.dismissLoading()
+          this.alertService.presentToast('Popriété supprimée avec succés :) ', 'success');
+          this.displayedList = this.displayedList.filter((item) => {
+            return item.id !== id;
+          });
+          this.displayedList = [...this.displayedList];
+          this.document.location.reload();
+        },
+        err => {
+          this.alertService.presentToast('Une erreur s\'est produite :( !! veuillez réessayer ', 'danger')
+          this.alertService.dismissLoading()
+          console.log(err);
         });
-        this.displayedList = [...this.displayedList];
-        this.document.location.reload();
-      }, 
-      err => {
-        this.alertService.presentToast('Une erreur s\'est produite :( !! veuillez réessayer ', 'danger')
-        this.alertService.dismissLoading()
-        console.log(err);
-      });
 
   }
 
@@ -239,13 +274,11 @@ export class AgDashboardPage implements OnInit {
       message: 'Fin de liste :)',
       animated: true,
       duration: 5000,
-      buttons: [
-        {
-          text: 'Done',
-          role: 'cancel',
-          icon: 'close'
-        }
-      ]
+      buttons: [{
+        text: 'Done',
+        role: 'cancel',
+        icon: 'close'
+      }]
     });
     if (event == null) {
       this.currentPage = 1;

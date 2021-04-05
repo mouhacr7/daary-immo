@@ -67,11 +67,19 @@ export class PropertyDetailsPage implements OnInit {
     slidesPerView: 1,
     centeredSlides: true,
     spaceBetween: 20,
-    autoplay: true
+    autoplay: true,
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    },
 
   };
   per_month: boolean = false;
-
+  temp_price : any;
+  price : any;
 
   constructor(private route: ActivatedRoute,
     private menuCtrl: MenuController,
@@ -83,6 +91,7 @@ export class PropertyDetailsPage implements OnInit {
     private favService: FavoriteService,
     private callNumber: CallNumber
   ) {
+    
 
     //Item object for Nature
     this.sliderOne = {
@@ -108,12 +117,19 @@ export class PropertyDetailsPage implements OnInit {
   }
 
   ngOnInit() {
+    var nf = Intl.NumberFormat();
+    var x = 42000000;
+    console.log();
     this.route.data.subscribe((data: {
       property: Properties[]
     }) => {
       console.log(data);
 
       this.property = data.property['property'];
+      this.price = this.property.price;
+      
+      console.log(this.formatNumber(this.price));
+      
       console.log(this.property.gallery);
 
       this.showData = true;
@@ -129,7 +145,38 @@ export class PropertyDetailsPage implements OnInit {
       this.per_month = true;
     }
   }
+  formatNumber(number) {
+    number = number.toFixed(2) + '';
+    let x = number.split('.');
+    let x1 = x[0];
+    let x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+      x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1;
+  }
 
+  existInfos(variables: any) {
+    switch (variables) {
+      case "0":
+      return;
+        break;
+      case null:
+       return;
+        break;
+      case undefined:
+         return;
+        break;
+      case -1:
+         return;
+        break;
+    
+      default:
+         return variables;
+        break;
+    }
+  } 
   onPreview(img) {
     this.modalCtrl.create({
       component: ImageModalPage,
@@ -157,7 +204,7 @@ export class PropertyDetailsPage implements OnInit {
         console.log(data);
       },
       err => {
-        this.alertService.presentToast('Une erreur s\'est pproduit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
+        this.alertService.presentToast('Une erreur s\'est produit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
         this.alertService.dismissLoading()
         this.errorMessage = err.error;
         console.log(this.errorMessage)

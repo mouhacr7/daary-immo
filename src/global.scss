@@ -32,34 +32,34 @@ body {
     padding: 15px !important;
 }
 ion-toolbar {
-    color: forestgreen;
+    color:  #39d6b6;
 }
-ion-row {
-    font-family: 'Josefin Sans', sans-serif !important;
-}
+// ion-row {
+//     font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+// }
 
-ion-list-header {
-    font-family: 'Josefin Sans', sans-serif !important;
-}
-body {
-    font-family: 'Josefin Sans', sans-serif !important;
-}
-ion-button {
-    font-family: 'Josefin Sans', sans-serif;
-}
-ion-label {
-    font-family: 'Josefin Sans', sans-serif !important;
-}
-ion-app {
-    font-family: 'Josefin Sans', sans-serif !important;
-}
+// ion-list-header {
+//     font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+// }
+// body {
+//     font-family: 'Josefin Sans', sans-serif !important;
+// }
+// ion-button {
+//     font-family: 'Josefin Sans', sans-serif;
+// }
+// ion-label {
+//     font-family: 'Josefin Sans', sans-serif !important;
+// }
+// ion-app {
+//     font-family: 'Josefin Sans', sans-serif !important;
+// }
 
 ion-toolbar ion-menu-button {
-    color: forestgreen;
+    color:  #39d6b6;
 }
 
 ion-toolbar ion-back-button {
-    color: forestgreen
+    color:  #39d6b6;
 }
 
 ion-menu.md ion-item.selected ion-icon {
@@ -72,7 +72,7 @@ ion-toolbar ion-button {
 ion-title {
     text-transform: uppercase;
     font-weight: bold;
-    font-family: 'Josefin Sans';
+    font-family: 'San Francisco';
     letter-spacing: -2px;
     font-size: larger;
 }

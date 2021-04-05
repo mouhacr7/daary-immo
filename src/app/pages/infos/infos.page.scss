@@ -1,3 +1,31 @@
+.custom-card {
+  text-align: -webkit-center;
+}
+.custom-avatar {
+  display: contents;
+}
+.custom-img {
+  max-width: 50%;
+}
+.avatar-edit {
+  max-width: 43%;
+}
+.label-padd {
+  margin-top: 16px;
+  margin-bottom: 21px;
+  padding-right: 21px;
+
+}
+.arrow-down-icon {
+  font-size: x-large;
+  color: whit;
+}
+.personal-agent {
+  font-size: large;
+}
+.icon-personal {
+  font-size: xx-large;
+}
 .fav-col {
     padding: 15px;
     font-size: -webkit-xxx-large;
@@ -139,4 +167,8 @@
     }
   
   
+  }
+
+  .fab {
+    --background: #302f2f !important;
   }

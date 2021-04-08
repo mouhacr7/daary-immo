@@ -1,55 +1,111 @@
 <!-- <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet"> -->
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <!-- <ion-title class="custom-font"> -->
-      <div class="logo-section">
-        <div class="logo-section__wrapper">
-          <img class="logo-section__logo" style="max-width: 76% !important;" src="assets/icons/icon-72x72.png" />
-        </div>
+    <div class="logo-section">
+      <div class="logo-section__wrapper">
+        <img class="logo-section__logo" style="max-width: 76% !important;" src="assets/icons/icon-72x72.png" />
       </div>
+    </div>
     <!-- </ion-title> -->
   </ion-toolbar>
 </ion-header>
-<ion-content class="custom-font ion-padding">
+<ion-content padding class="trips detail-bg">
   <ion-refresher ion-refresh-native slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-down" pullingText="Tirer pour recharger la page"
       refreshingSpinner="crescent" refreshingText="Chargement...">
     </ion-refresher-content>
   </ion-refresher>
-  <br>
+  <div class="slides ion-margin-bottom">
+    <ion-slides [options]="slidesOptions">
+      <ion-slide>
+        <ion-card class="card-category">
+          <img class="files" src="assets/images/categories/house.jpeg">
+          <p class="card_title">Maison</p>
+          <div class="box-filter-category"></div>
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card class="card-category">
+          <img class="files" src="assets/images/categories/appartment.jpg">
+          <p class="card_title">Appartement</p>
+          <div class="box-filter-category"></div>
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card class="card-category">
+          <img class="files" src="assets/images/categories/land.jpg">
+          <p class="card_title">Terrain</p>
+          <div class="box-filter-category"></div>
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card class="card-category">
+          <img class="files" src="assets/images/categories/store.jpeg">
+          <p class="card_title">Boutique</p>
+          <div class="box-filter-category"></div>
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card class="card-category">
+          <img class="files" src="assets/images/categories/building.jpg">
+          <p class="card_title">Immeuble</p>
+          <div class="box-filter-category"></div>
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card class="card-category">
+          <img class="files" src="assets/images/categories/office.jpg">
+          <p class="card_title">Bureau</p>
+          <div class="box-filter-category"></div>
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card class="card-category">
+          <img class="files" src="assets/images/categories/studio.jpg">
+          <p class="card_title">Studio</p>
+          <div class="box-filter-category"></div>
+        </ion-card>
+      </ion-slide>
+      
+    </ion-slides>
+  </div>
   <div class="container-form-btn">
     <button class="form-btn custom-font" routerLink="/search-property">
       Nouvelle recherche
     </button>
   </div>
-  <div *ngIf="showData; else skeleton">
-    <ion-grid>
+  <div *ngIf="showData; else skeleton ion-margin-top">
+    <ion-grid class="ion-margin-top" style="padding-left: 0px;padding-right: 0px;">
       <ion-row>
-        <ion-col *ngFor="let prop of displayedList" size-lg="6" size-md="6" size-sm="6" size="12">
+        <ion-col *ngFor="let prop of displayedList" size-lg="6" size-md="6" size-sm="6" size="12"
+          style="padding-left: 0px;padding-right: 0px;">
           <ion-card class="custom-font" routerLink="/property-details/{{prop.id}}">
             <span *ngIf="prop?.image != null">
-              <img class="img-prop"
+              <img class="img-prop background border-bottom"
                 src="https://daary-immo.com/storage/property/{{prop.image || 'assets/images/default_property.jpg'}}"
                 alt="ion">
             </span>
             <span *ngIf="prop?.image == null">
               <img class="img-prop" src="assets/images/default_property.jpg" alt="ion">
             </span>
+            <!-- <div class="background-filter rlt"> -->
             <div>
-              <ion-badge  class="box-price">{{this.formatNumber(prop?.price)}} MRU</ion-badge>
+              <ion-badge class="box-price">{{this.formatNumber(prop?.price)}} MRU</ion-badge>
             </div>
             <div>
-              <ion-badge  class="box-purpose">A {{prop?.purpose}}</ion-badge>
+              <ion-badge class="box-purpose">A {{prop?.purpose}}</ion-badge>
             </div>
+            <!-- </div> -->
             <div class="box-filter">
-  
+
             </div>
             <ion-card-content>
               <span class="property-title" *ngIf="this.existInfos(prop.title)">{{prop.title}}</span>
-              <div  *ngIf="this.existInfos(prop.nearby)">
+              <div *ngIf="this.existInfos(prop.nearby)">
                 <p class="desc-location" [innerHTML]="prop.nearby"></p>
               </div>
               <ion-row>
@@ -74,7 +130,7 @@
                   <span class="icon-label">{{prop?.douche}}</span>
                 </ion-col>
               </ion-row>
-              
+
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -87,42 +143,42 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
   <ng-template #skeleton>
-  <ion-grid>
+    <ion-grid>
       <ion-row>
-        <ion-col *ngFor="let item of [1, 2, 3, 4, 5, 6]"  size-lg="6" size-md="6" size-sm="6" size="12">
-            <div >
-              <ion-card class="custom-font">
-                <ion-grid fixed>
-                  <ion-skeleton-text animated
-                    style="line-height: 13px; width: 100%; height: 200px;--background-rgb: 230,40,50;--border-radius: 20px;">
-                  </ion-skeleton-text>
-                  <ion-row>
-                    <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-                    <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
-                  </ion-row>
-                </ion-grid>
-                <ion-card-content>
-                  <ion-row>
-                    <ion-col center text-center class="col-align">
-                      <ion-skeleton-text animated style="width: 75%;
-                  height: 40px;"></ion-skeleton-text>
-                    </ion-col>
-                    <ion-col center text-center class="col-align">
-                      <ion-skeleton-text animated style="width: 75%;
-                  height: 40px;"></ion-skeleton-text>
-                    </ion-col>
-                    <ion-col center text-center class="col-align">
-                      <ion-skeleton-text animated style="width: 75%;
-                  height: 40px;"></ion-skeleton-text>
-                    </ion-col>
-                  </ion-row>
+        <ion-col *ngFor="let item of [1, 2, 3, 4, 5, 6]" size-lg="6" size-md="6" size-sm="6" size="12">
+          <div>
+            <ion-card class="custom-font">
+              <ion-grid fixed>
+                <ion-skeleton-text animated
+                  style="line-height: 13px; width: 100%; height: 200px;--background-rgb: 230,40,50;--border-radius: 20px;">
+                </ion-skeleton-text>
+                <ion-row>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
                   <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ng-template>
-      
+                </ion-row>
+              </ion-grid>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+
 </ion-content>

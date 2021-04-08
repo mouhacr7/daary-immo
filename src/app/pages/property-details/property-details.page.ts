@@ -24,11 +24,7 @@ import {
 import {
   FavoriteService
 } from 'src/app/services/favorite.service';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from "@angular/forms";
 import {
   MessagesService
 } from 'src/app/services/messages.service';
@@ -36,6 +32,7 @@ import {
   AlertService
 } from 'src/app/services/alert.service';
 import { ImageModalPage } from 'src/app/image-modal/image-modal.page';
+import { ValidatorService } from 'src/app/services/validator.service';
 
 
 // @ViewChild('slideWithNav', { static: false }) slideWithNav: IonSlides;
@@ -63,6 +60,7 @@ export class PropertyDetailsPage implements OnInit {
   desc: string;
   user: any[];
   sliderOne: any;
+  isSubmitted: boolean = false;
   sliderConfig = {
     slidesPerView: 1,
     centeredSlides: true,
@@ -80,7 +78,8 @@ export class PropertyDetailsPage implements OnInit {
   per_month: boolean = false;
   temp_price : any;
   price : any;
-
+  ionicForm: FormGroup;
+  
   constructor(private route: ActivatedRoute,
     private menuCtrl: MenuController,
     private modalCtrl: ModalController,
@@ -117,6 +116,13 @@ export class PropertyDetailsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.ionicForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(2)]] ,
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
+      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      my_message :['']
+    });
+
     var nf = Intl.NumberFormat();
     var x = 42000000;
     console.log();
@@ -181,35 +187,36 @@ export class PropertyDetailsPage implements OnInit {
     this.modalCtrl.create({
       component: ImageModalPage,
       componentProps: {
-        img: img
+        img: img,
+        gallery: this.property.gallery
       }
     }).then(modal => modal.present());
   }
-  sendMessage() {
-    this.data = {
-      agent_id: this.property.agent_id,
-      property_id: this.property.id,
-      name: this.name,
-      email: this.email,
-      phone: this.phone,
-      message: this.my_message,
-    }
-    console.log(this.data);
+  sendMessage(form: NgForm) {
+    // this.data = {
+    //   agent_id: this.property.agent_id,
+    //   property_id: this.property.id,
+    //   name: this.name,
+    //   email: this.email,
+    //   phone: this.phone,
+    //   message: this.my_message,
+    // }
+    console.log(form);
 
-    this.alertService.presentLoading();
-    this.messageService.SendMessage(this.data).subscribe(
-      data => {
-        this.alertService.presentToast('Message envoyé avec succés :) !!', 'success');
-        this.alertService.dismissLoading()
-        console.log(data);
-      },
-      err => {
-        this.alertService.presentToast('Une erreur s\'est produit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
-        this.alertService.dismissLoading()
-        this.errorMessage = err.error;
-        console.log(this.errorMessage)
-      }
-    );
+    // this.alertService.presentLoading();
+    // this.messageService.SendMessage(this.data).subscribe(
+    //   data => {
+    //     this.alertService.presentToast('Message envoyé avec succés :) !!', 'success');
+    //     this.alertService.dismissLoading()
+    //     console.log(data);
+    //   },
+    //   err => {
+    //     this.alertService.presentToast('Une erreur s\'est produit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
+    //     this.alertService.dismissLoading()
+    //     this.errorMessage = err.error;
+    //     console.log(this.errorMessage)
+    //   }
+    // );
   }
   callAgent() {
     return this.callNumber.callNumber(this.property.user.phone_number.toString(), true)
@@ -273,6 +280,9 @@ export class PropertyDetailsPage implements OnInit {
 
   back() {
     this.navController.back();
+  }
+  get errorControl() {
+    return this.ionicForm.controls;
   }
 
 }

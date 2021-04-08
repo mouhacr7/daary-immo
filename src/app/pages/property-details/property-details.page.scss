@@ -86,7 +86,7 @@
 
 @media (max-width: 768px){
   .img-prop {
-    height:310px !important;
+    height:100% !important;
     width: -webkit-fill-available;
     object-fit: fill;
   }
@@ -322,20 +322,21 @@
     margin-bottom: 26px;
     box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.12);
   }
-
-  .input {
-    display: block;
-    width: 100%;
-    background: transparent;
-    font-family: Josefin Sans;
-    font-size: 16px;
-    line-height: 1.2;
-    border: none;
-    outline: none;
-    height: 46px;
-    padding: 0 20px 0 23px; 
+  ion-input {
+    border: 5px !important;
   }
-
+  
+  .text-input-ios, .text-input-md {
+      border-radius: 5px;
+      border: 1px solid #efefef;
+  }
+  
+  .text-input {
+      margin: 0;
+      width: calc(100% - 8px);
+      padding: 13px 8px;
+  }
+  Apprecia
   .container-form-btn {
     display: flex;
     justify-content: center;
@@ -398,4 +399,30 @@
     font-size: 13px;
     box-shadow: inset 1px 1px 55px #000;
 }
+
+.label-float {
+  position: relative;
+  padding-top: 13px;
+  text-align: -webkit-center;
+  input {
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    outline: none;
+    min-width: 250px;
+    padding: 15px 20px;
+    font-size: 16px;
+    transition: all 0.1s linear;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    -webkit-appearance: none;
+    &:focus {
+      border: 2px solid #3951b2;
+    }
+    &::placeholder {
+      color: transparent;
+    }
+  }
+}
+
 

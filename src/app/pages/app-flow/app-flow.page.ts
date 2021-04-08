@@ -42,6 +42,7 @@ export class AppFlowPage implements OnInit {
   showData = false;
   mySubscription: any;
   infoExist: boolean ;
+  imagePath: String = "https://daary-immo.com/storage/property";
   // loading: HTMLIonLoadingElement;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
@@ -51,6 +52,9 @@ export class AppFlowPage implements OnInit {
   bathroom: boolean = true;
   area: boolean = true;
   douches: boolean = true;
+  slidesOptions = {
+    slidesPerView: 2.3
+}
 
   constructor(
     private menuCtrl: MenuController,
@@ -66,6 +70,7 @@ export class AppFlowPage implements OnInit {
   ngOnInit() {
     this.networkService.initializeNetworkEvents();
   }
+  
   // ionViewWillEnter() {
     
   // }

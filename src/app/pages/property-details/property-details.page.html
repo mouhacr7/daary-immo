@@ -21,7 +21,7 @@
                 </ion-slide>
               </ion-slides>
             </ion-card >
-            <span *ngIf="property.gallery.length == 0">
+        <span *ngIf="property.gallery.length == 0">
           <img class="img-prop" src="assets/images/default_property.jpg" alt="ion">
         </span>
         <div>
@@ -139,32 +139,53 @@
             <h5 class="country">{{property?.user.email}}</h5>
             <h6 class="ranking">{{property?.user.phone_number}}</h6>
           </div>
-          <ion-col size="12">
-            <div class="wrap-input">
-              <input class="input" type="text" [(ngModel)]="name" placeholder="Nom">
-            </div>
-            <div class="wrap-input">
-              <input class="input" type="number" [(ngModel)]="phone" placeholder="Numéro">
-            </div>
-            <div class="wrap-input">
-              <input class="input" type="email" [(ngModel)]="email" placeholder="Email">
-            </div>
-            <div class="wrap-input">
-              <textarea class="input" type="text" cols="30" rows="10" [(ngModel)]="my_message"
-                placeholder="Message"></textarea>
-            </div>
-    
+         <ion-col size="12">
+          <form [formGroup]="ionicForm" (ngSubmit)="sendMessage(ionicForm.value)" novalidate>
+
+            <ion-list>
+              <ion-item lines="full">
+                <ion-label position="floating" color="success">Nom</ion-label>
+                <ion-input formControlName="name" type="text"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
+                Nom est requis.
+              </span>
+              <ion-item lines="full">
+                <ion-label position="floating" color="success">Téléphone</ion-label>
+                <ion-input formControlName="phone" type="number" pattern="\d*"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.minlength">
+                Le Numéro doit comporter au minimum 8 caractéres.
+              </span>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.required">
+                Numéro est requis.
+              </span>
+              <ion-item lines="full">
+                <ion-label position="floating" color="success">Email</ion-label>
+                <ion-input formControlName="email" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item lines="none" style="padding-bottom: 21px;">
+                <ion-label class="google-label" position="floating"style="
+                --color: #009688;
+                padding-left: 12px;
+                padding-top: 6px;
+            ">Message</ion-label>
+                <textarea formControlName="my_message" class="google-input" cols="33" rows="5" ></textarea>
+              </ion-item>
+
+            </ion-list>
             <div class="container-form-btn">
               <ion-row>
                 <ion-col size="6">
-    
-                  <ion-button class="btn-search" color="success" expand="block" (click)="sendMessage()">
+
+                  <ion-button class="btn-search" color="success" expand="block" type="submit" [disabled]="!ionicForm.valid">
                     <ion-icon slot="start" name="mail"></ion-icon>
                     Envoyer
                   </ion-button>
                 </ion-col>
                 <ion-col size="6">
-    
+
                   <ion-button class="btn-search" color="success" expand="block" fill="outline" (click)="callAgent()">
                     <ion-icon slot="start" name="call"></ion-icon>
                     Appeler
@@ -172,7 +193,8 @@
                 </ion-col>
               </ion-row>
             </div>
-          </ion-col>
+          </form>
+         </ion-col>
         </div>
         <!-- <ion-card class="custom-font custom-card">
           <ion-row>

@@ -124,7 +124,15 @@ const routes: Routes = [
   {
     path: 'image-modal',
     loadChildren: () => import('./image-modal/image-modal.module').then( m => m.ImageModalPageModule)
+  },  {
+    path: 'tabnav',
+    loadChildren: () => import('./tabnav/tabnav.module').then( m => m.TabnavPageModule)
+  },
+  {
+    path: 'tabnav',
+    loadChildren: () => import('./pages/tabnav/tabnav.module').then( m => m.TabnavPageModule)
   }
+
 
 
 

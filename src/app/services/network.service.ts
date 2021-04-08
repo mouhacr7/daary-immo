@@ -42,9 +42,9 @@ export class NetworkService {
   private async updateNetworkStatus(status: ConnectionStatus) {
     this.status.next(status);
  
-    let connection = status == ConnectionStatus.Offline ? 'Offline' : 'Online';
+    let connection = status == ConnectionStatus.Offline ? 'déconnecté' : 'connecté';
     let toast = this.toastController.create({
-      message: `You are now ${connection}`,
+      message: `Vous êtes '${connection}`,
       duration: 1500,
       position: 'bottom',
       mode: 'ios',

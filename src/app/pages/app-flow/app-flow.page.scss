@@ -1,7 +1,97 @@
+ion-header {
+  ion-toolbar, ion-item {
+    --background: #f1f5f8;
+    background: #f1f5f8;
+    padding: 0 10px;
+  }
+  ion-toolbar {
+    .bordered {
+      --border-radius: 10px;
+      --box-shadow: 5px 5px 10px #d1d1d1, -5px -5px 10px #FFFFFF;
+    }
+  }
+}
+
+ion-content {
+  --background: linear-gradient(90deg, #009688 0%, #009688 35%, #009688 100%);
+  .slides {
+    background: #f1f5f8;
+    padding: 4px 10px 20px 10px;
+    border-radius: 0 0 28px 28px;
+  }
+  ion-card {
+    width: 100%;
+    // box-shadow: none;
+    // border-radius: 14px;
+    // padding: 14px;
+    // background: rgba(255,255,255,.8);
+    .main {
+      width: 60px;
+      height: 60px;
+      border-radius: 50px;
+      background: #FFFFFF;
+      box-shadow:  7px 7px 20px #dbdfe2, 
+             -7px -7px 20px #ffffff;
+            
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      // img {
+      //   width: 30px;
+      // }
+      
+    }
+    .card_title {
+      color: #fff;
+      z-index: 4;
+      margin: 0px;
+      padding: 0px;
+      position: fixed;
+      top: 92px;
+      font-family: unset;
+      padding-left: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .files {
+        // padding-top: 14px;
+        height: -webkit-fill-available;
+        width: -webkit-fill-available
+    }
+  }
+  .container {
+    padding: 6px 20px;
+    color: #FFFFFF;
+    ion-item {
+      --background: rgba(255,255,255,.1);
+      padding: 0;
+      margin: 14px 0;
+      --border-radius: 14px;
+      color: #FFFFFF;
+      font-weight: 600;
+      ion-label {
+        padding: 6px 0;
+        h4 {
+          font-weight: 600;
+          font-size: 16px;
+        }
+        h6 {
+          color: rgba(255,255,255,.66);
+        }
+      }
+    }
+    h2 {
+      padding-bottom: 8px;
+    }
+  }
+
+}
 .custom-font {
   // margin-inline: auto !important;
   font-family: 'San Francisco';
   margin: 5px 0px;
+  border-radius: 0;
 }
 .logo-section{
   display: flex;
@@ -51,30 +141,19 @@
   margin-top: -240px;
   margin-right: 0px;
   float: right;
-  background:  #39d6b6;
+  background:#009688;
   border-radius: 2px;
   font-size: large;
   padding: 13px;
   border-bottom-left-radius: 25px;
 }
-// .box-time {
-//   z-index: 4;
-//   position: relative;
-//   margin-top: -29px;
-//   margin-right: 0px;
-//   float: right;
-//   background: #39d6b6;
-//   border-radius: 10px;
-//   font-size: large;
-//   padding: 1px 40px;
-// }
 
 .box-purpose {
   z-index: 4;
   position: relative;
   margin-top: -36px;
   float: left;
-  background: #39d6b6;
+  background: #009688;
   border-radius: 2px;
   font-size: large;
   padding: 9px;
@@ -83,7 +162,7 @@
 }
 
 .property-price {
-  color:  #39d6b6;
+  color:  #009688;
   letter-spacing: -2px;
   font-weight: bolder;
 }
@@ -104,7 +183,9 @@
   width: -webkit-fill-available;
   object-fit: fill;
   box-shadow: inset 1px 1px 150px #000;
+  
 }
+
 
 .desc-icons {
 
@@ -167,12 +248,12 @@ ion-content {
     padding: 0px 34px;
     min-width: 160px;
     height: 42px;
-    background-color: #39d6b6;
+    background-color: #009688;
     border-radius: 5px;
     font-size: 17px;
     letter-spacing: -1px;
     color: #FFFFFF;
-    /* padding-top: 5px; */
+    border: 2px solid;
     transition: all 0.4s;
     box-shadow: 0 10px 30px 0px rgb(57 71 82 / 50%);
   }
@@ -197,16 +278,68 @@ ion-skeleton-text {
 
 .box-filter {
   z-index: 3;
-    position: relative;
-    margin-top: -281px;
-    margin-right: 0px;
-    width: -webkit-fill-available;
-    height: 282px;
-    border-radius: 5px;
-    float: left;
-    color: #fff;
-    box-sizing: border-box;
-    font-family: monospace;
-    font-size: 13px;
-    box-shadow: inset 0px 44px 63px #00000096;
+  position: relative;
+  margin-top: -241px;
+  margin-right: 0px;
+  width: -webkit-fill-available;
+  height: 240px;
+  border-radius: 5px;
+  float: left;
+  color: #fff;
+  box-sizing: border-box;
+  font-family: monospace;
+  background: linear-gradient(
+360deg
+, transparent, transparent, #000000ad), linear-gradient(
+180deg
+, transparent, transparent, #00000070);
+}
+.box-filter-category {
+  z-index: 3;
+  position: relative;
+  margin-top: -241px;
+  margin-right: 0px;
+  width: -webkit-fill-available;
+  height: 240px;
+  border-radius: 5px;
+  float: left;
+  color: #fff;
+  box-sizing: border-box;
+  font-family: monospace;
+  background:linear-gradient(
+180deg
+, transparent, transparent, #00000070);
+}
+
+.card-category {
+  height: 128px;
+  margin-inline: 6px !important;
+}
+
+page-trips,
+.trips {
+	.card {
+		border-radius: 1rem
+	}
+  .trip {
+    overflow: hidden;
+
+    .background {
+      background-size: 100% auto;
+      background-position: center;
+
+      .background-filter {
+        height: 16rem;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
+
+        .align-bottom {
+          width: 100%;
+
+          h6 {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
 }

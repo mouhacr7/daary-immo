@@ -1,10 +1,11 @@
 .fav-col {
-    padding: 15px;
-    font-size: -webkit-xxx-large;
-    font-weight: bold;
+  font-size: revert;
+  font-weight: bold;
+  text-align: -webkit-center;
 }
 .custom-font {
-    font-family: 'Josefin Sans', sans-serif;
+  font-family: 'San Francisco';
+  margin: 0px 0px;
   }
 .custom-card {
     text-align: -webkit-center;
@@ -87,10 +88,16 @@
       font-size: 16px;
   }
   .img-prop {
+    width: 30vmin;
+    height: 30vmin;
+    box-shadow: inset 0 0 4vmin 3vmin rgba(0, 0, 0, 0.5);
     height: 240px !important;
-    border-bottom-right-radius: 30px !important;
-    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 6px !important;
+    border-bottom-left-radius: 6px;
     width: -webkit-fill-available;
+    object-fit: fill;
+    box-shadow: inset 1px 1px 150px #000;
+    
   }
   .desc-icons {
 
@@ -112,4 +119,41 @@
     display: block;
     height: 100%;
     width: 100%;
-    }  
+    } 
+
+  .box-filter {
+  z-index: 3;
+  position: relative;
+  margin-top: -241px;
+  margin-right: 0px;
+  width: -webkit-fill-available;
+  height: 240px;
+  border-radius: 5px;
+  float: left;
+  color: #fff;
+  box-sizing: border-box;
+  font-family: monospace;
+  background: linear-gradient(
+180deg
+, transparent, transparent, #00000070);
+}
+   
+.price-left {
+  position: relative;
+  top: 88px;
+  font-family: system-ui;
+  font-size: 23px;
+  font-weight: bolder;
+  float: center;
+  text-align: -webkit-center;
+  padding-left: 15px;
+}
+.desc-left {
+  position: relative;     
+  top: 43px;     
+  font-family: system-ui;    
+  font-size: 16px;     /* float: left; */     
+  text-align: -webkit-center;     
+  padding-left: 15px;
+}
+    

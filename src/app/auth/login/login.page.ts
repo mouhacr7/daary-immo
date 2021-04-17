@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MenuController, NavController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,16 +20,39 @@ export class LoginPage implements OnInit {
   agent: string = '2';
   user: string = '3';
   isSubmitted: boolean = false;
+  mySubscription: any;
  
   constructor(
     public formBuilder: FormBuilder,
     private authService: AuthService,
     private navCtrl: NavController,
+    private router: Router,
     private menuController: MenuController,
     private tokenSessionStorageService: TokenSessionStorageService,
     private alertService: AlertService
   ) { 
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
     this.menuController.enable(true);
+    if (this.tokenSessionStorageService.getToken()) {
+      this.isLoggedIn = true;
+      this.role = this.tokenSessionStorageService.getUser().user.role_id;
+      if (this.role.toString() == this.agent) {
+        this.navCtrl.navigateForward('/ag-dashboard');
+        this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
+      } else {
+        this.navCtrl.navigateForward('/usr-dashboard');
+        this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
+      }
+      console.log(this.role.toString());
+    }
   }
   ngOnInit() {
   
@@ -36,18 +60,11 @@ export class LoginPage implements OnInit {
       phone_number: ['', [Validators.required, Validators.pattern('^[0-9]{8}')]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    if (this.tokenSessionStorageService.getToken()) {
-      this.isLoggedIn = true;
-      this.role = this.tokenSessionStorageService.getUser().user.role_id;
-      if (this.role.toString() == this.agent) {
-        this.navCtrl.navigateRoot('/ag-dashboard');
-        this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
-      } else {
-        this.navCtrl.navigateRoot('/usr-dashboard');
-        this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
-      }
-      console.log(this.role.toString());
-      
+  }
+
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
     }
   }
   // On Register button tap

@@ -1,96 +1,108 @@
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
-
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="custom-font">Résultats recherche</ion-title>
+    <ion-title class="custom-font">Résultats</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
-  <br>
-  <div *ngIf="showData; else skeleton">
-    <ion-grid>
+  <div *ngIf="showData; else skeleton ion-margin-top">
+    <ion-grid class="ion-margin-top" style="padding-left: 0px;padding-right: 0px;">
       <ion-row>
-        <ion-col *ngFor="let prop of propertiesList" size-lg="6" size-md="6" size-sm="6" size="12">
+        <ion-col *ngFor="let prop of propertiesList" size-lg="6" size-md="6" size-sm="6" size="12"
+          style="padding-left: 0px;padding-right: 0px;">
           <ion-card class="custom-font" routerLink="/property-details/{{prop.id}}">
-            <img class="img-prop" src="https://daary-immo.com/storage/property/{{prop.image}}" alt="ion">
-            <ion-grid fixed>
-              <ion-row>
-                <ion-col size="8" class="ion-align-self-start">
-                  <ion-card-title class="property-price">{{prop?.price}} Mru</ion-card-title>
-                </ion-col>
-                <ion-col size="4" class="ion-align-self-start">
-                  <ion-badge color="danger" class="property-type">A {{prop?.purpose}}</ion-badge>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+            <span *ngIf="prop?.image != null">
+              <img class="img-prop background border-bottom"
+                src="https://daary-immo.com/storage/property/{{prop.image || 'assets/images/default_property.jpg'}}"
+                alt="ion">
+            </span>
+            <span *ngIf="prop?.image == null">
+              <img class="img-prop" src="assets/images/default_property.jpg" alt="ion">
+            </span>
+            <!-- <div class="background-filter rlt"> -->
+            <div>
+              <ion-badge class="box-price">{{this.formatNumber(prop?.price)}} MRU</ion-badge>
+            </div>
+            <div>
+              <ion-badge class="box-purpose">A {{prop?.purpose}}</ion-badge>
+            </div>
+            <!-- </div> -->
+            <div class="box-filter">
+
+            </div>
             <ion-card-content>
-              <span class="property-title">{{ prop.title}}</span>
+              <span class="property-title" *ngIf="this.existInfos(prop.title)">{{prop.title}}</span>
+              <div *ngIf="this.existInfos(prop.nearby)">
+                <p class="desc-location" [innerHTML]="prop.nearby"></p>
+              </div>
               <ion-row>
-                <ion-col center text-center class="col-align">
-
+                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(prop.bathroom)">
                   <ion-icon class="desc-icons" name="bed-outline"></ion-icon>
-                  <span class="icon-label ion-align-self-end">{{ prop.bathroom}}ch.</span>
-
+                  <p class="p-desc">Chambre(s)</p>
+                  <span class="icon-label ion-align-self-end">{{ prop.bathroom }}</span>
                 </ion-col>
-                <ion-col center text-center class="col-align">
-
+                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(prop.bedroom)">
                   <ion-icon class="desc-icons" src="assets/icon/door.svg"></ion-icon>
-
-                  <span class="icon-label">{{ prop.bedroom}}p.</span>
+                  <p class="p-desc">piece(s)</p>
+                  <span class="icon-label">{{ prop.bedroom }}</span>
                 </ion-col>
-                <ion-col center text-center class="col-align">
-
+                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(prop.area)">
                   <ion-icon class="desc-icons" src="assets/icon/area.svg"></ion-icon>
+                  <p class="p-desc">Surface</p>
                   <span class="icon-label">{{ prop.area}}</span>
-
+                </ion-col>
+                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(prop.douche)">
+                  <ion-icon class="desc-icons" src="assets/icon/toilet.svg"></ion-icon>
+                  <p class="p-desc">Douche(s)</p>
+                  <span class="icon-label">{{prop?.douche}}</span>
                 </ion-col>
               </ion-row>
-              <br>
-              <p class="desc-location">{{ prop.nearby}}</p>
+
             </ion-card-content>
           </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
-  <ion-card *ngIf="propertiesList.length == 0">
-    <img src="assets/images/oops.png" alt="File not found">
-  </ion-card>
   <ng-template #skeleton>
-    <div *ngFor="let item of [1, 2, 3, 4, 5]">
-      <ion-card class="custom-font">
-        <ion-grid fixed>
-          <ion-skeleton-text animated
-            style="line-height: 13px; width: 100%; height: 200px;--background-rgb: 230,40,50;--border-radius: 20px;">
-          </ion-skeleton-text>
-          <ion-row>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
-          </ion-row>
-        </ion-grid>
-        <ion-card-content>
-          <ion-row>
-            <ion-col center text-center class="col-align">
-              <ion-skeleton-text animated style="width: 75%;
-            height: 40px;"></ion-skeleton-text>
-            </ion-col>
-            <ion-col center text-center class="col-align">
-              <ion-skeleton-text animated style="width: 75%;
-            height: 40px;"></ion-skeleton-text>
-            </ion-col>
-            <ion-col center text-center class="col-align">
-              <ion-skeleton-text animated style="width: 75%;
-            height: 40px;"></ion-skeleton-text>
-            </ion-col>
-          </ion-row>
-          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
-        </ion-card-content>
-      </ion-card>
-    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let item of [1, 2, 3, 4, 5, 6]" size-lg="6" size-md="6" size-sm="6" size="12">
+          <div>
+            <ion-card class="custom-font">
+              <ion-grid fixed>
+                <ion-skeleton-text animated
+                  style="line-height: 13px; width: 100%; height: 200px;--background-rgb: 230,40,50;--border-radius: 20px;">
+                </ion-skeleton-text>
+                <ion-row>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                </ion-row>
+              </ion-grid>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ng-template>
 </ion-content>

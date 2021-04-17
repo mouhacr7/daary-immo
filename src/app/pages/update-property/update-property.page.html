@@ -56,27 +56,26 @@
           <ion-item>
             <ion-input autocorrect="on" autofocus="on" [(ngModel)]="property.description" clearInput="true" clearOnEdit="true"
               inputmode="text" placeholder="Description..." required="true"></ion-input>
-            <ion-icon name="location" fill="outline" color="success" slot="end"></ion-icon>
+              
+            <ion-icon name="document-text-outline" fill="outline" color="success" slot="end"></ion-icon>
           </ion-item>
         </ion-col>
         <ion-item-divider>
         </ion-item-divider>
         <ion-col size="4">
-          <ion-button class="btn-type" color="tertiary" expand="block" disabled>Precedent</ion-button>
+          <ion-button class="btn-type" color="success" expand="block" disabled>Precedent</ion-button>
         </ion-col>
         <ion-col size="4">
 
         </ion-col>
         <ion-col size="4">
-          <ion-button class="btn-type" color="tertiary" expand="block" (click)="onStep1()">Suivant</ion-button>
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStep1()">Suivant</ion-button>
         </ion-col>
         <ion-item-divider>
         </ion-item-divider>
       </ion-row>
     </div>
     <div *ngIf="this.step2" >
-      <ion-item-divider>
-      </ion-item-divider>
       <h5 >Type de bien</h5>
       <ion-row class="type-row">
         <ion-col size="4" class="property-col" (click)="onClickApp()">
@@ -131,36 +130,34 @@
         <ion-item-divider>
         </ion-item-divider>
         <ion-col size="4">
-          <ion-button class="btn-type" color="tertiary" expand="block" (click)="onStepBack1()">Precedent</ion-button>
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStepBack1()">Precedent</ion-button>
         </ion-col>
         <ion-col size="4">
       
         </ion-col>
         <ion-col size="4">
-          <ion-button class="btn-type" color="tertiary" expand="block" (click)="onStep2()">Suivant</ion-button>
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStep2()">Suivant</ion-button>
         </ion-col>
         <ion-item-divider>
         </ion-item-divider>
       </ion-row>
     </div>
     <div *ngIf="this.step3" >
-      <ion-item-divider>
-      </ion-item-divider>
-        <ion-col size="12" class="property-col">
+        <ion-col size="12" >
           <h5 >Image en avant</h5>
           <input class="form-control" name="foto" type="file" (change)="uploadImage($event)">
           <div class="image-preview mb-3" *ngIf="img_preview && img_preview !== null">
             <img [src]="img_preview" height="100px" />
           </div>
         </ion-col>
-        <ion-col size="12" class="property-col" *ngIf="!this.onTerrain">
+        <ion-col size="12" *ngIf="!this.onTerrain">
           <h5 >Plan du terrain</h5>
           <input class="form-control" name="plan" type="file" (change)="uploadFloor($event)">
           <div class="image-preview mb-3" *ngIf="floor_preview && floor_preview !== null">
             <img [src]="floor_preview" height="100px" />
           </div>
         </ion-col>
-        <ion-col size="12" class="property-col">
+        <ion-col size="12" >
           <h5 >Gallerie photos des propriétés</h5>
           <input class="form-control" name="gallaryimage[]" type="file" accept="image/*" multiple
           (change)="uploadGallery($event)">
@@ -199,24 +196,23 @@
         <ion-item-divider>
         </ion-item-divider>
         <ion-col size="4">
-          <ion-button class="btn-type" color="tertiary" expand="block" (click)="onStepBack2()">Precedent</ion-button>
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStepBack2()">Precedent</ion-button>
         </ion-col>
         <ion-col size="4">
       
         </ion-col>
         <ion-col size="4">
-          <ion-button class="btn-type" color="tertiary" expand="block" (click)="onStep3()">Suivant</ion-button>
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStep3()">Suivant</ion-button>
         </ion-col>
       </ion-row>
       <ion-item-divider>
       </ion-item-divider>
     </div>
     <div *ngIf="this.step4" >
-      <h5 >Surface</h5>
       <ion-row>
         <ion-col size="12">
+          <h5 >Surface</h5>
           <ion-item>
-            <ion-label class="label-price" position="floating">Surface de la propriété</ion-label>
             <ion-input [(ngModel)]="property.area" type="number"></ion-input>
           </ion-item>
         </ion-col>
@@ -224,23 +220,10 @@
       <ion-item-divider *ngIf="!this.onTerrain">
       </ion-item-divider>
       <ion-row *ngIf="!this.onTerrain">
-        <h5 >Nombre de douches</h5>
         <ion-col size="12">
+          <h5 >Nombre de douches</h5>
           <ion-item>
-            <ion-label class="label-price" position="floating">Nombre de douches</ion-label>
-            <ion-input [(ngModel)]="property.douche" type="number"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-item-divider>
-      </ion-item-divider>
-      <ion-row>
-        <ion-col size="12">
-          <h5 >Situation Geographique</h5>
-          <ion-item>
-            <ion-input autocorrect="on" autofocus="on" [(ngModel)]="property.nearby" clearInput="true" clearOnEdit="true"
-            inputmode="text" placeholder="Prés de..." required="true"></ion-input>
-            <ion-icon name="pin" fill="outline" color="success" slot="end"></ion-icon>
+            <ion-input [(ngModel)]="property.douche" type="number"  (ionInput)="inputClear($event)"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -306,7 +289,7 @@
         <ion-item-divider>
         </ion-item-divider>
         <ion-col size="12">
-          <ion-button class="btn-type" color="tertiary" fill='outline' expand="block"  (click)="onStepBack3()">Precedent</ion-button>
+          <ion-button class="btn-type" color="success" fill='outline' expand="block"  (click)="onStepBack3()">Precedent</ion-button>
         </ion-col>
         <ion-col size="12">
           <ion-button class="btn-search" (click)="sendUpload()" color="success" expand="block">Modifier la propriété

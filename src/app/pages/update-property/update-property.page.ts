@@ -60,7 +60,7 @@ price  : string = '';
 purpose = new BehaviorSubject('');
 type = new BehaviorSubject('');
 cuisine = new BehaviorSubject('');
-douche : string ='';
+douche = new BehaviorSubject('');
 image : string ='';
 bedroom = new BehaviorSubject('');
 bathroom = new BehaviorSubject('');
@@ -69,13 +69,13 @@ address : string = '';
 area : string = '';
 floor_plan = '';
 description: string = '';
-nearby: string = '';
+// nearby: string = '';
 gallaryimage = '';
 floor_preview: string;
 img_preview: string;
 gallery_preview: string;
-number_bath: number;
-number_bed: number;
+number_bath: any;
+number_bed: any;
 // featured = new BehaviorSubject('');
 
 // Multiple images upload
@@ -84,21 +84,21 @@ progressInfos = [];
 message = '';
 fileInfos: Observable<any>;
 property: Properties;
-  showData: boolean;
-  successColor: string;
-  outlineColor: string;
-  bedroom_number: any;
-  bathroom_number: any;
+showData: boolean;
+successColor: string;
+outlineColor: string;
+bedroom_number: any;
+bathroom_number: any;
 
-  // process of inserting by steps
-  step1: boolean = true;
-  step2: boolean = false;
-  step3: boolean = false;
-  step4: boolean = false;
+// process of inserting by steps
+step1: boolean = true;
+step2: boolean = false;
+step3: boolean = false;
+step4: boolean = false;
 
-  // Step behavior
-  onPrev: boolean = false;
-  onNext: boolean = true;
+// Step behavior
+onPrev: boolean = false;
+onNext: boolean = true;
 
  constructor(
    private route: ActivatedRoute, 
@@ -333,7 +333,7 @@ uploadGallery(event) {
     type: this.type.getValue(),
     price: this.property.price,
     cuisine: this.cuisine.getValue(),
-    douche: this.property.douche,
+    douche: this.douche.getValue(),
     image: this.image,
     bedroom: this.bedroom_number,
     bathroom: this.bathroom_number,
@@ -342,25 +342,58 @@ uploadGallery(event) {
     area: this.property.area,
     floor_plan: this.floor_plan,
     description: this.property.description,
-    nearby: this.property.nearby,
     gallaryimage: this.selectedFiles
   };
   console.log(this.data);
   
 //  call service/api to post message
- this.alertService.presentLoading();
-    this.propertyService.updatePropertyData(this.property.id, this.data).subscribe(
-      data => {      
-        this.alertService.dismissLoading();
-        this.alertService.presentToast('Popriété modifiée avec succés :) ', 'success');
-        this.router.navigateByUrl('/ag-dashboard');
-        console.log('Property succesfully updated', data);
-      },
-      error => {
-        this.alertService.dismissLoading();
-        this.alertService.presentToast('Vous avez oubliez certains champs :( !! vérifier à nouveau les données entrées :) ', 'danger');
-        console.log('Something went wrong!', error);
-    })
+//  this.alertService.presentLoading();
+//     this.propertyService.updatePropertyData(this.property.id, this.data).subscribe(
+//       data => {      
+//         this.alertService.dismissLoading();
+//         this.alertService.presentToast('Popriété modifiée avec succés :) ', 'success');
+//         this.router.navigateByUrl('/ag-dashboard');
+//         console.log('Property succesfully updated', data);
+//       },
+//       error => {
+//         this.alertService.dismissLoading();
+//         this.alertService.presentToast('Vous avez oubliez certains champs :( !! vérifier à nouveau les données entrées :) ', 'danger');
+//         console.log('Something went wrong!', error);
+//     })
+}
+
+onTerrainClicked() {
+ // Number of rooms
+ this.isRoom1 = false;
+ this.isRoom2 = false;
+ this.isRoom3 = false;
+ this.isRoom4 = false;
+ this.isRoom5 = false;
+ this.isRoomPlus = false;
+ this.bedroom.next('');
+ // Number of rooms
+ this.isPiece1 = false;
+ this.isPiece2 = false;
+ this.isPiece3 = false;
+ this.isPiece4 = false;
+ this.isPiece5 = false;
+ this.isPiecePlus = false;
+ this.bathroom.next('');
+
+ this.bedroom_number = '';
+ this.bathroom_number = '';
+ this.number_bath = '';
+ this.number_bed = '';
+ this.douche.next('');
+ 
+ // Type of cuisine
+ this.isIntClicked = false;
+ this.isExtClicked = false;
+ this.isIntExtClicked = false
+ this.cuisine.next('');
+
+ 
+
 }
 bedroomChange(e) {
   console.log(e.target.value);
@@ -627,6 +660,8 @@ bedroomChange(e) {
   this.isOfficeClicked = false;
   this.isStudioClicked = false;
   this.onTerrain = true;
+  // reinitialised features 
+  this.onTerrainClicked();
   }
 
   onClickShop() {

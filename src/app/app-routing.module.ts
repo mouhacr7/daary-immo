@@ -9,11 +9,15 @@ import { IntroGuard } from './guard/intro.guard';
 
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: 'app-flow',
+  //   pathMatch: 'full',
+  //   canActivate: [IntroGuard]
+  // },
   {
     path: '',
-    redirectTo: 'app-flow',
-    pathMatch: 'full',
-    canActivate: [IntroGuard]
+    loadChildren: () => import('./pages/tabnav/tabnav.module').then(m => m.TabnavPageModule)
   },
   {
     path: 'signup',
@@ -124,17 +128,11 @@ const routes: Routes = [
   {
     path: 'image-modal',
     loadChildren: () => import('./image-modal/image-modal.module').then( m => m.ImageModalPageModule)
-  },  {
-    path: 'tabnav',
-    loadChildren: () => import('./tabnav/tabnav.module').then( m => m.TabnavPageModule)
   },
   {
     path: 'tabnav',
     loadChildren: () => import('./pages/tabnav/tabnav.module').then( m => m.TabnavPageModule)
   }
-
-
-
 
 ];
 

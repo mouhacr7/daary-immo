@@ -47,10 +47,10 @@ ion-content {
       margin: 0px;
       padding: 0px;
       position: fixed;
-      top: 92px;
+      top: 50px;
       font-family: unset;
-      padding-left: 10px;
-      font-size: 18px;
+      padding-left: 8px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 1.2;
     }
@@ -95,17 +95,21 @@ ion-content {
 }
 .logo-section{
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
   .logo-section__wrapper{
     text-align: center;
-    margin-right: 36px;
+    // margin-right: 36px;
       .logo-section__logo{
+          max-width: 78%;
           display: block;
           border-radius: 100%;
           // text-align: ;
       }
   }
+}
+.ellipsis {
+  font-size: xx-large;
 }
 .title-col {
   font-size: -webkit-xxx-large;
@@ -312,7 +316,7 @@ ion-skeleton-text {
 }
 
 .card-category {
-  height: 128px;
+  height: 5rem;
   margin-inline: 6px !important;
 }
 

@@ -210,7 +210,6 @@
   <ion-row>
     <ion-col size="12">
       <ion-item>
-        <ion-label class="label-price" position="floating">Surface de la propriété</ion-label>
         <ion-input [(ngModel)]="area" type="number"></ion-input>
       </ion-item>
     </ion-col>
@@ -223,18 +222,6 @@
       <ion-item>
         <ion-label class="label-price" position="floating">Nombre de douches</ion-label>
         <ion-input [(ngModel)]="douche" type="number"></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-item-divider>
-  </ion-item-divider>
-  <ion-row>
-    <ion-col size="12">
-      <h5 class="custom-font">Situation Geographique</h5>
-      <ion-item>
-        <ion-input autocorrect="on" autofocus="on" [(ngModel)]="nearby" clearInput="true" clearOnEdit="true"
-        inputmode="text" placeholder="Prés de..." required="true"></ion-input>
-        <ion-icon name="pin" fill="outline" color="success" slot="end"></ion-icon>
       </ion-item>
     </ion-col>
   </ion-row>

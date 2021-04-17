@@ -16,9 +16,8 @@ import {
 import {
   PropertiesService
 } from './../../services/properties.service';
-import {
-  Router
-} from '@angular/router';
+import { NavigationExtras, Router  } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import {
   DOCUMENT
 } from '@angular/common';
@@ -53,7 +52,7 @@ export class AppFlowPage implements OnInit {
   area: boolean = true;
   douches: boolean = true;
   slidesOptions = {
-    slidesPerView: 2.3
+    slidesPerView: 3.5
 }
 
   constructor(
@@ -62,6 +61,8 @@ export class AppFlowPage implements OnInit {
     public loadingController: LoadingController,
     public toastController: ToastController,
     private networkService: NetworkService,
+    public navCtrl: NavController,
+    public router: Router,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.menuCtrl.enable(true);
@@ -152,6 +153,24 @@ export class AppFlowPage implements OnInit {
 
     }
 
+  }
+
+  categoryFilter(category: any) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        purpose:"",
+        city:"",
+        type: category,
+        bedroom: "",
+        bathroom:"",
+        minprice:"",
+        maxprice: "",
+        minarea: "",
+        maxarea:"",
+      }
+    };
+    console.log(navigationExtras);
+    this.router.navigate(['/search-result'], navigationExtras);
   }
   //
   formatNumber(number) {

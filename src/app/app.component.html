@@ -2,7 +2,7 @@
 
 <ion-app class="custom-font">
   <ion-split-pane contentId="main-content">
-    <ion-menu class="custom-font" contentId="main-content" type="overlay">
+    <!-- <ion-menu class="custom-font" contentId="main-content" type="overlay">
       <div class="logo-section">
         <div class="logo-section__wrapper">
           <img class="logo-section__logo" src="assets/icon/daary_immo.png" />
@@ -22,7 +22,39 @@
           </ion-item>
         </ion-list>
       </ion-content>
-    </ion-menu>
+    </ion-menu> -->
     <ion-router-outlet class="custom-font" id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button tab="app-flow">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Acceuil</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="favorites">
+      <ion-icon name="heart-outline"></ion-icon>
+      <ion-label>Favoris</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="search-property">
+      <ion-icon name="search-outline"></ion-icon>
+      <ion-label>Explorer</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="login">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label>Profil</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="infos">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <ion-label>Infos</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+</ion-tabs>

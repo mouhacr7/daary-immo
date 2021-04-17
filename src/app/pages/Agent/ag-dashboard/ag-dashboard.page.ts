@@ -107,6 +107,8 @@ export class AgDashboardPage implements OnInit {
     this.menu.enable(true);
     this.collapse_trigger_prop.next('collapse');
     this.collapse_trigger_mess.next('collapse');
+
+    
   }
 
   doRefresh(event: any) {
@@ -181,7 +183,6 @@ export class AgDashboardPage implements OnInit {
     await this.loading.present();
   }
   ngOnInit() {
-
     this.users = this.tokenSession.getUser();
     this.token = this.tokenSession.getUser()['token'];
     console.log(this.token);
@@ -192,7 +193,7 @@ export class AgDashboardPage implements OnInit {
     } else {
       this.role = 'user';
     }
-    console.log(this.currentUser.name)
+    console.log(this.currentUser.id)
 
     this.loadingFunction();
     // Agent properties
@@ -230,7 +231,6 @@ export class AgDashboardPage implements OnInit {
         }
       }]
     });
-
     await alert.present();
   }
   onDelete(id: number) {
@@ -285,9 +285,11 @@ export class AgDashboardPage implements OnInit {
       return;
     } else {
       this.currentPage++;
-      this.propertiesServices.getPostsPaginated(this.currentPage).subscribe(async (data: Properties[]) => {
+      this.propertyService.getAgentProperties(this.currentUser.id,this.currentPage).subscribe(async (data: Properties[]) => {
         this.propertiesList = this.propertiesList.concat(data['properties']['data']);
         this.displayedList = [...this.propertiesList];
+        console.log(this.displayedList);
+        
 
         if (event !== null) {
           event.target.complete();

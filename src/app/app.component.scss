@@ -1,4 +1,11 @@
 /* menu styling */
+
+ion-tab-bar{
+  --color-selected: #009688 !important;
+  height: 60px !important;
+  border: 1px solid;
+  border-color: darkgray;
+}
 ion-menu{
   ion-item,
   ion-list, .list-md,

@@ -37,20 +37,20 @@ export class SignupPage {
     private menuCtrl: MenuController,
     private tokenSessionStorageService: TokenSessionStorageService) {
     
+      this.ionicForm = formBuilder.group({
+        name: ['', Validators.compose([Validators.required, Validators.minLength(6)])] ,
+        // username: ['', [Validators.required, Validators.minLength(6)]],
+        // email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+        phone_number: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]$'), Validators.minLength(8)])],
+        password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+        password_confirmation: [''],
+        agent: [true]
+      }, { validator: ValidatorService('password', 'password_confirmation')});
       this.menuCtrl.enable(true);
   }
 
   ngOnInit() {
-    this.ionicForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(2)]] ,
-      // username: ['', [Validators.required, Validators.minLength(6)]],
-      // email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      phone_number: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      password_confirmation: [''],
-      agent: [true]
-    }, { validator: ValidatorService('password', 'password_confirmation')});
-
+      
     if (this.tokenSessionStorageService.getToken()) {
       this.isLoggedIn = true;
       this.role = this.tokenSessionStorageService.getUser().user.role_id;

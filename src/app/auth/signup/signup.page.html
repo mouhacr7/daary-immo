@@ -17,7 +17,7 @@
 <ion-grid fixed class="ion-padding">
   <ion-row>
     <ion-col size="12"> 
-      <p style="color: black;">
+      <p>
         Créer un compte pour synchroniser vos recherches 
         et vos favoris entre vos différents appareils.
       </p>
@@ -45,7 +45,7 @@
                   <ion-input formControlName="phone_number" type="number" pattern="\d*"></ion-input>
                 </ion-item>
                 <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.minlength">
-                  Le mot de passe doit comporter au minimum 8 caractéres. 
+                  Téléphone doit comporter au minimum 8 caractéres. 
                 </span>
                 <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.required">
                   Numéro est requis.
@@ -60,10 +60,10 @@
                   <ion-input formControlName="password_confirmation" type="password"></ion-input>
                 </ion-item>
                 
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+                  Mot de passe est requis.
+                </span>
                 <div class="error ion-padding"  *ngIf="errorControl.password_confirmation && errorControl.password_confirmation.invalid" >
-                  <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
-                    Mot de passe est requis.
-                  </span>
                   <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
                     Le mot de passe doit comporter au minimum 6 caractéres. 
                   </span>
@@ -73,9 +73,9 @@
               </div>
 
               </ion-list>
-                <ion-button class="custom-font" color="success" type="submit" [disabled]="!ionicForm.valid" expand="block">M'inscrire</ion-button>
+                <ion-button class="custom-font" color="success" type="submit"  expand="block">M'inscrire</ion-button>
                 <p style="text-align: -webkit-center;
-                font-size: inherit;"> j'ai déjà un compte! <br> <span style="color: forestgreen; font-weight: bolder;" (click)="loginLoad()">me connecter</span> </p>
+                font-size: inherit;"> j'ai déjà un compte! <br> <span style="color: forestgreen; font-weight: bolder;" (click)="loginLoad()">Me connecter</span> </p>
             </form>
             <br>
           </ion-card-content>

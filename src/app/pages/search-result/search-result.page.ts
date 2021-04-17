@@ -70,6 +70,38 @@ export class SearchResultPage implements OnInit {
   ngOnInit() {
     this.like = false;
   }
+    //
+    formatNumber(number) {
+      number = number.toFixed(2) + '';
+      let x = number.split('.');
+      let x1 = x[0];
+      let x2 = x.length > 1 ? '.' + x[1] : '';
+      var rgx = /(\d+)(\d{3})/;
+      while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+      }
+      return x1;
+    }
+    existInfos(variables: any) {
+      switch (variables) {
+        case "0":
+        return;
+          break;
+        case null:
+         return;
+          break;
+        case undefined:
+           return;
+          break;
+        case -1:
+           return;
+          break;
+      
+        default:
+           return variables;
+          break;
+      }
+    } 
   onFav() {
     this.like = !this.like;
     if (!this.like) {

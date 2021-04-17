@@ -192,13 +192,13 @@ fileInfos: Observable<any>;
     this.bathroom_number = this.bathroom.getValue()
     }
     if (typeof this.bedroom_number === 'undefined') {
-      this.bedroom_number = 'neant';
+      this.bedroom_number = '';
     } 
     if (typeof this.bathroom_number === 'undefined'){
-      this.bathroom_number = 'neant';
+      this.bathroom_number = '';
     }
     if (this.cuisine.getValue() === '') {
-      this.cuisine.next('neant');
+      this.cuisine.next('');
     }
 
     this.data = {
@@ -216,7 +216,6 @@ fileInfos: Observable<any>;
     area: this.area,
     floor_plan: this.floor_plan,
     description: this.description,
-    nearby: this.nearby,
     gallaryimage: this.selectedFiles
     };
     this.locationEvent.emit(this.data);

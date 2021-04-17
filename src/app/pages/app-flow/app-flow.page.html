@@ -1,15 +1,20 @@
 <!-- <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet"> -->
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <!-- <ion-title class="custom-font"> -->
     <div class="logo-section">
       <div class="logo-section__wrapper">
-        <img class="logo-section__logo" style="max-width: 76% !important;" src="assets/icons/icon-72x72.png" />
+        <img class="logo-section__logo" src="assets/icons/icon-72x72.png" />
       </div>
     </div>
+    <ion-buttons slot="end">
+      <ion-button color="success">
+        <ion-icon class="ellipsis" name="options-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <!-- </ion-title> -->
   </ion-toolbar>
 </ion-header>
@@ -20,51 +25,54 @@
     </ion-refresher-content>
   </ion-refresher>
   <div class="slides ion-margin-bottom">
+    <ion-card-header>
+     <ion-card-title>Où voudriez-vous habiter?</ion-card-title>
+    </ion-card-header>
     <ion-slides [options]="slidesOptions">
       <ion-slide>
-        <ion-card class="card-category">
+        <ion-card class="card-category" (click)="categoryFilter('Maison')">
           <img class="files" src="assets/images/categories/house.jpeg">
           <p class="card_title">Maison</p>
           <div class="box-filter-category"></div>
         </ion-card>
       </ion-slide>
       <ion-slide>
-        <ion-card class="card-category">
+        <ion-card class="card-category" (click)="categoryFilter('Appartement')">
           <img class="files" src="assets/images/categories/appartment.jpg">
           <p class="card_title">Appartement</p>
           <div class="box-filter-category"></div>
         </ion-card>
       </ion-slide>
       <ion-slide>
-        <ion-card class="card-category">
+        <ion-card class="card-category" (click)="categoryFilter('Terrain')">
           <img class="files" src="assets/images/categories/land.jpg">
           <p class="card_title">Terrain</p>
           <div class="box-filter-category"></div>
         </ion-card>
       </ion-slide>
       <ion-slide>
-        <ion-card class="card-category">
+        <ion-card class="card-category" (click)="categoryFilter('Boutique')">
           <img class="files" src="assets/images/categories/store.jpeg">
           <p class="card_title">Boutique</p>
           <div class="box-filter-category"></div>
         </ion-card>
       </ion-slide>
       <ion-slide>
-        <ion-card class="card-category">
+        <ion-card class="card-category" (click)="categoryFilter('Immeuble')">
           <img class="files" src="assets/images/categories/building.jpg">
           <p class="card_title">Immeuble</p>
           <div class="box-filter-category"></div>
         </ion-card>
       </ion-slide>
       <ion-slide>
-        <ion-card class="card-category">
+        <ion-card class="card-category" (click)="categoryFilter('Bureau')">
           <img class="files" src="assets/images/categories/office.jpg">
           <p class="card_title">Bureau</p>
           <div class="box-filter-category"></div>
         </ion-card>
       </ion-slide>
       <ion-slide>
-        <ion-card class="card-category">
+        <ion-card class="card-category" (click)="categoryFilter('Studio')">
           <img class="files" src="assets/images/categories/studio.jpg">
           <p class="card_title">Studio</p>
           <div class="box-filter-category"></div>

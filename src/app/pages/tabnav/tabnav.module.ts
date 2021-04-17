@@ -8,6 +8,7 @@ import { TabnavPageRoutingModule } from './tabnav-routing.module';
 
 import { TabnavPage } from './tabnav.page';
 
+
 @NgModule({
   imports: [
     CommonModule,

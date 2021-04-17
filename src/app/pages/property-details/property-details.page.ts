@@ -193,15 +193,15 @@ export class PropertyDetailsPage implements OnInit {
     }).then(modal => modal.present());
   }
   sendMessage(form: NgForm) {
-    // this.data = {
-    //   agent_id: this.property.agent_id,
-    //   property_id: this.property.id,
-    //   name: this.name,
-    //   email: this.email,
-    //   phone: this.phone,
-    //   message: this.my_message,
-    // }
-    console.log(form);
+    this.data = {
+      agent_id: this.property.agent_id,
+      property_id: this.property.id,
+      name: this.ionicForm.value.name,
+      email: this.ionicForm.value.email,
+      phone: this.ionicForm.value.phone,
+      message: this.ionicForm.value.my_message,
+    }
+    console.log(this.data);
 
     // this.alertService.presentLoading();
     // this.messageService.SendMessage(this.data).subscribe(

@@ -84,7 +84,6 @@ export class PropertiesService {
     input.append('area',data.area)
     input.append('floor_plan',data.floor_plan)
     input.append('description',data.description)
-    input.append('nearby',data.nearby)
     if (data.image === '') {
       // input.append('image','')
     } else {
@@ -143,7 +142,6 @@ export class PropertiesService {
     input.append('address',data.address)
     input.append('area',data.area)
     input.append('description',data.description)
-    input.append('nearby',data.nearby)
     
     if (data.image === '') {
       // input.append('image','')

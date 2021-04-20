@@ -1,3 +1,4 @@
+import { ThemeSwitcherService } from './services/theme-switcher.service';
 import {
   Component
 } from '@angular/core';
@@ -71,8 +72,10 @@ export class AppComponent {
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private tokenSession: TokenSessionStorageService,
+    private themeSwitch: ThemeSwitcherService
   ) {
     this.initializeApp();
+    this.themeSwitch.getThemeSwitch();
   }
   logout() {
     this.tokenSession.signOut();
@@ -80,8 +83,8 @@ export class AppComponent {
     this.navCtrl.navigateRoot('app-flow')
     this.menuCtrl.close();
   }
-
-
+  
+  
   componentDidMount() {
     this.platform.ready().then(() => {
       SplashScreen.hide();

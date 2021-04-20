@@ -22,6 +22,7 @@ import {
   DOCUMENT
 } from '@angular/common';
 import { NetworkService } from 'src/app/services/network.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-app-flow',
@@ -61,6 +62,7 @@ export class AppFlowPage implements OnInit {
     public loadingController: LoadingController,
     public toastController: ToastController,
     private networkService: NetworkService,
+    private alertService: AlertService,
     public navCtrl: NavController,
     public router: Router,
     @Inject(DOCUMENT) private document: Document
@@ -80,6 +82,10 @@ export class AppFlowPage implements OnInit {
       this.document.location.reload();
       event.target.complete(); // This is a must for us to perform the method
     }, 1000); // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
+  }
+
+  onClickAlert() {
+    this.alertService.presentToast('test','success')
   }
 
   existInfos(variables: any) {

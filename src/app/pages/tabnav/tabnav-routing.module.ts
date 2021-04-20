@@ -3,7 +3,7 @@ import { TabnavPage } from './tabnav.page';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [{
-    path: 'tabnav',
+    path: '',
     component: TabnavPage,
     children: [
       {
@@ -26,11 +26,11 @@ const routes: Routes = [{
         path: 'infos',
         loadChildren: () => import('../../pages/infos/infos.module').then( m => m.InfosPageModule)
       },
-      // {
-      //   path: '',
-      //   redirectTo: '/app-flow',
-      //   pathMatch: 'full'
-      // }
+      {
+        path: '',
+        redirectTo: '/app-flow',
+        pathMatch: 'full'
+      }
     ]
   },
   {

@@ -18,6 +18,7 @@ export class FavoritesPage implements OnInit {
   like: boolean = false;
   count: number;
   propertiesList: Properties[] = [];
+  displayedList: Properties[];
   favList: Properties[] = [];
   favIdList: any;
   favId: any;
@@ -32,15 +33,14 @@ export class FavoritesPage implements OnInit {
     private loadingController: LoadingController,
     @Inject(DOCUMENT) private document: Document
   ) { 
-   
-  }
+    this.displayedList = [...this.propertiesList];
+    }
   
   ngOnInit() {
-      
-  }
-  ionViewWillEnter(){
     this.propertyService.getPosts().subscribe((properties:  Properties[] ) => {
-      this.propertiesList = properties['properties']['data'];
+      this.propertiesList = this.propertiesList.concat(properties['properties']['data']);
+      this.displayedList = [...this.propertiesList];
+      console.log(this.displayedList);
     })
     this.favService.getAllFavoriteProperties().then(resultats => {
       this.favIdList = resultats;
@@ -49,6 +49,10 @@ export class FavoritesPage implements OnInit {
       this.onFav();
     }, 5000);  
   }
+  IonViewWillEnter() {
+    this.displayedList = [...this.propertiesList];
+  }
+ 
   doRefresh(event: any) { 
     setTimeout(() => {
       this.document.location.reload();

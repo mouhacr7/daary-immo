@@ -12,6 +12,15 @@ ion-header {
   }
 }
 
+.title-top {
+  font-size: 42px;
+  font-weight: bold;
+  color: #000;
+}
+.subtitle-top {
+  font-size: 24px;  
+  color: #000;
+}
 ion-content {
   --background: linear-gradient(90deg, #009688 0%, #009688 35%, #009688 100%);
   .slides {

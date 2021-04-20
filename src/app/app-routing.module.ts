@@ -132,7 +132,11 @@ const routes: Routes = [
   {
     path: 'tabnav',
     loadChildren: () => import('./pages/tabnav/tabnav.module').then( m => m.TabnavPageModule)
+  },  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   }
+
 
 ];
 

@@ -100,6 +100,7 @@ export class AgDashboardPage implements OnInit {
     private callNumber: CallNumber,
     private tokenSession: TokenSessionStorageService,
     private alertService: AlertService,
+    private authService: AuthService,
     private propertyService: PropertiesService,
     private messageService: MessagesService,
     @Inject(DOCUMENT) private document: Document
@@ -261,8 +262,17 @@ export class AgDashboardPage implements OnInit {
   }
 
   logout() {
-    this.tokenSession.signOut();
-    window.location.reload();
+    this.authService.logout().subscribe(
+      data => {
+        this.alertService.presentToast('Vous étes déconnecté :)', 'danger');        
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        this.navCtrl.navigateRoot('/login');
+      }
+    );
   }
   onCallCustomer(phone: any) {
     return this.callNumber.callNumber(phone.toString(), true)

@@ -9,12 +9,13 @@ import { TokenSessionStorageService } from '../services/token-session-storage.se
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
+    private authService: AuthService,
     private tokenSessionStorageService: TokenSessionStorageService,
   ) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      const currentUser = this.tokenSessionStorageService.getToken();
+      const currentUser = this.authService.isLoggedIn;
       if (currentUser) {
           // authorised so return true
           return true;

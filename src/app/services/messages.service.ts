@@ -46,7 +46,7 @@ export class MessagesService {
   SendMessage(data): Observable<any> {
     return this.http.post<Message>('/mobile/property/message', data)
     .pipe(
-      tap(_ => console.log('response received')),
+      tap( (response) => console.log('response received', response)),
       catchError(this.handleError('properties', []))
     );
   }

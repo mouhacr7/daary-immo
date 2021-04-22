@@ -31,34 +31,35 @@ export class LoginPage implements OnInit {
     private tokenSessionStorageService: TokenSessionStorageService,
     private alertService: AlertService
   ) { 
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
-    this.mySubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Trick the Router into believing it's last link wasn't previously loaded
-        this.router.navigated = false;
-      }
-    });
+    
     this.menuController.enable(true);
-    if (this.tokenSessionStorageService.getToken()) {
-      this.isLoggedIn = true;
-      this.role = this.tokenSessionStorageService.getUser().user.role_id;
-      if (this.role.toString() == this.agent) {
-        this.navCtrl.navigateForward('/ag-dashboard');
-        this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
-      } else {
-        this.navCtrl.navigateForward('/usr-dashboard');
-        this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
-      }
-      console.log(this.role.toString());
-    }
+    // if (this.tokenSessionStorageService.getToken()) {
+    //   this.isLoggedIn = true;
+    //   this.role = this.tokenSessionStorageService.getUser().user.role_id;
+    //   if (this.role.toString() == this.agent) {
+    //     this.navCtrl.navigateForward('/ag-dashboard');
+    //     this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
+    //   } else {
+    //     this.navCtrl.navigateForward('/usr-dashboard');
+    //     this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
+    //   }
+    //   console.log(this.role.toString());
+    // }
   }
   ngOnInit() {
   
     this.ionicForm = this.formBuilder.group({
       phone_number: ['', [Validators.required, Validators.pattern('^[0-9]{8}')]],
       password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+  ionViewWillEnter() {
+    this.authService.getToken().then(() => {
+      console.log(this.authService.isLoggedIn);
+      if(this.authService.isLoggedIn) {
+        this.navCtrl.navigateRoot('/ag-dashboard');
+        this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
+      }
     });
   }
 

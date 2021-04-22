@@ -10,15 +10,54 @@
 .avatar-edit {
   max-width: 43%;
 }
-.label-padd {
-  margin-top: 16px;
-  margin-bottom: 21px;
-  padding-right: 21px;
-
-}
 .arrow-down-icon {
   font-size: x-large;
   color: whit;
+}
+.personal-agent {
+  font-size: large;
+}
+.icon-personal {
+  font-size: xx-large;
+}
+.btn-type {
+  font-size: large;
+}
+// .sc-ion-input-ios-h {
+// 	--placeholder-color: initial;
+// 	--placeholder-font-style: initial;
+// 	--placeholder-font-weight: initial;
+// 	--placeholder-opacity: .5;
+// 	padding-left: 8px;
+// }
+  .submit-btn {
+    margin: 48px 12px 12px;
+}
+.property-icon {
+ 
+  z-index: 4;
+text-align: center;
+  font-size: xxx-large;
+  border: solid;
+  border-width: 1px;
+  border-color: currentColor;
+  padding: 12px;
+border-radius: 34%;
+// background: #228b2259;
+}
+.property-item {
+display: inline-grid !important;
+}
+.property-col {
+text-align: center !important;
+}
+.row-prop {
+  border-bottom: inset;
+}
+
+.prop-button {
+  width: -webkit-fill-available !important;
+  font-size: x-small
 }
 .personal-agent {
   font-size: large;

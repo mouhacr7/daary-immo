@@ -2,6 +2,11 @@
   font-family: 'San Francisco';
     margin: 0px;
   }
+  .error {
+    color: red;
+    font-size: smaller;
+    display: table-footer-group;
+  }
   .fav-like {
     
     z-index: 4;

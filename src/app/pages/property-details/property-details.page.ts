@@ -79,6 +79,7 @@ export class PropertyDetailsPage implements OnInit {
   temp_price : any;
   price : any;
   ionicForm: FormGroup;
+  email_value: any;
   
   constructor(private route: ActivatedRoute,
     private menuCtrl: MenuController,
@@ -118,9 +119,9 @@ export class PropertyDetailsPage implements OnInit {
   ngOnInit() {
     this.ionicForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(2)]] ,
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
-      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      my_message :['']
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      email: ['', [ Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      my_message :['', [Validators.required]]
     });
 
     var nf = Intl.NumberFormat();
@@ -192,7 +193,13 @@ export class PropertyDetailsPage implements OnInit {
       }
     }).then(modal => modal.present());
   }
-  sendMessage(form: NgForm) {
+  sendMessage() {
+    this.isSubmitted = true;
+    if (this.ionicForm.value.email === '') {
+      this.email_value = 'anonyme_mail'
+    } else {
+      this.email_value = this.ionicForm.value.email
+    }
     this.data = {
       agent_id: this.property.agent_id,
       property_id: this.property.id,
@@ -201,22 +208,35 @@ export class PropertyDetailsPage implements OnInit {
       phone: this.ionicForm.value.phone,
       message: this.ionicForm.value.my_message,
     }
-    console.log(this.data);
+    if (!this.ionicForm.valid) {
+      console.log('All fields are required.')
+      return false;
+    } else {
+      // console.log(this.ionicForm.value)
+      console.log(this.data);
+      this.alertService.presentLoading();
+      this.messageService.SendMessage(this.data).subscribe(
+        (response) => {
+          if (response) {
+            console.log(response);
+            
+          } else {
+            
+          }
+          this.alertService.presentToast('Message envoyé avec succés :) !!', 'success');
+          this.alertService.dismissLoading()
+          console.log(response);
+        },
+        err => {
+          this.alertService.presentToast('Une erreur s\'est produit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
+          this.alertService.dismissLoading()
+          this.errorMessage = err.length;
+          console.log(this.errorMessage)
+        }
+      );
+    }
 
-    // this.alertService.presentLoading();
-    // this.messageService.SendMessage(this.data).subscribe(
-    //   data => {
-    //     this.alertService.presentToast('Message envoyé avec succés :) !!', 'success');
-    //     this.alertService.dismissLoading()
-    //     console.log(data);
-    //   },
-    //   err => {
-    //     this.alertService.presentToast('Une erreur s\'est produit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
-    //     this.alertService.dismissLoading()
-    //     this.errorMessage = err.error;
-    //     console.log(this.errorMessage)
-    //   }
-    // );
+   
   }
   callAgent() {
     return this.callNumber.callNumber(this.property.user.phone_number.toString(), true)

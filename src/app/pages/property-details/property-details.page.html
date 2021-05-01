@@ -144,14 +144,14 @@
 
             <ion-list>
               <ion-item lines="full">
-                <ion-label position="floating" color="success">Nom</ion-label>
+                <ion-label position="floating" color="success">Nom<label style="color: red;">*</label> </ion-label>
                 <ion-input formControlName="name" type="text"></ion-input>
               </ion-item>
               <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
                 Nom est requis.
               </span>
               <ion-item lines="full">
-                <ion-label position="floating" color="success">Téléphone</ion-label>
+                <ion-label position="floating" color="success">Téléphone<label style="color: red;">*</label> </ion-label>
                 <ion-input formControlName="phone" type="number" pattern="\d*"></ion-input>
               </ion-item>
               <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone.errors?.required">
@@ -166,7 +166,7 @@
               </ion-item>
 
               <ion-item lines="full">
-                <ion-label position="floating" color="success">Message</ion-label>
+                <ion-label position="floating" color="success">Message<label style="color: red;">*</label> </ion-label>
                 <ion-textarea formControlName="my_message" class="google-input" cols="33" rows="5" ></ion-textarea>
                 <span class="error ion-padding" *ngIf="isSubmitted && errorControl.my_message.errors?.required">
                   Message est requis.

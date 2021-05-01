@@ -1,3 +1,5 @@
+import { StoreService } from './../../services/store.service';
+import { LoadingServiceService } from './../../services/loading-service.service';
 import {
   Properties
 } from './../../models/properties';
@@ -23,6 +25,8 @@ import {
 } from '@angular/common';
 import { NetworkService } from 'src/app/services/network.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { map, finalize, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-app-flow',
@@ -32,7 +36,8 @@ import { AlertService } from 'src/app/services/alert.service';
 export class AppFlowPage implements OnInit {
   like: boolean;
   count: number = 0;
-  propertiesList: Properties[] = [];
+  propertiesList$: Properties[];
+  propertiesData$: Observable<Properties[]>;
   posts: any[] = [];
   totalPosts = 0;
   currentPage = 1;
@@ -60,18 +65,20 @@ export class AppFlowPage implements OnInit {
     private menuCtrl: MenuController,
     private propertiesServices: PropertiesService,
     public loadingController: LoadingController,
+    private loadingService: LoadingServiceService,
     public toastController: ToastController,
     private networkService: NetworkService,
     private alertService: AlertService,
+    private store: StoreService,
     public navCtrl: NavController,
     public router: Router,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.menuCtrl.enable(true);
-    this.getAllProperties()
   }
   ngOnInit() {
     this.networkService.initializeNetworkEvents();
+    this.getAllProperties()
   }
   
   // ionViewWillEnter() {
@@ -108,20 +115,17 @@ export class AppFlowPage implements OnInit {
         break;
     }
   } 
-  async getAllProperties() {
-    this.propertiesServices.getPostsPaginated(this.currentPage).subscribe(async (data: Properties[]) => {
-      this.propertiesList = data['properties']['data'];
-      this.displayedList = [...this.propertiesList];
-      this.paginate = data['properties'];
-      console.log(this.paginate);
-      for (let i = 0; i < 5; i++) {
-        this.posts.push(this.propertiesList[i]);
-      }
-      this.showData = true;
-      this.propertiesList.map((prop: Properties) => {
-      
-      });
-    })
+   getAllProperties() {
+    //  const properties$ = this.store.loadProperties();
+     
+    
+    const loadProperties$ = this.propertiesServices.getPostsPaginated(this.currentPage)
+   .subscribe( (data: Properties[]) => {
+     this.propertiesList$ = data;
+     this.showData = true;
+     console.log(this.propertiesList$);
+   })
+
   }
 
   //have issue here about "disabling"
@@ -142,14 +146,14 @@ export class AppFlowPage implements OnInit {
     } else {
       this.currentPage++;
       this.propertiesServices.getPostsPaginated(this.currentPage).subscribe(async (data: Properties[]) => {
-        this.propertiesList = this.propertiesList.concat(data['properties']['data']);
-        this.displayedList = [...this.propertiesList];
+        this.propertiesList$ = this.propertiesList$.concat(data);
+        this.displayedList = [...this.propertiesList$];
 
         if (event !== null) {
           event.target.complete();
         }
 
-        if (data['properties']['data'].length < 10) {
+        if (data.length < 10) {
           await toast.present().then();
           event.target.disabled = true;
         }

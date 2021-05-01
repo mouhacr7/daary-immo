@@ -1,7 +1,7 @@
 import { StorageService } from './storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { shareReplay, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { catchError } from 'rxjs/operators';
@@ -103,6 +103,7 @@ export class AuthService {
     return this.http.get('/mobile/user', {})
       .pipe(
         tap(_ => this.log('response received')),
+        shareReplay(),
         catchError(this.handleError('user', []))
       );
   }

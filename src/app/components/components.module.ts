@@ -1,3 +1,4 @@
+import { LoadingComponentComponent } from './loading-component/loading-component.component';
 import { AgUpdatePropertyComponent } from './ag-update-property/ag-update-property.component';
 import { AgUpdateProfileComponent } from './ag-update-profile/ag-update-profile.component';
 import { AgMessagesComponent } from './ag-messages/ag-messages.component';
@@ -9,7 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AgPropertiesComponent } from './ag-properties/ag-properties.component';
 import { AgEditPasswordComponent } from './ag-edit-password/ag-edit-password.component';
-
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { AgEditPasswordComponent } from './ag-edit-password/ag-edit-password.com
     AgProfileComponent,
     AgMessagesComponent,
     AgUpdateProfileComponent,
-    AgUpdatePropertyComponent
+    AgUpdatePropertyComponent,
+    LoadingComponentComponent
 
   ],
   exports: [
@@ -29,13 +32,16 @@ import { AgEditPasswordComponent } from './ag-edit-password/ag-edit-password.com
     AgProfileComponent,
     AgMessagesComponent,
     AgUpdateProfileComponent,
-    AgUpdatePropertyComponent
+    AgUpdatePropertyComponent,
+    LoadingComponentComponent
   ],
   imports: [
     CommonModule,
     IonicModule,
     FormsModule,
     ReactiveFormsModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class ComponentsModule { }

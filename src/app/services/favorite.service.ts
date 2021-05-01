@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Properties } from '../models/properties';
 
@@ -18,6 +18,11 @@ export class FavoriteService {
   private http: HttpClient,
   public storage: Storage) { }
 
+  private _refreshNeeded$ = new Subject<void>();
+
+  get refreshNeeded$() {
+    return this._refreshNeeded$;
+  }
   isFavorite(popertyId) {
     return this.getAllFavoriteProperties().then(result => {
       return result && result.indexOf(popertyId) !== -1;
@@ -52,7 +57,10 @@ export class FavoriteService {
   // Send to api
   favouriteProperty(id: any, property :any) {
     return this.http.post<Properties>(`/mobile/toggle_favorite/${id}`, property).pipe(
-      tap(_ => console.log(`favourite added id=${id}`)),
+      tap(()=> {
+        this.refreshNeeded$.next();
+        console.log(`favourite property added : id=${id}`);
+      }),
       catchError(this.handleError<Properties>('favouriteProduct'))
     );
   }

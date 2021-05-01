@@ -89,6 +89,7 @@ export class AgDashboardPage implements OnInit {
   loading: HTMLIonLoadingElement;
   collapse_trigger_prop = new BehaviorSubject < any > ('');
   collapse_trigger_mess = new BehaviorSubject < any > ('');
+  isLoggedIn: boolean = false;
 
   constructor(
     private menu: MenuController,
@@ -184,11 +185,13 @@ export class AgDashboardPage implements OnInit {
     await this.loading.present();
   }
   ngOnInit() {
-    this.users = this.tokenSession.getUser();
-    this.token = this.tokenSession.getUser()['token'];
-    console.log(this.token);
-
-    this.currentUser = this.users.user;
+    if (this.tokenSession.getUser()['token']) {
+      this.isLoggedIn = true;
+      this.users = this.tokenSession.getUser();
+      this.token = this.tokenSession.getUser()['token'];
+      console.log(this.token);
+      this.currentUser = this.users.user;
+    }
     if (this.currentUser.role_id == 2) {
       this.role = 'agent';
     } else {
@@ -198,15 +201,19 @@ export class AgDashboardPage implements OnInit {
 
     this.loadingFunction();
     // Agent properties
+    this.propertyService.getPosts().subscribe( (properties: Properties[]) => {
+      console.log([...properties]);
+    })
+
     this.propertyService.getAgentProperties(this.currentUser.id, this.currentPage).subscribe(async (data: Properties[]) => {
-      this.propertiesList = data['properties']['data'];
+      this.propertiesList = data;
       this.displayedList = [...this.propertiesList];
       console.log(this.propertiesList)
 
     });
     // Agent Messages
     this.messageService.getAgentMessages().subscribe(async (data: any) => {
-      this.messagesList = data['messages'];
+      this.messagesList = data;
       console.log(this.messagesList);
     })
   }
@@ -296,7 +303,7 @@ export class AgDashboardPage implements OnInit {
     } else {
       this.currentPage++;
       this.propertyService.getAgentProperties(this.currentUser.id,this.currentPage).subscribe(async (data: Properties[]) => {
-        this.propertiesList = this.propertiesList.concat(data['properties']['data']);
+        this.propertiesList = this.propertiesList.concat(data);
         this.displayedList = [...this.propertiesList];
         console.log(this.displayedList);
         
@@ -305,7 +312,7 @@ export class AgDashboardPage implements OnInit {
           event.target.complete();
         }
 
-        if (data['properties']['data'].length < 10) {
+        if (data.length < 10) {
           await toast.present().then();
           event.target.disabled = true;
         }

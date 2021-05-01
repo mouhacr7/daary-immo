@@ -204,7 +204,7 @@ export class PropertyDetailsPage implements OnInit {
       agent_id: this.property.agent_id,
       property_id: this.property.id,
       name: this.ionicForm.value.name,
-      email: this.ionicForm.value.email,
+      email: this.email_value,
       phone: this.ionicForm.value.phone,
       message: this.ionicForm.value.my_message,
     }
@@ -216,22 +216,11 @@ export class PropertyDetailsPage implements OnInit {
       console.log(this.data);
       this.alertService.presentLoading();
       this.messageService.SendMessage(this.data).subscribe(
-        (response) => {
-          if (response) {
-            console.log(response);
-            
-          } else {
-            
-          }
-          this.alertService.presentToast('Message envoyé avec succés :) !!', 'success');
-          this.alertService.dismissLoading()
-          console.log(response);
+        (data) => {
+          console.log(data);
         },
-        err => {
-          this.alertService.presentToast('Une erreur s\'est produit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
-          this.alertService.dismissLoading()
-          this.errorMessage = err.length;
-          console.log(this.errorMessage)
+        (error) => {
+          console.log(error)
         }
       );
     }

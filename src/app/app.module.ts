@@ -1,3 +1,4 @@
+import { LoadingServiceService } from './services/loading-service.service';
 import { Network } from '@ionic-native/network/ngx';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,7 +16,9 @@ import { ValuesPipe } from './pipes/values.pipe';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ComponentsModule } from './components/components.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 // app.module.ts
 
 @NgModule({
@@ -29,8 +32,11 @@ import { environment } from '../environments/environment';
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
+    ComponentsModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    MatExpansionModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     CallNumber,
@@ -38,7 +44,8 @@ import { environment } from '../environments/environment';
     CallNumber,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},
-    NativeStorage
+    NativeStorage,
+    LoadingServiceService
   ],
   bootstrap: [AppComponent]
 })

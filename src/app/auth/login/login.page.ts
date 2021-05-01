@@ -33,18 +33,18 @@ export class LoginPage implements OnInit {
   ) { 
     
     this.menuController.enable(true);
-    // if (this.tokenSessionStorageService.getToken()) {
-    //   this.isLoggedIn = true;
-    //   this.role = this.tokenSessionStorageService.getUser().user.role_id;
-    //   if (this.role.toString() == this.agent) {
-    //     this.navCtrl.navigateForward('/ag-dashboard');
-    //     this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
-    //   } else {
-    //     this.navCtrl.navigateForward('/usr-dashboard');
-    //     this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
-    //   }
-    //   console.log(this.role.toString());
-    // }
+    if (this.tokenSessionStorageService.getToken()) {
+      this.isLoggedIn = true;
+      this.role = this.tokenSessionStorageService.getUser().user.role_id;
+      if (this.role.toString() == this.agent) {
+        this.navCtrl.navigateForward('/ag-dashboard');
+        this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
+      } else {
+        this.navCtrl.navigateForward('/usr-dashboard');
+        this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
+      }
+      console.log(this.role.toString());
+    }
   }
   ngOnInit() {
   

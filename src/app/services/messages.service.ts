@@ -4,8 +4,9 @@ import { Observable, of, throwError } from 'rxjs';
 import { StorageService } from './storage.service';
 import { TokenSessionStorageService } from './token-session-storage.service';
 import { Properties } from '../models/properties';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { Message } from '../models/message';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,14 @@ export class MessagesService {
   isLoggedIn: boolean;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private alertService: AlertService,
   ) {}
 
   getAgentMessages(): Observable<any> {
     return this.http.get<Message>('/mobile/message', {})
     .pipe(
-      tap(_ => console.log('response received')),
+      map(res => res['messages']),
       catchError(this.handleError('properties', []))
     );
   }
@@ -44,10 +46,27 @@ export class MessagesService {
     );
   }
   SendMessage(data): Observable<any> {
-    return this.http.post<Message>('/mobile/property/message', data)
+    return this.http.post<Message>('/mobile/property/message', data, {observe: 'response'})
     .pipe(
-      tap( (response) => console.log('response received', response)),
-      catchError(this.handleError('properties', []))
+      tap( // Log the result or error
+        data => {
+           if (data['status'] === 200 ) {
+            this.alertService.presentToast('Message envoyé avec succés :) !!', 'success');
+            this.alertService.dismissLoading()
+          } else {
+            this.alertService.presentToast('Une erreur s\'est produit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
+            this.alertService.dismissLoading()
+          }
+          console.log(data)
+        },
+        error => {
+          this.alertService.presentToast('Une erreur s\'est produit au moment de l\'envoi du message :( !! Veuillez réessayer', 'danger');
+          this.alertService.dismissLoading()
+          console.log(error)
+        }
+      ),
+      shareReplay(),
+      catchError(this.handleError)
     );
   }
 
@@ -58,6 +77,7 @@ export class MessagesService {
         // TODO: send the error to remote logging infrastructure
         console.error(error); // log to console instead
   
+
         // TODO: better job of transforming error for user consumption
         this.log(`${operation} failed: ${error.message}`);
   

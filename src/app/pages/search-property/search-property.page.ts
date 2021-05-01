@@ -82,7 +82,8 @@ export class SearchPropertyPage implements OnInit {
   
   async loadCities() {
       await this.propertiesServices.getPosts().subscribe( (data: Properties[]) => {
-        this.dataList = data['properties']['data'];
+        this.dataList = data;
+        console.log(this.dataList );
         this.dataList.forEach(data => {
           this.allCityList.push(data.city)
         })

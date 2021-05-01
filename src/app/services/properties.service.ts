@@ -1,5 +1,5 @@
 import { Properties } from './../models/properties';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders  } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
@@ -20,38 +20,42 @@ export class PropertiesService {
   isLoggedIn: boolean;
   public uploadProgress: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public downloadProgress: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  private _refreshNeeded$ = new Subject<void>();
   constructor(
     private http: HttpClient,
     private storageService: StorageService,
     private tokenSession: TokenSessionStorageService,
     private alertService: AlertService,
-  ) {
+    ) {
+      
+      // this.token = this.tokenSession.getUser()['token'];
+      // console.log(this.token);
+    }
+    private _refreshNeeded$ = new Subject<void>();
 
-    // this.token = this.tokenSession.getUser()['token'];
-    // console.log(this.token);
-  }
-  
+    get refreshNeeded$() {
+      return this._refreshNeeded$;
+    }
+    
   getPosts(): Observable<Properties[]> {
     return this.http.get<Properties[]>(`/mobile/properties`, {})
     .pipe(
-      tap(() => {
-        console.log("properties loaded");
-      }),
+      map(res => res['properties']['data']),
       catchError(this.handleError)
     );
   }
   getPostsPaginated(page_number: number): Observable<Properties[]> {
     return this.http.get<Properties[]>(`/mobile/properties?page=${page_number}`, {})
     .pipe(
-      tap(_ => console.log('response received')),
+      map(res => res['properties']['data']),
+      shareReplay(),
       catchError(this.handleError)
     );
   }
   getAgentProperties(id: number, page_number: number): Observable<Properties[]> {
     return this.http.get<Properties[]>(`/mobile/agent/${id}/properties?page=${page_number}`, {})
     .pipe(
-      tap(_ => console.log('response received')),
+      map(res => res['properties']['data']),
+      shareReplay(),
       catchError(this.handleError)
     );
   }
@@ -108,6 +112,7 @@ export class PropertiesService {
     .pipe(
       tap(response => {
         // this.alertService.dismissLoading();
+        this.refreshNeeded$.next();
         console.log(`add_property launched,` + response)
       }),
       catchError(this.handleError)
@@ -124,7 +129,10 @@ export class PropertiesService {
     
     return this.http.post(`/mobile/updateProfile`, input, {reportProgress: true})
     .pipe(
-      tap(_ => console.log(`Agent profile updated`)),
+      tap(()=> {
+        this.refreshNeeded$.next();
+        console.log(`agent profile updated`);
+      }),
       catchError(this.handleError)
     );
   }
@@ -163,14 +171,21 @@ export class PropertiesService {
     }
     console.log(input.getAll(data));
 
-    return this.http.post(`/mobile/update_property/${id}`, input).pipe(
-      tap(_ => console.log(`updated property id=${id}`)),
+    return this.http.post(`/mobile/update_property/${id}`, input)
+    .pipe(
+      tap(()=> {
+        this.refreshNeeded$.next();
+        console.log(`updated property id=${id}`);
+      }),
       catchError(this.handleError)
     );
   } 
   deleteProperty(id: any,  property: any) {
     return this.http.post(`/mobile/delete_property/${id}`, property).pipe(
-      tap(_ => console.log(`deleted property id=${id}`)),
+      tap(()=> {
+        this.refreshNeeded$.next();
+        console.log(`deleted property id=${id}`);
+      }),
       catchError(this.handleError)
     );
   

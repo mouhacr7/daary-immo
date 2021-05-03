@@ -27,6 +27,7 @@ import { NetworkService } from 'src/app/services/network.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { map, finalize, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ConnectionService } from 'ng-connection-service';
 
 @Component({
   selector: 'app-app-flow',
@@ -60,6 +61,8 @@ export class AppFlowPage implements OnInit {
   slidesOptions = {
     slidesPerView: 3.5
 }
+status = 'ONLINE';
+isConnected = true;
 
   constructor(
     private menuCtrl: MenuController,
@@ -72,23 +75,44 @@ export class AppFlowPage implements OnInit {
     private store: StoreService,
     public navCtrl: NavController,
     public router: Router,
-    @Inject(DOCUMENT) private document: Document
+    private connectionService: ConnectionService
   ) {
     this.menuCtrl.enable(true);
+
   }
   ngOnInit() {
     this.networkService.initializeNetworkEvents();
     this.getAllProperties()
   }
   
-  // ionViewWillEnter() {
-    
-  // }
+  ionViewWillEnter() {
+    this.connectionService.monitor().subscribe(isConnected => {
+      this.isConnected = isConnected;
+      if (this.isConnected) {
+        this.status = "ONLINE";
+        console.log( this.status);
+        this.alertService.presentToast(this.status,'success')
+      }
+      else {
+        this.status = "OFFLINE";
+        console.log( this.status);
+        this.alertService.presentToast(this.status,'danger')
+      }
+    })
+  }
   doRefresh(event: any) {
-    setTimeout(() => {
-      this.document.location.reload();
-      event.target.complete(); // This is a must for us to perform the method
-    }, 1000); // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
+    this.connectionService.monitor().subscribe(isConnected => {
+      this.isConnected = isConnected;
+      if (this.isConnected) {
+        this.status = "ONLINE";
+        console.log( this.status);
+        this.alertService.presentToast(this.status,'danger')
+      }
+      else {
+        this.status = "OFFLINE";
+        console.log( this.status);
+      }
+    })
   }
 
   onClickAlert() {

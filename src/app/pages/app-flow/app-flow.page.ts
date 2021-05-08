@@ -25,8 +25,8 @@ import {
 } from '@angular/common';
 import { NetworkService } from 'src/app/services/network.service';
 import { AlertService } from 'src/app/services/alert.service';
-import { map, finalize, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, finalize, tap, startWith, mergeMap } from 'rxjs/operators';
+import { merge, Observable, Subject } from 'rxjs';
 import { ConnectionService } from 'ng-connection-service';
 
 @Component({
@@ -61,6 +61,10 @@ export class AppFlowPage implements OnInit {
   slidesOptions = {
     slidesPerView: 3.5
 }
+propertyList$: Observable<Properties[]>;
+propList$: Observable<Properties[]>;
+refreshDataClickSubject = new Subject();
+model$: Observable<{ properties: Properties[]}>;
 status = 'ONLINE';
 isConnected = true;
 
@@ -78,22 +82,46 @@ isConnected = true;
     private connectionService: ConnectionService
   ) {
     this.menuCtrl.enable(true);
-
   }
   ngOnInit() {
+    // Rxjs strategy to refresh current component state using observables 
+    this.propertyList$ = this.propertiesServices.getPostsPaginated(this.currentPage);
+    const refreshDataClick$ = this.refreshDataClickSubject.asObservable();
+    const refreshTrigger$ = refreshDataClick$.pipe(
+      startWith({})
+    );
+    this.propList$ = refreshTrigger$.pipe(
+      mergeMap(() => this.propertyList$)
+    )
+    this.propList$.subscribe((data) => {
+      this.showData = true;
+      this.displayedList = data;
+    }) 
+    
+  
+    this.model$ = merge(
+      refreshTrigger$.pipe(map(() => ({ properties: []}))),
+      this.propList$.pipe(map(properties => ({ properties: properties}))),
+    );  
     this.networkService.initializeNetworkEvents();
     this.getAllProperties()
   }
   
   ionViewWillEnter() {
-    this.connectionService.monitor().subscribe(isConnected => {
+    // this.refreshDataClickSubject.next();
+    console.log("TabX is enter")
+    return this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
+      console.log(this.isConnected);
+      
       if (this.isConnected) {
         this.status = "ONLINE";
         console.log( this.status);
         this.alertService.presentToast(this.status,'success')
+        // this.ngOnInit();
       }
       else {
+        this.showData = false;
         this.status = "OFFLINE";
         console.log( this.status);
         this.alertService.presentToast(this.status,'danger')
@@ -101,18 +129,22 @@ isConnected = true;
     })
   }
   doRefresh(event: any) {
-    this.connectionService.monitor().subscribe(isConnected => {
-      this.isConnected = isConnected;
-      if (this.isConnected) {
-        this.status = "ONLINE";
-        console.log( this.status);
-        this.alertService.presentToast(this.status,'danger')
-      }
-      else {
-        this.status = "OFFLINE";
-        console.log( this.status);
-      }
-    })
+    setTimeout(() => {
+      this.ngOnInit();
+      event.target.complete();  // This is a must for us to perform the method
+    }, 1000);  // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
+    // this.connectionService.monitor().subscribe(isConnected => {
+    //   this.isConnected = isConnected;
+    //   if (this.isConnected) {
+    //     this.status = "ONLINE";
+    //     console.log( this.status);
+    //     this.alertService.presentToast(this.status,'danger')
+    //   }
+    //   else {
+    //     this.status = "OFFLINE";
+    //     console.log( this.status);
+    //   }
+    // })
   }
 
   onClickAlert() {
@@ -152,6 +184,10 @@ isConnected = true;
 
   }
 
+  propertyDetails(id: number) {
+    this.router.navigateByUrl(`property-details/`+id);
+  }
+
   //have issue here about "disabling"
   async loadMorePosts(event) {
     const toast = await this.toastController.create({
@@ -169,7 +205,15 @@ isConnected = true;
       return;
     } else {
       this.currentPage++;
-      this.propertiesServices.getPostsPaginated(this.currentPage).subscribe(async (data: Properties[]) => {
+      this.propertyList$ = this.propertiesServices.getPostsPaginated(this.currentPage);
+      const refreshDataClick$ = this.refreshDataClickSubject.asObservable();
+      const refreshTrigger$ = refreshDataClick$.pipe(
+        startWith({})
+      );
+      this.propList$ = refreshTrigger$.pipe(
+        mergeMap(() => this.propertyList$)
+      )
+      this.propList$.subscribe(async (data) => {
         this.propertiesList$ = this.propertiesList$.concat(data);
         this.displayedList = [...this.propertiesList$];
 
@@ -223,14 +267,4 @@ isConnected = true;
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
-  onFav() {
-    this.like = !this.like;
-    if (!this.like) {
-      this.count = 0;
-    } else {
-      this.count = 1;
-    }
-    console.log(this.count);
-  }
-
-}
+ }

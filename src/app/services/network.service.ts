@@ -45,7 +45,7 @@ export class NetworkService {
     let connection = status == ConnectionStatus.Offline ? 'déconnecté' : 'connecté';
     let toast = this.toastController.create({
       message: `Vous êtes '${connection}`,
-      duration: 1500,
+      duration: 3500,
       position: 'bottom',
       mode: 'ios',
       translucent: true

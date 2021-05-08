@@ -1,11 +1,13 @@
 import { Properties } from './../models/properties';
-import { catchError, map, shareReplay, tap } from 'rxjs/operators';
+import { catchError, delay, finalize, map, shareReplay, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders  } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { StorageService } from './storage.service';
 import { TokenSessionStorageService } from './token-session-storage.service';
 import { AlertService } from './alert.service';
+import { SampleShellListingModel, SampleShellModel } from '../models/SampleShell';
+import { ShellProvider } from './shell-provider.service';
 
 
 const HttpUploadOptions = {
@@ -46,8 +48,15 @@ export class PropertiesService {
   getPostsPaginated(page_number: number): Observable<Properties[]> {
     return this.http.get<Properties[]>(`/mobile/properties?page=${page_number}`, {})
     .pipe(
+      tap(val => { val;
+        console.log('getData STARTED', val['properties']['data'])
+      }),
       map(res => res['properties']['data']),
       shareReplay(),
+      delay(5000),
+      finalize(() => {
+        console.log('getData COMPLETED');
+      }),
       catchError(this.handleError)
     );
   }

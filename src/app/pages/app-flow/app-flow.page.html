@@ -90,9 +90,9 @@
   <div *ngIf="showData; else skeleton ion-margin-top">
     <ion-grid class="ion-margin-top" style="padding-left: 0px;padding-right: 0px;">
       <ion-row>
-        <ion-col *ngFor="let prop of propertiesList$" size-lg="6" size-md="6" size-sm="6" size="12"
+        <ion-col *ngFor="let prop of displayedList" size-lg="6" size-md="6" size-sm="6" size="12"
           style="padding-left: 0px;padding-right: 0px;">
-          <ion-card class="custom-font" routerLink="/property-details/{{prop.id}}">
+          <ion-card class="custom-font" (click)="propertyDetails(prop.id)">
             <span *ngIf="prop?.image != null">
               <img class="img-prop background border-bottom"
                 src="https://daary-immo.com/storage/property/{{prop.image || 'assets/images/default_property.jpg'}}"

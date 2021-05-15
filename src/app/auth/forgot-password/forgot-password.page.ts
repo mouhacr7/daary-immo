@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MenuController, NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,7 +18,7 @@ export class ForgotPasswordPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     private authService: AuthService,
-    private navCtrl: NavController,
+    private router: Router,
     private menuController: MenuController,
     private tokenSessionStorageService: TokenSessionStorageService,
     private alertService: AlertService
@@ -53,7 +54,7 @@ export class ForgotPasswordPage implements OnInit {
               } else {
                 this.alertService.presentToast('Numéro de téléphone reconnu', 'success');
                 this.alertService.dismissLoading();
-                this.navCtrl.navigateRoot('/verification-code');
+                this.router.navigateByUrl('/verification-code');
               } 
             },
             err => {
@@ -73,7 +74,7 @@ export class ForgotPasswordPage implements OnInit {
   }
   loginLoad() {
     this.logout();
-    this.navCtrl.navigateRoot('/login');
+    this.router.navigateByUrl('/login');
   }
   logout() {
     this.tokenSessionStorageService.signOut();

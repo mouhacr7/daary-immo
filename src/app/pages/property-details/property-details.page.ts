@@ -33,6 +33,7 @@ import {
 } from 'src/app/services/alert.service';
 import { ImageModalPage } from 'src/app/image-modal/image-modal.page';
 import { ValidatorService } from 'src/app/services/validator.service';
+import { Observable } from 'rxjs';
 
 
 // @ViewChild('slideWithNav', { static: false }) slideWithNav: IonSlides;
@@ -80,19 +81,25 @@ export class PropertyDetailsPage implements OnInit {
   price : any;
   ionicForm: FormGroup;
   email_value: any;
-  
+  property_id: string;
+  propertyID$: Observable<Properties[]>;
+  gallery:any;
+  IsGallery :boolean;
+  id: any;
   constructor(private route: ActivatedRoute,
     private menuCtrl: MenuController,
     private modalCtrl: ModalController,
     private alertService: AlertService,
     public formBuilder: FormBuilder,
     private messageService: MessagesService,
+    private propertyService: PropertiesService,
     private navController: NavController,
     private favService: FavoriteService,
+    private router: Router,
     private callNumber: CallNumber
   ) {
     
-
+   
     //Item object for Nature
     this.sliderOne = {
       isBeginningSlide: true,
@@ -115,42 +122,50 @@ export class PropertyDetailsPage implements OnInit {
       ]
     };
   }
-
-  ngOnInit() {
+  ionViewDidLoad() {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.id = this.router.getCurrentNavigation().extras.state.id;
+        console.log(this.id);
+      }
+      this.getSinglePropertyDetails(this.id);
+    });
+  }
+  async ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.id = this.router.getCurrentNavigation().extras.state.id;
+        console.log(this.id);
+      }
+      this.getSinglePropertyDetails(this.id);
+    });
     this.ionicForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(2)]] ,
       phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       email: ['', [ Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       my_message :['', [Validators.required]]
     });
-
-    var nf = Intl.NumberFormat();
-    var x = 42000000;
-    console.log();
-    this.route.data.subscribe((data: {
-      property: Properties[]
-    }) => {
-      console.log(data);
-
-      this.property = data.property['property'];
-      this.price = this.property.price;
-      
-      console.log(this.formatNumber(this.price));
-      
-      console.log(this.property.gallery);
-
-      this.showData = true;
-    });
-    this.like = false;
-    // console.log(this.count);
-    this.menuCtrl.enable(true);
-    this.favService.isFavorite(this.property.id).then(isFav => {
+    this.favService.isFavorite(this.id).then(isFav => {
       this.isFavorite = isFav;
     });
+  }
 
-    if(this.property.purpose = 'Louer') {
-      this.per_month = true;
-    }
+  getSinglePropertyDetails(id){
+    this.propertyService.getSingleProperty(id).subscribe((data: any) => {
+      this.property = data['property'] ;
+      this.showData = true;
+      console.log(this.property);
+      this.gallery = data['property']['gallery'];
+      this.price = data['property']['price'];
+      if (this.gallery.length !== 0) {
+          this.IsGallery = true;
+        } else {
+          this.IsGallery = false;
+        }
+      console.log(this.formatNumber(this.price));
+      console.log(this.gallery);
+      
+    });
   }
   formatNumber(number) {
     number = number.toFixed(2) + '';

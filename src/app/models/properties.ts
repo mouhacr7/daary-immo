@@ -1,3 +1,5 @@
+import { SampleShellModel } from "./SampleShell";
+
 export interface Properties {
   id: number;
   name: string;
@@ -25,4 +27,17 @@ export interface Properties {
   // tslint:disable-next-line: ban-types
   gallery?: String;
   user: any;
+}
+
+export class SampleShellListingModel {
+  data: Array<SampleShellModel> = [
+    new SampleShellModel(),
+    new SampleShellModel(),
+    new SampleShellModel(),
+    new SampleShellModel(),
+    new SampleShellModel(),
+    new SampleShellModel()
+  ];
+
+  constructor(readonly isShell: boolean) { }
 }

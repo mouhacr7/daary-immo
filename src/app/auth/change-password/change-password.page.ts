@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MenuController, NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,7 +22,7 @@ export class ChangePasswordPage implements OnInit {
   constructor(
     private propertyService: PropertiesService,
     private authService: AuthService,
-    private navCtrl: NavController,
+    private router: Router,
     private menuController: MenuController,
     private tokenSessionStorageService: TokenSessionStorageService,
     private alertService: AlertService,
@@ -61,7 +62,7 @@ export class ChangePasswordPage implements OnInit {
               } else if (data['message'] === "Le mot de passe a été changé avec succès.") {
                 this.alertService.basciAlert('Bravo!!!', data['message'],  ['OK'])
                 this.logout();
-                this.navCtrl.navigateRoot('/login');
+                this.router.navigateByUrl('/login');
                 this.alertService.dismissLoading()
               } else {
                 this.alertService.dismissLoading()
@@ -80,7 +81,7 @@ export class ChangePasswordPage implements OnInit {
   }
   loginLoad() {
     this.logout();
-    this.navCtrl.navigateRoot('/login');
+    this.router.navigateByUrl('/login');
   }
   logout() {
     this.tokenSessionStorageService.signOut();

@@ -68,7 +68,7 @@ export class PropertiesService {
       catchError(this.handleError)
     );
   }
-  getSingleProperty(id: number): Observable<Properties> {
+  getSingleProperty(id: String): Observable<Properties> {
     return this.http.get<Properties>(`/mobile/property/${id}`);
   }
   getFilteredProperties(request: any) {

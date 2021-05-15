@@ -1,9 +1,10 @@
 
-.custom-font {
-  font-family: 'Josefin Sans', sans-serif;
-}
+
 .custom-card {
   text-align: -webkit-center;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: -webkit-fill-available;
 }
 .custom-avatar {
   display: contents;
@@ -95,3 +96,31 @@ font-size: large;
 .fab {
   --background: #302f2f !important;
 }
+.container-form-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.form-btn {
+  display: flex;
+  font-family: revert;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 24px;
+  min-width: 160px;
+  height: 42px;
+  background-color: #009688;
+  border-radius: 5px;
+  font-size: 12px;
+  letter-spacing: -1px;
+  color: #FFFFFF;
+  border: 2px solid;
+  transition: all 0.4s;
+  box-shadow: 0 10px 30px 0px rgb(57 71 82 / 50%);
+}
+
+.form-btn:hover {
+  background-color: #28333b;
+  box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.8);
+}
+

@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Properties } from 'src/app/models/properties';
 import { PropertiesService } from 'src/app/services/properties.service';
@@ -102,15 +102,14 @@ export class SearchResultPage implements OnInit {
           break;
       }
     } 
-  onFav() {
-    this.like = !this.like;
-    if (!this.like) {
-      this.count = 0;
-    } else {
-      this.count = 1;
+    propertyDetails(id: number) {
+      let navigationExtras: NavigationExtras = {
+        state: {
+          id: id
+        }
+      };
+      this.router.navigate([`/property-details/`+id], navigationExtras);
     }
-    console.log(this.count);
-  }
 
 }
  

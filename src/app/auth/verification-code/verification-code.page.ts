@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MenuController, NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,7 +18,7 @@ export class VerificationCodePage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     private authService: AuthService,
-    private navCtrl: NavController,
+    private router: Router,
     private menuController: MenuController,
     private tokenSessionStorageService: TokenSessionStorageService,
     private alertService: AlertService)
@@ -53,7 +54,7 @@ export class VerificationCodePage implements OnInit {
             if (data['message'] == "Votre code à bien été verifié, à present veuillez changer votre numéro de passe" ) {
                 this.alertService.presentToast('Numéro de téléphone reconnu', 'success');
                 this.alertService.dismissLoading();
-              this.navCtrl.navigateRoot('/change-password');
+                this.router.navigateByUrl('/change-password');
               } 
             else if (data == "[HTTP 404] Unable to create record: The requested resource \/Services\/VAc1b6e3ff9145b90016e76f0594cb276c\/VerificationCheck was not found") {
                 this.alertService.basciAlert('Réponse', 'Aucune Corespondance avec ce numèro de Téléphone, Veuillez vérifier votre code validation et votre numéro de téléphone', ['OK']);
@@ -82,7 +83,7 @@ export class VerificationCodePage implements OnInit {
 
   loginLoad() {
     this.logout();
-    this.navCtrl.navigateRoot('/login');
+    this.router.navigateByUrl('/login');
   }
   logout() {
     this.tokenSessionStorageService.signOut();

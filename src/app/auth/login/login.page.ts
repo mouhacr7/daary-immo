@@ -33,20 +33,20 @@ export class LoginPage implements OnInit {
   ) { 
     
     this.menuController.enable(true);
+  }
+  ngOnInit() {
     if (this.tokenSessionStorageService.getToken()) {
       this.isLoggedIn = true;
       this.role = this.tokenSessionStorageService.getUser().user.role_id;
       if (this.role.toString() == this.agent) {
-        this.navCtrl.navigateForward('/ag-dashboard');
+        this.router.navigateByUrl('/ag-dashboard');
         this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
       } else {
-        this.navCtrl.navigateForward('/usr-dashboard');
+        this.router.navigateByUrl('/usr-dashboard');
         this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
       }
       console.log(this.role.toString());
     }
-  }
-  ngOnInit() {
   
     this.ionicForm = this.formBuilder.group({
       phone_number: ['', [Validators.required, Validators.pattern('^[0-9]{8}')]],
@@ -57,7 +57,7 @@ export class LoginPage implements OnInit {
     this.authService.getToken().then(() => {
       console.log(this.authService.isLoggedIn);
       if(this.authService.isLoggedIn) {
-        this.navCtrl.navigateRoot('/ag-dashboard');
+        this.router.navigateByUrl('/ag-dashboard');
         this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
       }
     });
@@ -70,10 +70,10 @@ export class LoginPage implements OnInit {
   }
   // On Register button tap
   async registerLoad() {
-    this.navCtrl.navigateRoot('/signup');
+    this.router.navigateByUrl('/signup');
   }
   async forgotPassLoad() {
-    this.navCtrl.navigateRoot('/forgot-password');
+    this.router.navigateByUrl('/forgot-password');
   }
   login() {
     this.isSubmitted = true;
@@ -95,10 +95,10 @@ export class LoginPage implements OnInit {
             this.role = this.tokenSessionStorageService.getUser().user.role_id;
             console.log(this.role);
             if (this.role.toString() == this.agent) {
-              this.navCtrl.navigateRoot('/ag-dashboard');
+              this.router.navigateByUrl('/ag-dashboard');
               this.alertService.dismissLoading()
             } else {
-              this.navCtrl.navigateRoot('/usr-dashboard');
+              this.router.navigateByUrl('/usr-dashboard');
               this.alertService.dismissLoading()
             }
             console.log(this.role.toString());

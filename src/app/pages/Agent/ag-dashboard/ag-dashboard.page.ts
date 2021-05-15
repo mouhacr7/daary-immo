@@ -26,6 +26,7 @@ import {
   TokenSessionStorageService
 } from 'src/app/services/token-session-storage.service';
 import {
+  NavigationExtras,
   Router
 } from '@angular/router';
 import {
@@ -46,6 +47,7 @@ import {
 import {
   CallNumber
 } from '@ionic-native/call-number/ngx';
+import { ConnectionService } from 'ng-connection-service';
 
 @Component({
   selector: 'app-ag-dashboard',
@@ -81,6 +83,7 @@ export class AgDashboardPage implements OnInit {
   idx = new BehaviorSubject < any > ('');
   propertyID: number;
   cpt_number: number = 1;
+  showData = false;
   // Format data to receive 
 
   editProfileStatus = false;
@@ -90,11 +93,14 @@ export class AgDashboardPage implements OnInit {
   collapse_trigger_prop = new BehaviorSubject < any > ('');
   collapse_trigger_mess = new BehaviorSubject < any > ('');
   isLoggedIn: boolean = false;
+  status = 'ONLINE';
+  isConnected = true;
+  showLoadMoreButton: boolean = true; 
 
   constructor(
     private menu: MenuController,
     public loadingController: LoadingController,
-    private navCtrl: NavController,
+    private router: Router,
     private alertCtrl: AlertController,
     private propertiesServices: PropertiesService,
     public toastController: ToastController,
@@ -104,21 +110,13 @@ export class AgDashboardPage implements OnInit {
     private authService: AuthService,
     private propertyService: PropertiesService,
     private messageService: MessagesService,
-    @Inject(DOCUMENT) private document: Document
+    private connectionService: ConnectionService
   ) {
     this.menu.enable(true);
     this.collapse_trigger_prop.next('collapse');
     this.collapse_trigger_mess.next('collapse');
-
-    
   }
 
-  doRefresh(event: any) {
-    setTimeout(() => {
-      this.document.location.reload();
-      event.target.complete(); // This is a must for us to perform the method
-    }, 1000); // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
-  }
   receiveMessage(data) {
     this.users = this.tokenSession.getUser();
     this.agent_id = this.users.user.role_id;
@@ -130,7 +128,8 @@ export class AgDashboardPage implements OnInit {
       response => {
         this.alertService.dismissLoading();
         this.alertService.presentToast('Popriété insérée avec succés :) ', 'success');
-        this.document.location.reload();
+        this.currentPage = 1;
+        this.ngOnInit();
         console.log(response)
       },
       error => {
@@ -148,7 +147,8 @@ export class AgDashboardPage implements OnInit {
         this.alertService.dismissLoading();
         this.alertService.presentToast('Mot de passe modifié avec succés :) ', 'success');
         console.log('Password succesfully edited', data);
-        this.document.location.reload();
+        this.currentPage = 1;
+        this.ngOnInit();
       },
       error => {
         this.alertService.presentToast('Erreur au moment de l\'insertion des données :) ', 'danger');
@@ -166,7 +166,8 @@ export class AgDashboardPage implements OnInit {
       data => {
         this.alertService.dismissLoading();
         this.alertService.presentToast('Informations modifiées avec succés :) ', 'success');
-        this.document.location.reload();
+        this.currentPage = 1;
+        this.ngOnInit();
         console.log('Profile succesfully edited', data);
       },
       error => {
@@ -185,6 +186,16 @@ export class AgDashboardPage implements OnInit {
     await this.loading.present();
   }
   ngOnInit() {
+    // this.authService.getToken().then(() => {
+    //   console.log(this.authService.isLoggedIn);
+    //   if(this.authService.isLoggedIn) {
+    //     this.router.navigateByUrl('/ag-dashboard');
+    //     this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
+    //   } else {
+    //     this.router.navigateByUrl('/login');
+    //     this.alertService.presentToast('Vous étes déconnecté :)', 'danger')
+    //   }
+    // });
     if (this.tokenSession.getUser()['token']) {
       this.isLoggedIn = true;
       this.users = this.tokenSession.getUser();
@@ -216,6 +227,36 @@ export class AgDashboardPage implements OnInit {
       this.messagesList = data;
       console.log(this.messagesList);
     })
+  }
+  ionViewWillEnter() {
+    // this.refreshDataClickSubject.next();
+    console.log("TabX is enter")
+    return this.connectionService.monitor().subscribe(isConnected => {
+      this.isConnected = isConnected;
+      console.log(this.isConnected);
+      
+      if (this.isConnected) {
+        this.showLoadMoreButton = true;
+        this.currentPage = 1;
+        this.status = "ONLINE";
+        console.log( this.status);
+        this.alertService.presentToast(this.status,'success')
+        this.ngOnInit();
+      }
+      else {
+        this.showData = false;
+        this.status = "OFFLINE";
+        console.log( this.status);
+        this.alertService.presentToast(this.status,'danger')
+      }
+    })
+  }
+  doRefresh(event: any) {
+    setTimeout(() => {
+      this.currentPage = 1;
+      this.ngOnInit();
+      event.target.complete();  // This is a must for us to perform the method
+    }, 1000);  // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
   }
 
   async deleteAlertConfirm(id: number) {
@@ -253,7 +294,8 @@ export class AgDashboardPage implements OnInit {
             return item.id !== id;
           });
           this.displayedList = [...this.displayedList];
-          this.document.location.reload();
+          this.currentPage = 1;
+          this.ngOnInit();
         },
         err => {
           this.alertService.presentToast('Une erreur s\'est produite :( !! veuillez réessayer ', 'danger')
@@ -267,6 +309,14 @@ export class AgDashboardPage implements OnInit {
   editProfileToggle() {
     this.editProfileStatus = !this.editProfileStatus;
   }
+  propertyDetails(id: number) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        id: id
+      }
+    };
+    this.router.navigate([`/property-details/`+id], navigationExtras);
+  }
 
   logout() {
     this.authService.logout().subscribe(
@@ -277,7 +327,7 @@ export class AgDashboardPage implements OnInit {
         console.log(error);
       },
       () => {
-        this.navCtrl.navigateRoot('/login');
+        this.router.navigate(['/app-flow']);
       }
     );
   }
@@ -297,10 +347,7 @@ export class AgDashboardPage implements OnInit {
         icon: 'close'
       }]
     });
-    if (event == null) {
-      this.currentPage = 1;
-      return;
-    } else {
+ 
       this.currentPage++;
       this.propertyService.getAgentProperties(this.currentUser.id,this.currentPage).subscribe(async (data: Properties[]) => {
         this.propertiesList = this.propertiesList.concat(data);
@@ -308,20 +355,13 @@ export class AgDashboardPage implements OnInit {
         console.log(this.displayedList);
         
 
-        if (event !== null) {
-          event.target.complete();
-        }
-
         if (data.length < 10) {
+          this.showLoadMoreButton = false;
           await toast.present().then();
-          event.target.disabled = true;
         }
       }, (err) => {
         console.log(err);
       });
-
-    }
-
   }
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;

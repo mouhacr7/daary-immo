@@ -3,7 +3,7 @@
   <ion-row>
     <ion-col size="6">
       <ion-button class="btn-type" color="success" expand="block" [fill]="isSaleClicked?'solid':'outline'"
-        (click)="saleClick()" [color]="isSaleClicked?'success':'success'">Achat</ion-button>
+        (click)="saleClick()" [color]="isSaleClicked?'success':'success'">Vente</ion-button>
     </ion-col>
     <ion-col size="6">
       <ion-button class="btn-type" color="danger" expand="block" [fill]="isRentClicked?'solid':'outline'"
@@ -202,10 +202,10 @@
       <ion-button class="btn-type" color="tertiary" expand="block" (click)="onStep3()">Suivant</ion-button>
     </ion-col>
   </ion-row>
-  <ion-item-divider>
-  </ion-item-divider>
 </div>
 <div *ngIf="this.step4" >
+  <ion-item-divider>
+  </ion-item-divider>
   <h5 class="custom-font">Surface</h5>
   <ion-row>
     <ion-col size="12">
@@ -214,13 +214,12 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-item-divider *ngIf="!this.onTerrain">
+  <ion-item-divider>
   </ion-item-divider>
   <ion-row *ngIf="!this.onTerrain">
     <h5 class="custom-font">Nombre de douches</h5>
     <ion-col size="12">
       <ion-item>
-        <ion-label class="label-price" position="floating">Nombre de douches</ion-label>
         <ion-input [(ngModel)]="douche" type="number"></ion-input>
       </ion-item>
     </ion-col>

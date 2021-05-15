@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="custom-font">Favoris</ion-title>
+    <ion-title>Favoris</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -20,12 +20,18 @@
       refreshingSpinner="crescent">
     </ion-refresher-content>
   </ion-refresher>
-  
-  <div>
+  <!-- spinnner element is 
+    defined with id loading -->
+  <div class="d-flex justify-content-center" *ngIf="!this.showData">
+    <div class="spinner-border" role="status">
+        <span class="sr-only" id="loading"></span>
+    </div>
+  </div>
+  <div *ngIf="showData">
     <ion-grid fixed *ngIf="model$ | async as model">
       <ion-row>
         <ion-col *ngFor="let favProp of uniques" size-lg="6" size-md="6" size-sm="6" size="12">
-          <ion-card class="custom-font"  routerLink="/property-details/{{favProp.id}}">
+          <ion-card class="custom-font"  (click)="propertyDetails(favProp?.id)">
             <img class="img-prop" src="https://daary-immo.com/storage/property/{{favProp.image}}" alt="ion">
             <div class="box-filter">
                 <ion-row>
@@ -44,40 +50,7 @@
       </ion-row>
     </ion-grid>
   </div>
-  <ion-card *ngIf="this.favData === null">
+  <ion-card *ngIf="this.noFav">
     <img src="assets/images/oops.png" alt="File not found">
   </ion-card>
-
-  <ng-template #skeleton>
-    <div *ngFor="let item of [1, 2, 3, 4, 5]">
-      <ion-card class="custom-font">
-        <ion-grid fixed>
-          <ion-skeleton-text animated
-            style="line-height: 13px; width: 100%; height: 200px;--background-rgb: 230,40,50;--border-radius: 20px;">
-          </ion-skeleton-text>
-          <ion-row>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
-          </ion-row>
-        </ion-grid>
-        <ion-card-content>
-          <ion-row>
-            <ion-col center text-center class="col-align">
-              <ion-skeleton-text animated style="width: 75%;
-            height: 40px;"></ion-skeleton-text>
-            </ion-col>
-            <ion-col center text-center class="col-align">
-              <ion-skeleton-text animated style="width: 75%;
-            height: 40px;"></ion-skeleton-text>
-            </ion-col>
-            <ion-col center text-center class="col-align">
-              <ion-skeleton-text animated style="width: 75%;
-            height: 40px;"></ion-skeleton-text>
-            </ion-col>
-          </ion-row>
-          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
-        </ion-card-content>
-      </ion-card>
-    </div>
-  </ng-template>
 </ion-content>

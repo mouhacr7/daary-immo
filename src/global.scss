@@ -32,7 +32,7 @@ body {
     padding: 15px !important;
 }
 ion-toolbar {
-    color:  #009688;
+    // color:  #009688;
 }
 // ion-row {
 //     font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -55,7 +55,7 @@ ion-toolbar {
 // }
 
 ion-toolbar ion-menu-button {
-    color:  #009688;
+    // color:  #009688;
 }
 
 ion-toolbar ion-back-button {
@@ -70,9 +70,9 @@ ion-toolbar ion-button {
     color: var(--ion-color-primary-contrast);
 }
 ion-title {
-    text-transform: uppercase;
+    // text-transform: uppercase;
     font-weight: bold;
-    font-family: 'San Francisco';
-    letter-spacing: -2px;
-    font-size: larger;
+    // font-family: 'San Francisco';
+    // letter-spacing: -2px;
+    font-size: x-large !important;
 }

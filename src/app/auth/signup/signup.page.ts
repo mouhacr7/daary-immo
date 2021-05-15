@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController, Platform, MenuController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, NgForm } from "@angular/forms";
@@ -33,7 +34,7 @@ export class SignupPage {
     private alertService: AlertService,
     public formBuilder: FormBuilder,
     private authService: AuthService,
-    private navCtrl: NavController,
+    private router: Router,
     private menuCtrl: MenuController,
     private tokenSessionStorageService: TokenSessionStorageService) {
     
@@ -56,10 +57,10 @@ export class SignupPage {
       this.role = this.tokenSessionStorageService.getUser().user.role_id;
       this.currentUserName = this.tokenSessionStorageService.getUser().user.name;
       if (this.role.toString() == this.agent) {
-        this.navCtrl.navigateRoot('/ag-dashboard');
+        this.router.navigateByUrl('/ag-dashboard');
         this.alertService.presentToast(`Vous étes déjà connecté :)`, 'success')
       } else {
-        this.navCtrl.navigateRoot('/usr-dashboard');
+        this.router.navigateByUrl('/usr-dashboard');
         this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
       }
       console.log(this.role.toString());
@@ -67,7 +68,7 @@ export class SignupPage {
   }
     // On Register button tap
   async loginLoad() {
-    this.navCtrl.navigateRoot('/login');
+    this.router.navigateByUrl('/login');
   }
 
   register(form: NgForm) {
@@ -88,7 +89,7 @@ export class SignupPage {
             this.isLoggedIn = true;
             this.role = this.tokenSessionStorageService.getUser().user.role_id;
               if (this.role.toString() == this.agent) {
-                this.navCtrl.navigateRoot('/ag-dashboard');
+                this.router.navigateByUrl('/ag-dashboard');
                 }
               console.log(this.role.toString());
               },

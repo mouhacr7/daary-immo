@@ -62,8 +62,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     
                     if (reason === 'invalid_credentials') {
                         this.alertService.basciAlert( 'Oups!!!','Indentifiants incorrects :( Veuillez vérifier vos identifiants !',  ['OK'])
-                    } else {
-                        this.alertService.basciAlert('Oups!!!','Erreur liée au serveur, veuillez réessayer !',  ['OK'])
                     }
                     console.log(reason)
                     return throwError(error);

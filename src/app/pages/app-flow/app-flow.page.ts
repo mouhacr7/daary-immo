@@ -13,7 +13,8 @@ import {
   MenuController,
   LoadingController,
   IonInfiniteScroll,
-  ToastController
+  ToastController,
+  IonVirtualScroll
 } from '@ionic/angular';
 import {
   PropertiesService
@@ -52,6 +53,8 @@ export class AppFlowPage implements OnInit {
   // loading: HTMLIonLoadingElement;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+
   paginate: any;
   displayedList: Properties[];
   bedroom: boolean = true;
@@ -67,7 +70,7 @@ refreshDataClickSubject = new Subject();
 model$: Observable<{ properties: Properties[]}>;
 status = 'ONLINE';
 isConnected = true;
-
+showLoadMoreButton: boolean = false;
   constructor(
     private menuCtrl: MenuController,
     private propertiesServices: PropertiesService,
@@ -84,7 +87,7 @@ isConnected = true;
     this.menuCtrl.enable(true);
   }
   ngOnInit() {
-    // Rxjs strategy to refresh current component state using observables 
+       // Rxjs strategy to refresh current component state using observables 
     this.propertyList$ = this.propertiesServices.getPostsPaginated(this.currentPage);
     const refreshDataClick$ = this.refreshDataClickSubject.asObservable();
     const refreshTrigger$ = refreshDataClick$.pipe(
@@ -115,10 +118,12 @@ isConnected = true;
       console.log(this.isConnected);
       
       if (this.isConnected) {
+        this.showLoadMoreButton = true;
+        this.currentPage = 1;
         this.status = "ONLINE";
         console.log( this.status);
         this.alertService.presentToast(this.status,'success')
-        // this.ngOnInit();
+        this.ngOnInit();
       }
       else {
         this.showData = false;
@@ -130,21 +135,10 @@ isConnected = true;
   }
   doRefresh(event: any) {
     setTimeout(() => {
+      this.currentPage = 1;
       this.ngOnInit();
       event.target.complete();  // This is a must for us to perform the method
     }, 1000);  // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
-    // this.connectionService.monitor().subscribe(isConnected => {
-    //   this.isConnected = isConnected;
-    //   if (this.isConnected) {
-    //     this.status = "ONLINE";
-    //     console.log( this.status);
-    //     this.alertService.presentToast(this.status,'danger')
-    //   }
-    //   else {
-    //     this.status = "OFFLINE";
-    //     console.log( this.status);
-    //   }
-    // })
   }
 
   onClickAlert() {
@@ -185,7 +179,12 @@ isConnected = true;
   }
 
   propertyDetails(id: number) {
-    this.router.navigateByUrl(`property-details/`+id);
+    let navigationExtras: NavigationExtras = {
+      state: {
+        id: id
+      }
+    };
+    this.router.navigate([`/property-details/`+id], navigationExtras);
   }
 
   //have issue here about "disabling"
@@ -215,8 +214,9 @@ isConnected = true;
       )
       this.propList$.subscribe(async (data) => {
         this.propertiesList$ = this.propertiesList$.concat(data);
-        this.displayedList = [...this.propertiesList$];
+        this.displayedList = this.propertiesList$;
 
+         
         if (event !== null) {
           event.target.complete();
         }
@@ -232,6 +232,38 @@ isConnected = true;
     }
 
   }
+ async loadMorePostsButton(event) {
+    const toast = await this.toastController.create({
+      message: 'Fin de liste :)',
+      animated: true,
+      duration: 5000,
+      buttons: [{
+        text: 'Done',
+        role: 'cancel',
+        icon: 'close'
+      }]
+    });
+
+      this.currentPage++;
+      this.propertyList$ = this.propertiesServices.getPostsPaginated(this.currentPage);
+      const refreshDataClick$ = this.refreshDataClickSubject.asObservable();
+      const refreshTrigger$ = refreshDataClick$.pipe(
+        startWith({})
+      );
+      this.propList$ = refreshTrigger$.pipe(
+        mergeMap(() => this.propertyList$)
+      )
+      this.propList$.subscribe(async (data) => {
+        this.propertiesList$ = this.propertiesList$.concat(data);
+        this.displayedList = this.propertiesList$;
+        if (data.length < 10) {
+          this.showLoadMoreButton = false;
+          await toast.present().then();
+        }
+      }, (err) => {
+        console.log(err);
+      });
+  }
 
   categoryFilter(category: any) {
     let navigationExtras: NavigationExtras = {
@@ -246,7 +278,7 @@ isConnected = true;
         minarea: "",
         maxarea:"",
       }
-    };
+    }; 
     console.log(navigationExtras);
     this.router.navigate(['/search-result'], navigationExtras);
   }
@@ -261,10 +293,5 @@ isConnected = true;
       x1 = x1.replace(rgx, '$1' + ',' + '$2');
     }
     return x1;
-  }
-  
-
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
  }

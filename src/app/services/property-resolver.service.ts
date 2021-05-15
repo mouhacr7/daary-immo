@@ -20,9 +20,7 @@ export class PropertyResolverService implements Resolve<any> {
 
         return this.propertiesService.getSingleProperty(id).pipe(
             tap(async () => {
-                if (await this.loadingController.getTop()) {
-                    this.loadingController.dismiss().then();
-                }
+                
             })
         );
     }

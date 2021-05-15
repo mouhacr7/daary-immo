@@ -5,7 +5,7 @@ import { map, mergeMap, startWith } from 'rxjs/operators';
 import { PropertiesService } from 'src/app/services/properties.service';
 import { FavoriteService } from './../../services/favorite.service';
 import { Component, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { BehaviorSubject, interval, merge, Observable, Subject } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
 
@@ -30,6 +30,7 @@ export class FavoritesPage implements OnInit {
   valueCounts = {};
   extra: any;
   showData: boolean = false;
+  noFav: boolean = false;
   favData: any;
   propertyList$: Observable<Properties[]>;
   refreshDataClickSubject = new Subject();
@@ -63,6 +64,7 @@ export class FavoritesPage implements OnInit {
      mergeMap(() => this.favService.getAllFavoriteProperties())
    );
    this.propertyList$.subscribe((data) => {
+     this.showData = true;
      favList$.subscribe((favIdList) => {
        this.favData = favIdList;
        console.log(favIdList);
@@ -70,6 +72,7 @@ export class FavoritesPage implements OnInit {
          this.showData = true;
          favIdList.map(fav => {
            this.favId = fav;
+           this.noFav = false;
            console.log(this.favId);
                this.favItem = data.filter(p => p.id === fav);
                  console.log(this.favItem[0]);
@@ -82,7 +85,10 @@ export class FavoritesPage implements OnInit {
                    }
                  });
                })
-             } 
+             } else {
+              this.showData = false;
+              this.noFav = true;
+             }
              this.getDuplicatesAndUniques(this.favArraylist,'id')
              console.log(this.uniques);
              console.log(this.duplicates);
@@ -118,6 +124,15 @@ export class FavoritesPage implements OnInit {
       event.target.complete();  // This is a must for us to perform the method
     }, 3000);  // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
   }
+  propertyDetails(id: number) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        id: id
+      }
+    };
+    this.router.navigate([`/property-details/`+id], navigationExtras);
+  }
+
   formatNumber(number) {
     number = number.toFixed(2) + '';
     let x = number.split('.');

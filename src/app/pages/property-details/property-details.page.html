@@ -3,80 +3,81 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title class="custom-font">Détails propriétés</ion-title>
+    <ion-title>Détails propriétés</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col size-lg="7" size-md="7" size-sm="7" size="12">
-        <ion-card class="custom-font" *ngIf="property.gallery.length != 0">
-          <ion-slides [options]="sliderConfig" pager="false" #slideWithNav
-            (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
-            <ion-slide *ngFor="let pic of property.gallery">
-              <!-- <span>  -->
-                  <img class="img-prop" src="{{imagepath}}/{{ pic['name']}}" tappable (click)="onPreview(pic['name'])"
+  <div *ngIf="showData; else skeleton ion-margin-top">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-lg="7" size-md="7" size-sm="7" size="12">
+          <ion-card class="custom-font" *ngIf="IsGallery">
+            <ion-slides [options]="sliderConfig" pager="false" #slideWithNav
+              (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
+              <ion-slide *ngFor="let pic of gallery">
+                <!-- <span>  -->
+                <img class="img-prop" src="{{imagepath}}/{{ pic['name']}}" tappable (click)="onPreview(pic['name'])"
                   alt="img">
-                  <!-- </span> -->
-                </ion-slide>
-              </ion-slides>
-            </ion-card >
-        <span *ngIf="property.gallery.length == 0">
-          <img class="img-prop" src="assets/images/default_property.jpg" alt="ion">
-        </span>
-        <div>
-          <ion-badge  class="box-price">{{this.formatNumber(property?.price)}} MRU</ion-badge>
-        </div>
-        <div>
-          <ion-badge  class="box-purpose">A {{property?.purpose}}</ion-badge>
-        </div>
-        <div>
-          <ion-icon ion-button icon-only (click)="unFavoriteProperty()" *ngIf="isFavorite" class="fav-like"
-          src="assets/icon/heart.svg"></ion-icon>
-          <ion-icon ion-button icon-only (click)="favoriteProperty()" *ngIf="!isFavorite" class="fav-unlike"
-            src="assets/icon/heart_white.svg"></ion-icon>
+                <!-- </span> -->
+              </ion-slide>
+            </ion-slides>
+          </ion-card>
+          <span *ngIf="!IsGallery">
+            <img class="img-prop" src="assets/images/default_property.jpg" alt="ion">
+          </span>
+          <div>
+            <ion-badge class="box-price">{{this.formatNumber(property?.price)}} MRU</ion-badge>
+          </div>
+          <div>
+            <ion-badge class="box-purpose">A {{property?.purpose}}</ion-badge>
+          </div>
+          <div>
+            <ion-icon ion-button icon-only (click)="unFavoriteProperty()" *ngIf="isFavorite" class="fav-like"
+              src="assets/icon/heart.svg"></ion-icon>
+            <ion-icon ion-button icon-only (click)="favoriteProperty()" *ngIf="!isFavorite" class="fav-unlike"
+              src="assets/icon/heart_white.svg"></ion-icon>
           </div>
           <!-- <div class="box-filter">
-  
-          </div> -->
+    
+            </div> -->
         </ion-col>
-      <ion-col size-lg="5" size-md="5" size-sm="5" size="12">
-        <ion-card class="custom-font">
-          <ion-card-content>
-        
+        <ion-col size-lg="5" size-md="5" size-sm="5" size="12">
+          <ion-card class="custom-font">
+            <ion-card-content>
+
               <span class="property-title" *ngIf="this.existInfos(property.title)">{{ property.title}}</span>
               <div *ngIf="this.existInfos(property.nearby)">
                 <p class="desc-location" [innerHTML]="property.nearby"></p>
               </div>
               <br>
               <ion-row>
-                
-                <ion-col  size="3" center text-center class="col-align" *ngIf="this.existInfos(property.bathroom)">
-      
+
+                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(property.bathroom)">
+
                   <ion-icon class="desc-icons" name="bed-outline"></ion-icon>
                   <p class="p-desc">Chambre(s)</p>
                   <span class="icon-label ion-align-self-end">{{ property.bathroom }}</span>
-      
+
                 </ion-col>
-                <ion-col  size="3" center text-center class="col-align" *ngIf="this.existInfos(property.bedroom)">
-      
+                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(property.bedroom)">
+
                   <ion-icon class="desc-icons" src="assets/icon/door.svg"></ion-icon>
                   <p class="p-desc">piece(s)</p>
                   <span class="icon-label">{{ property.bedroom }}</span>
                 </ion-col>
-                <ion-col  size="3" center text-center class="col-align" *ngIf="this.existInfos(property.area)">
-      
+                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(property.area)">
+
                   <ion-icon class="desc-icons" src="assets/icon/area.svg"></ion-icon>
                   <p class="p-desc">Surface</p>
                   <span class="icon-label">{{ property.area}}</span>
-      
+
                 </ion-col>
                 <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(property.douche)">
-      
+
                   <ion-icon class="desc-icons" src="assets/icon/toilet.svg"></ion-icon>
                   <p class="p-desc">Douche(s)</p>
                   <span class="icon-label">{{property.douche}}</span>
-        
+
                 </ion-col>
               </ion-row>
               <br>
@@ -84,135 +85,164 @@
                 <div class="desc-location" [innerHtml]="property.description">
                 </div>
               </ion-row>
-            
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid>
-    <ion-row>
-      <ion-col size-lg="6" size-md="6" size-sm="6" size="12">
-        <div class="card-body">
-          <div class="user-meta">
-            <h3 class="playername">Caratéristiques</h3>
-          </div>
-          <br>
-          <ion-row>
-          <ion-col center text-center>
-            <div *ngIf="this.existInfos(property.cuisine)">
-              <ion-badge class="box-features">cuisine {{property?.cuisine}}</ion-badge>
-            </div>
-          </ion-col>
-          <ion-col  center text-center>
-            <div *ngIf="this.existInfos(property.city)">
-              <ion-badge class="box-features">{{property?.city}}</ion-badge>
-            </div>
-          </ion-col>
-          <ion-col  center text-center>
-            <div *ngIf="this.existInfos(property.nearby)">
-              <ion-badge class="box-features">
-                  {{property?.nearby}}
-              </ion-badge>
-            </div>
-          </ion-col>
-        </ion-row>
-        </div>
-        <ion-card class="custom-font">
-          <ion-card-content>
-            <span *ngIf="property?.floor_plan != 'default.png'">
-              <img src="https://daary-immo.com/storage/property/{{property?.floor_plan}}" alt="ion">
-            </span>
-            <span *ngIf="property?.floor_plan == 'default.png'">
-              <img src="assets/images/default_property.jpg" alt="ion">
-            </span>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size-lg="6" size-md="6" size-sm="6" size="12">
-        <ion-avatar class="custom-avatar">
-          <img class="custom-img" src="assets/images/avatar.png">
-        </ion-avatar>
-        <div class="card-body">
-          <div class="user-meta ion-text-center">
-            <h3 class="playername">{{property?.user.name}}</h3>
-            <h5 class="country">{{property?.user.email}}</h5>
-            <h6 class="country">{{property?.user.phone_number}}</h6>
-          </div>
-         <ion-col size="12">
-          <form [formGroup]="ionicForm" (ngSubmit)="sendMessage()" novalidate>
 
-            <ion-list>
-              <ion-item lines="full">
-                <ion-label position="floating" color="success">Nom<label style="color: red;">*</label> </ion-label>
-                <ion-input formControlName="name" type="text"></ion-input>
-              </ion-item>
-              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
-                Nom est requis.
-              </span>
-              <ion-item lines="full">
-                <ion-label position="floating" color="success">Téléphone<label style="color: red;">*</label> </ion-label>
-                <ion-input formControlName="phone" type="number" pattern="\d*"></ion-input>
-              </ion-item>
-              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone.errors?.required">
-                Numéro est requis.
-              </span>
-              <ion-item lines="full">
-                <ion-label position="floating" color="success">Email</ion-label>
-                <ion-input formControlName="email" type="text"></ion-input>
-                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
-                Format E-email invalide.
-                </span>
-              </ion-item>
-
-              <ion-item lines="full">
-                <ion-label position="floating" color="success">Message<label style="color: red;">*</label> </ion-label>
-                <ion-textarea formControlName="my_message" class="google-input" cols="33" rows="5" ></ion-textarea>
-                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.my_message.errors?.required">
-                  Message est requis.
-                  </span>
-              </ion-item>
-
-            </ion-list>
-            <div class="container-form-btn">
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-lg="6" size-md="6" size-sm="6" size="12">
+          <ion-card class="card_content">
+            <ion-card-content>
+              <h3 class="playername">Caratéristiques</h3>
+              <br>
               <ion-row>
-                <ion-col size="6">
-
-                  <ion-button class="btn-search" color="success" expand="block" type="submit">
-                    <ion-icon slot="start" name="mail"></ion-icon>
-                    Envoyer
-                  </ion-button>
+                <ion-col center text-center>
+                  <div *ngIf="this.existInfos(property.cuisine)">
+                    <ion-badge class="box-features">cuisine {{property?.cuisine}}</ion-badge>
+                  </div>
                 </ion-col>
-                <ion-col size="6">
-
-                  <ion-button class="btn-search" color="success" expand="block" fill="outline" (click)="callAgent()">
-                    <ion-icon slot="start" name="call"></ion-icon>
-                    Appeler
-                  </ion-button>
+                <ion-col center text-center>
+                  <div *ngIf="this.existInfos(property.city)">
+                    <ion-badge class="box-features">{{property?.city}}</ion-badge>
+                  </div>
+                </ion-col>
+                <ion-col center text-center>
+                  <div *ngIf="this.existInfos(property.nearby)">
+                    <ion-badge class="box-features">
+                      {{property?.nearby}}
+                    </ion-badge>
+                  </div>
                 </ion-col>
               </ion-row>
-            </div>
-          </form>
-         </ion-col>
-        </div>
-        <!-- <ion-card class="custom-font custom-card">
-          <ion-row>
-            <ion-col size="5">
+            </ion-card-content>
+          </ion-card>
+          <ion-card class="card_content">
+            <ion-card-content>
+              <span *ngIf="property?.floor_plan != 'default.png'">
+                <img src="https://daary-immo.com/storage/property/{{property?.floor_plan}}" alt="ion">
+              </span>
+              <span *ngIf="property?.floor_plan == 'default.png'">
+                <img src="assets/images/default_property.jpg" alt="ion">
+              </span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-lg="6" size-md="6" size-sm="6" size="12">
+          <ion-card class="card_content">
+            <ion-card-content>
               <ion-avatar class="custom-avatar">
                 <img class="custom-img" src="assets/images/avatar.png">
               </ion-avatar>
-            </ion-col>
-            <ion-col size="7">
-              <h1 class="custom-font"></h1>
-              <span></span>
-              <p></p>
-            </ion-col>
-           
-          </ion-row>
-        </ion-card> -->
-      </ion-col>
-    </ion-row>
-</ion-grid>
- 
-  
+              <div class="user-meta ion-text-center">
+                <h3 class="playername">{{property?.user.name}}</h3>
+                <h5 class="country">{{property?.user.email}}</h5>
+                <h6 class="country">{{property?.user.phone_number}}</h6>
+              </div>
+              <ion-col size="12">
+                <form [formGroup]="ionicForm" (ngSubmit)="sendMessage()" novalidate>
+
+                  <ion-list>
+                    <ion-item lines="full">
+                      <ion-label position="floating" color="success">Nom<label style="color: red;">*</label>
+                      </ion-label>
+                      <ion-input formControlName="name" type="text"></ion-input>
+                    </ion-item>
+                    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
+                      Nom est requis.
+                    </span>
+                    <ion-item lines="full">
+                      <ion-label position="floating" color="success">Téléphone<label style="color: red;">*</label>
+                      </ion-label>
+                      <ion-input formControlName="phone" type="number" pattern="\d*"></ion-input>
+                    </ion-item>
+                    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone.errors?.required">
+                      Numéro est requis.
+                    </span>
+                    <ion-item lines="full">
+                      <ion-label position="floating" color="success">Email</ion-label>
+                      <ion-input formControlName="email" type="text"></ion-input>
+                      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+                        Format E-email invalide.
+                      </span>
+                    </ion-item>
+
+                    <ion-item lines="full">
+                      <ion-label position="floating" color="success">Message<label style="color: red;">*</label>
+                      </ion-label>
+                      <ion-textarea formControlName="my_message" class="google-input" cols="33" rows="5"></ion-textarea>
+                      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.my_message.errors?.required">
+                        Message est requis.
+                      </span>
+                    </ion-item>
+
+                  </ion-list>
+                  <div class="container-form-btn">
+                    <ion-row>
+                      <ion-col size="6">
+
+                        <ion-button class="btn-search" color="success" expand="block" type="submit">
+                          <ion-icon slot="start" name="mail"></ion-icon>
+                          Envoyer
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="6">
+
+                        <ion-button class="btn-search" color="success" expand="block" fill="outline"
+                          (click)="callAgent()">
+                          <ion-icon slot="start" name="call"></ion-icon>
+                          Appeler
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </div>
+                </form>
+              </ion-col>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ng-template #skeleton>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let item of [1, 2, 3, 4, 5, 6]" size-lg="6" size-md="6" size-sm="6" size="12">
+          <div>
+            <ion-card class="custom-font">
+              <ion-grid fixed>
+                <ion-skeleton-text animated
+                  style="line-height: 13px; width: 100%; height: 200px;--background-rgb: 230,40,50;--border-radius: 20px;">
+                </ion-skeleton-text>
+                <ion-row>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                </ion-row>
+              </ion-grid>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+
 </ion-content>

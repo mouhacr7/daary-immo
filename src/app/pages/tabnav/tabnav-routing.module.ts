@@ -1,6 +1,8 @@
+import { AgDashboardPageModule } from './../Agent/ag-dashboard/ag-dashboard.module';
 import { NgModule } from '@angular/core';
 import { TabnavPage } from './tabnav.page';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'src/app/guard/auth.guard';
 
 const routes: Routes = [{
     path: '',
@@ -21,6 +23,11 @@ const routes: Routes = [{
       {
         path: 'login',
         loadChildren: () => import('../../auth/login/login.module').then(m => m.LoginPageModule)
+      },
+      {
+        path: 'ag-dashboard',
+        loadChildren: () => import('../../pages/Agent/ag-dashboard/ag-dashboard.module').then(m => m.AgDashboardPageModule),
+        canActivate: [AuthGuard]
       },
       {
         path: 'infos',

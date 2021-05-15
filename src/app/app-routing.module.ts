@@ -47,8 +47,7 @@ const routes: Routes = [
   },
   {
     path: 'property-details/:id',
-    loadChildren: () => import('./pages/property-details/property-details.module').then( m => m.PropertyDetailsPageModule),
-    resolve: {property: PropertyResolverService}
+    loadChildren: () => import('./pages/property-details/property-details.module').then( m => m.PropertyDetailsPageModule)
   },
   {
     path: 'contact-agent/:id',
@@ -132,12 +131,11 @@ const routes: Routes = [
   {
     path: 'tabnav',
     loadChildren: () => import('./pages/tabnav/tabnav.module').then( m => m.TabnavPageModule)
-  },  {
+  },
+  {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   }
-
-
 ];
 
 @NgModule({

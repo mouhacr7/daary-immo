@@ -319,7 +319,7 @@
   }
   .custom-avatar {
     display: table-row;
-    text-align-last: center;
+    text-align: -webkit-center;
   }
   .custom-img {
     max-width: 50%;

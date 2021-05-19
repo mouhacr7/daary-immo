@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "pwa-daary-immo"
+    "default": "daary-immo",
+    "daary-immo-pwa": "daary-immo",
+    "daary-immo": "daary-immo"
   }
 }

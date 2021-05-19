@@ -1,4 +1,3 @@
-import { LoadingComponentComponent } from './loading-component/loading-component.component';
 import { AgUpdatePropertyComponent } from './ag-update-property/ag-update-property.component';
 import { AgUpdateProfileComponent } from './ag-update-profile/ag-update-profile.component';
 import { AgMessagesComponent } from './ag-messages/ag-messages.component';
@@ -21,9 +20,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     AgProfileComponent,
     AgMessagesComponent,
     AgUpdateProfileComponent,
-    AgUpdatePropertyComponent,
-    LoadingComponentComponent
-
+    AgUpdatePropertyComponent
   ],
   exports: [
     AgUploadComponent,
@@ -32,8 +29,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     AgProfileComponent,
     AgMessagesComponent,
     AgUpdateProfileComponent,
-    AgUpdatePropertyComponent,
-    LoadingComponentComponent
+    AgUpdatePropertyComponent
   ],
   imports: [
     CommonModule,

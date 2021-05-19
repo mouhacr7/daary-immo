@@ -4,10 +4,9 @@ import { Properties } from './../../models/properties';
 import { map, mergeMap, startWith } from 'rxjs/operators';
 import { PropertiesService } from 'src/app/services/properties.service';
 import { FavoriteService } from './../../services/favorite.service';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { BehaviorSubject, interval, merge, Observable, Subject } from 'rxjs';
-import { LoadingController } from '@ionic/angular';
+import { merge, Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-favorites',
@@ -39,10 +38,8 @@ export class FavoritesPage implements OnInit {
   constructor(
     private router: Router,
     public favService: FavoriteService,
-    private propertyService: PropertiesService,
-    private alertService: AlertService,
-    private networkService: NetworkService
-  ) { 
+    private propertyService: PropertiesService  
+    ) { 
     
   }
   ionViewDidLeave() {

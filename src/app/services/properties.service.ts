@@ -6,8 +6,6 @@ import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { StorageService } from './storage.service';
 import { TokenSessionStorageService } from './token-session-storage.service';
 import { AlertService } from './alert.service';
-import { SampleShellListingModel, SampleShellModel } from '../models/SampleShell';
-import { ShellProvider } from './shell-provider.service';
 
 
 const HttpUploadOptions = {
@@ -39,9 +37,9 @@ export class PropertiesService {
     }
     
   getPosts(): Observable<Properties[]> {
-    return this.http.get<Properties[]>(`/mobile/properties`, {})
+    return this.http.get<Properties[]>(`/mobile/properties_no_paginate`, {})
     .pipe(
-      map(res => res['properties']['data']),
+      map(res => res['properties']),
       catchError(this.handleError)
     );
   }
@@ -53,7 +51,7 @@ export class PropertiesService {
       }),
       map(res => res['properties']['data']),
       shareReplay(),
-      delay(5000),
+      // delay(5000),
       finalize(() => {
         console.log('getData COMPLETED');
       }),

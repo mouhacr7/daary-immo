@@ -36,6 +36,7 @@ export class SignupPage {
     private authService: AuthService,
     private router: Router,
     private menuCtrl: MenuController,
+    private platform: Platform,
     private tokenSessionStorageService: TokenSessionStorageService) {
     
       this.ionicForm = formBuilder.group({

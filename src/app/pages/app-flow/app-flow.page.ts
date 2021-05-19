@@ -1,11 +1,8 @@
-import { StoreService } from './../../services/store.service';
-import { LoadingServiceService } from './../../services/loading-service.service';
 import {
   Properties
 } from './../../models/properties';
 import {
   Component,
-  Inject,
   OnInit,
   ViewChild
 } from '@angular/core';
@@ -21,12 +18,9 @@ import {
 } from './../../services/properties.service';
 import { NavigationExtras, Router  } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import {
-  DOCUMENT
-} from '@angular/common';
 import { NetworkService } from 'src/app/services/network.service';
 import { AlertService } from 'src/app/services/alert.service';
-import { map, finalize, tap, startWith, mergeMap } from 'rxjs/operators';
+import { map, startWith, mergeMap } from 'rxjs/operators';
 import { merge, Observable, Subject } from 'rxjs';
 import { ConnectionService } from 'ng-connection-service';
 
@@ -44,12 +38,13 @@ export class AppFlowPage implements OnInit {
   totalPosts = 0;
   currentPage = 1;
   limit = 10;
-  loading: any;
+  // loading: any;
   property: Properties;
   showData = false;
   mySubscription: any;
   infoExist: boolean ;
   imagePath: String = "https://daary-immo.com/storage/property";
+  loading = false;
   // loading: HTMLIonLoadingElement;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
@@ -75,11 +70,9 @@ showLoadMoreButton: boolean = false;
     private menuCtrl: MenuController,
     private propertiesServices: PropertiesService,
     public loadingController: LoadingController,
-    private loadingService: LoadingServiceService,
     public toastController: ToastController,
     private networkService: NetworkService,
     private alertService: AlertService,
-    private store: StoreService,
     public navCtrl: NavController,
     public router: Router,
     private connectionService: ConnectionService
@@ -135,6 +128,7 @@ showLoadMoreButton: boolean = false;
   }
   doRefresh(event: any) {
     setTimeout(() => {
+      this.showLoadMoreButton = true;
       this.currentPage = 1;
       this.ngOnInit();
       event.target.complete();  // This is a must for us to perform the method
@@ -243,7 +237,7 @@ showLoadMoreButton: boolean = false;
         icon: 'close'
       }]
     });
-
+      this.loading = true;
       this.currentPage++;
       this.propertyList$ = this.propertiesServices.getPostsPaginated(this.currentPage);
       const refreshDataClick$ = this.refreshDataClickSubject.asObservable();
@@ -254,6 +248,7 @@ showLoadMoreButton: boolean = false;
         mergeMap(() => this.propertyList$)
       )
       this.propList$.subscribe(async (data) => {
+        this.loading = false;
         this.propertiesList$ = this.propertiesList$.concat(data);
         this.displayedList = this.propertiesList$;
         if (data.length < 10) {

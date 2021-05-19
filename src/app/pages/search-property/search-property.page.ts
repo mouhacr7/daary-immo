@@ -1,11 +1,10 @@
 import { filter } from 'rxjs/operators';
 import { PropertiesService } from './../../services/properties.service';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NavigationExtras, Router  } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
-import { DOCUMENT } from '@angular/common';
 import { Properties } from 'src/app/models/properties';
 
 @Component({
@@ -71,8 +70,7 @@ export class SearchPropertyPage implements OnInit {
     public formBuilder: FormBuilder,
     private propertiesServices: PropertiesService,
     public navCtrl: NavController,
-    public router: Router,
-    @Inject(DOCUMENT) private document: Document
+    public router: Router
   ) {}
 
   ngOnInit() {
@@ -126,12 +124,6 @@ export class SearchPropertyPage implements OnInit {
       this.showCity = false;
       this.local.next('');
     }
-  doRefresh(event: any) { 
-    setTimeout(() => {
-      this.document.location.reload();
-      event.target.complete();  // This is a must for us to perform the method
-    }, 1000);  // 1000 means that the execution time is within 1s. If the execution is slow, this needs to be increased.
-  }
 
   onRefreshFilters() {
     // Purpose

@@ -3,9 +3,9 @@
 <ion-header>
 	<ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-		<ion-title class="ion-text-center custom-font">Se connecter</ion-title>
+		<ion-title>Se connecter</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -55,10 +55,10 @@
                   Le mot de passe doit comporter au minimum 6 caractéres. 
                 </span>
               </ion-list>
-              <ion-button class="custom-font" color="success" type="submit" [disabled]="!ionicForm.valid" expand="block">Me connecter</ion-button>   
+              <ion-button color="success" type="submit" [disabled]="!ionicForm.valid" expand="block">Me connecter</ion-button>   
                 <p text-right style="text-align: -webkit-center;font-size: inherit; font-weight: bolder;" (click)="forgotPassLoad()">Mot de passe oublié ?</p>
                 <p style="text-align: -webkit-center;
-                font-size: inherit;"> Vous n'avez pas encore de compte! <span style="color: forestgreen; font-weight: bolder;" (click)="registerLoad()">S'inscrire</span> </p>
+                font-size: inherit;"> Vous n'avez pas encore de compte! <span style="color: forestgreen; font-weight: bolder;" routerLink="/signup">S'inscrire</span> </p>
             </form>
           </ion-card-content>
         </ion-card>

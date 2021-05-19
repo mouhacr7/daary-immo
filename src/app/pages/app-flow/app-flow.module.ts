@@ -10,7 +10,6 @@ import { AppFlowPageRoutingModule } from './app-flow-routing.module';
 import { AppFlowPage } from './app-flow.page';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { LoadingComponentComponent } from 'src/app/components/loading-component/loading-component.component';
 
 @NgModule({
   imports: [

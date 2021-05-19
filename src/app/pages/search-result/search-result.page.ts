@@ -25,6 +25,8 @@ export class SearchResultPage implements OnInit {
   featured: any;
   propertiesList: Properties[] = [];
   showData: boolean = false;
+  noResults: boolean = false;
+  categorieTitle: string = '';
   
   constructor(
     private route: ActivatedRoute,
@@ -59,9 +61,17 @@ export class SearchResultPage implements OnInit {
           this.propertiesList = data['properties'];
           this.showData = true;
           console.log( this.propertiesList.length);
+          
           this.propertiesList.map( prop => {
-            console.log(prop);
+            this.categorieTitle = prop.type;
           });
+          if (this.propertiesList.length === 0) {
+            this.categorieTitle = 'Resultats'
+            this.noResults = true;
+          } else {
+            this.noResults = false;
+          }
+          console.log(this.categorieTitle);
         })
        }
     });

@@ -215,7 +215,7 @@
                       </ion-col>
                     </ion-row>
                     <div class="container-form-btn" *ngIf="this.showLoadMoreButton">
-                      <button class="form-btn custom-font" (click)="loadMorePosts($event)">
+                      <button class="form-btn custom-font" [class.spinner]="loading" [disabled]="loading" (click)="loadMorePosts($event)">
                         Charger plus...
                       </button>
                     </div>

@@ -6,13 +6,11 @@ import {
 } from 'src/app/services/auth.service';
 import {
   Component,
-  Inject,
   OnInit,
   ViewChild
 } from '@angular/core';
 import {
   MenuController,
-  NavController,
   AlertController,
   IonContent,
   ToastController,
@@ -38,9 +36,6 @@ import {
 import {
   MessagesService
 } from 'src/app/services/messages.service';
-import {
-  DOCUMENT
-} from '@angular/common';
 import {
   AlertService
 } from 'src/app/services/alert.service';
@@ -96,13 +91,13 @@ export class AgDashboardPage implements OnInit {
   status = 'ONLINE';
   isConnected = true;
   showLoadMoreButton: boolean = true; 
+  loader = false;
 
   constructor(
     private menu: MenuController,
     public loadingController: LoadingController,
     private router: Router,
     private alertCtrl: AlertController,
-    private propertiesServices: PropertiesService,
     public toastController: ToastController,
     private callNumber: CallNumber,
     private tokenSession: TokenSessionStorageService,
@@ -347,14 +342,14 @@ export class AgDashboardPage implements OnInit {
         icon: 'close'
       }]
     });
- 
+      this.loader = true;
       this.currentPage++;
       this.propertyService.getAgentProperties(this.currentUser.id,this.currentPage).subscribe(async (data: Properties[]) => {
         this.propertiesList = this.propertiesList.concat(data);
         this.displayedList = [...this.propertiesList];
         console.log(this.displayedList);
         
-
+        this.loader = false;
         if (data.length < 10) {
           this.showLoadMoreButton = false;
           await toast.present().then();

@@ -334,3 +334,20 @@ page-trips,
     }
   }
 }
+@media (max-width: 768px) {
+  .col-md {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  .custom-card {
+    font-family: "San Francisco";
+    margin: 5px 0px;
+    border-radius: 10px;
+  }
+
+  .custom-card-content {
+    padding-bottom: 32px;
+
+  }
+}

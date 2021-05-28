@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>ag-dashboard</ion-title>
+    <ion-title>Mon profil</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,11 +17,12 @@
           <ion-avatar class="custom-avatar">
             <img class="custom-img" src="assets/images/avatar.png">
           </ion-avatar>
-          <ion-card-header>
-            <h1 class="custom-font">Bonjour <strong>{{ currentUser.username }}</strong></h1>
-            <span> {{ currentUser.email }}</span>
-            <p> {{ currentUser.phone_number }}</p>
-            <p> Compte : <b>{{ role | uppercase}} </b></p>
+          <ion-card-header *ngIf="currentUser">
+            <div class="user-meta ion-text-center">
+              <h3 class="playername">Bonjour {{ currentUser.username }}</h3>
+              <h5 class="country">Email : {{ currentUser.email }}</h5>
+              <h5 class="country">Numero : {{ currentUser.phone_number }}</h5>
+            </div>
           </ion-card-header>
         </ion-card>
       </ion-col>
@@ -51,7 +52,7 @@
                       <ion-card-content>
                         <ion-icon class="icon-personal" name="business-outline"></ion-icon><br>
                         <h1 class="custom-font personal-agent">Propriétés</h1>
-                        <h1>{{ propertiesList.length }}</h1>
+                        <h1>{{cpt_agent_properties }}</h1>
                       </ion-card-content>
                     </ion-card>
                   </ion-col>
@@ -77,7 +78,7 @@
               <ion-label (click)="toggleUp('profile')"
                 class="d-flex justify-content-between align-items-center label-padd" data-target="#profileDetails"
                 data-toggle="collapse">
-                <h2 class="custom-font">Profile</h2>
+                <h2 class="custom-font">Profil</h2>
                 <ion-icon (click)="toggleUp('upload')" *ngIf="!isProfileUp" class="arrow-down-icon ustify-self-start"
                   data-target="#profileDetails" data-toggle="collapse" name="chevron-down-outline" size="medium"
                   slot="icon-only"></ion-icon>
@@ -215,10 +216,14 @@
                       </ion-col>
                     </ion-row>
                     <div class="container-form-btn" *ngIf="this.showLoadMoreButton">
-                      <button class="form-btn custom-font" [class.spinner]="loading" [disabled]="loading" (click)="loadMorePosts($event)">
+                      <button class="form-btn custom-font" (click)="loadMorePostsButton($event)">
                         Charger plus...
                       </button>
                     </div>
+                    <ion-infinite-scroll threshold="150px" (ionInfinite)="loadMorePosts($event)">
+                      <ion-infinite-scroll-content color="light" loadingSpinner="crescent" loadingText="Chargement...">
+                      </ion-infinite-scroll-content>
+                    </ion-infinite-scroll>
                   </div>
                 </ion-card>
               </ion-item>

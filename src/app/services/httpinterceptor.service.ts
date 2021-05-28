@@ -1,83 +1,102 @@
-import { StorageService } from './storage.service';
-import {Injectable} from '@angular/core';
 import {
-    HttpInterceptor,
-    HttpRequest,
-    HttpResponse,
-    HttpHandler,
-    HttpEvent,
-    HttpErrorResponse
+  AuthService
+} from 'src/app/services/auth.service';
+import {
+  Storage
+} from '@ionic/storage';
+import {
+  Injectable
+} from '@angular/core';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+  HttpHandler,
+  HttpEvent,
+  HttpErrorResponse
 } from '@angular/common/http';
 
-import { Observable, throwError, from } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import {
+  Observable,
+  throwError,
+  from
+} from 'rxjs';
+import {
+  map,
+  catchError,
+  switchMap
+} from 'rxjs/operators';
 
-import { AlertController } from '@ionic/angular';
-import { AlertService } from './alert.service';
+import {
+  AlertController
+} from '@ionic/angular';
+import {
+  AlertService
+} from './alert.service';
 
 
-const TOKEN_KEY = 'auth-user';
+const TOKEN_KEY = 'token';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
 
-    protected url   = 'https://daary-immo.com/api';
-    protected debug = true;
+  protected url = 'https://daary-immo.com/api';
+  protected debug = true;
+  accessToken: string;
+  constructor(
+    private alertController: AlertController,
+    private authService: AuthService,
+    private storage: Storage
+  ) {}
 
-    constructor(
-        private alertController: AlertController,
-        private alertService: AlertService,
-        private storage: StorageService) { }
+  intercept(request: HttpRequest < any > , next: HttpHandler): Observable < HttpEvent < any >> {
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // YOU CAN ALSO DO THIS
+    const token = this.storage.get(TOKEN_KEY);
 
-        // YOU CAN ALSO DO THIS
-        // const token = this.authenticationService.getToke()   this.token = this.tokenSession.getUser()['token'];
-        
-    return from(this.storage.get(TOKEN_KEY))
-    .pipe(
+    return from(token)
+      .pipe(
         switchMap(token => {
-            if (token) {
-                // token = this.tokenSession.getUser()['token'];
-                console.log(token);
-                request = request.clone({ headers: request.headers.set('Authorization', `Bearer ${token}`) });
-            }
+          if (token) {
+            // token = this.tokenSession.getUser()['token'];
+            this.accessToken = token['token'];
+            request = request.clone({
+              headers: request.headers.set('Authorization', `Bearer ${this.accessToken}`)
+            });
+          }
 
-            if (this.debug) {
-                request = request.clone({ url: this.url + request.url});
-            }
+          if (this.debug) {
+            request = request.clone({
+              url: this.url + request.url
+            });
+          }
 
-            return next.handle(request).pipe(
-                map((event: HttpEvent<any>) => {
-                    if (event instanceof HttpResponse) {
-                        // do nothing for now
-                    }
-                    return event;
-                }),
-                catchError((error: HttpErrorResponse) => {
-                    const status =  error.status;
-                    const reason = error.error.error;
-                    const message = error.message;
-                    console.log(status);
-                    
-                    if (reason === 'invalid_credentials') {
-                        this.alertService.basciAlert( 'Oups!!!','Indentifiants incorrects :( Veuillez vérifier vos identifiants !',  ['OK'])
-                    }
-                    console.log(reason)
-                    return throwError(error);
-                })
-            );
+          return next.handle(request).pipe(
+            // map((event: HttpEvent < any > ) => {
+            //   if (event instanceof HttpResponse) {
+            //     console.log('event--->>>', event);
+            //   }
+            //   return event;
+            // }),
+            catchError((error: HttpErrorResponse) => {
+              if (error.status === 401) {
+                if (error.error.success === false) {
+                  this.presentAlert('Connexion échouée');
+                }
+              }
+              return throwError(error);
+            }));
         })
-    );
- }
-    async presentAlert(status, reason) {
-        const alert = await this.alertController.create({
-            header: status + ' Error',
-            subHeader: 'Subtitle',
-            message: reason,
-            buttons: ['OK']
-        });
+      );
+  }
+  async presentAlert(reason) {
+    const alert = await this.alertController.create({
+      header: status + ' Error',
+      subHeader: 'Subtitle',
+      message: reason,
+      buttons: ['OK']
+    });
 
-        await alert.present();
-    }
+    await alert.present();
+  }
 }

@@ -35,7 +35,7 @@ export class AlertService {
   }
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'Chargement...',
+      // message: 'Chargement...',
       spinner: 'crescent',
     });
     await loading.present();

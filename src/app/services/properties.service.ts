@@ -66,6 +66,14 @@ export class PropertiesService {
       catchError(this.handleError)
     );
   }
+  getAgentPropertiesNoPaginate(): Observable<Properties[]> {
+    return this.http.get<Properties[]>(`/mobile/added_properties_without_paginate`, {})
+    .pipe(
+      tap(res => res),
+      shareReplay(),
+      catchError(this.handleError)
+    );
+  }
   getSingleProperty(id: String): Observable<Properties> {
     return this.http.get<Properties>(`/mobile/property/${id}`);
   }
@@ -131,7 +139,6 @@ export class PropertiesService {
     input.append('username',data.username)
     input.append('email',data.email)
     input.append('phone_number', data.phone_number)
-    input.append('image', data.image)
     console.log(input.getAll(data));
     
     return this.http.post(`/mobile/updateProfile`, input, {reportProgress: true})

@@ -1,3 +1,5 @@
+import { NetworkService } from 'src/app/services/network.service';
+import { User } from './../../../models/user';
 import {
   PropertiesService
 } from 'src/app/services/properties.service';
@@ -18,12 +20,6 @@ import {
   LoadingController
 } from '@ionic/angular';
 import {
-  User
-} from 'src/app/models/user';
-import {
-  TokenSessionStorageService
-} from 'src/app/services/token-session-storage.service';
-import {
   NavigationExtras,
   Router
 } from '@angular/router';
@@ -31,7 +27,7 @@ import {
   Properties
 } from 'src/app/models/properties';
 import {
-  BehaviorSubject
+  BehaviorSubject, merge, Observable, Subject
 } from 'rxjs';
 import {
   MessagesService
@@ -43,6 +39,7 @@ import {
   CallNumber
 } from '@ionic-native/call-number/ngx';
 import { ConnectionService } from 'ng-connection-service';
+import { map, mergeMap, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ag-dashboard',
@@ -60,12 +57,10 @@ export class AgDashboardPage implements OnInit {
   displayedList: Properties[];
   messagesList = [];
   property: Properties;
-  users: User;
   name: string = '';
   username: string = '';
   email: string = '';
   bio: string = '';
-  currentUser: any;
   role: string;
   isPersonalUp: boolean;
   isProfileUp: boolean;
@@ -77,7 +72,7 @@ export class AgDashboardPage implements OnInit {
   agent_id: number;
   idx = new BehaviorSubject < any > ('');
   propertyID: number;
-  cpt_number: number = 1;
+  cpt_agent_properties: Properties[];
   showData = false;
   // Format data to receive 
 
@@ -90,8 +85,25 @@ export class AgDashboardPage implements OnInit {
   isLoggedIn: boolean = false;
   status = 'ONLINE';
   isConnected = true;
-  showLoadMoreButton: boolean = true; 
+  showLoadMoreButton: boolean = false; 
   loader = false;
+
+// RXJS reactive system
+  // properties data
+  propertiesList$: Properties[];
+  propertyList$: Observable<Properties[]>;
+  propList$: Observable<Properties[]>;
+  // user data
+  id: User;
+  currentUser: User[];
+  currentUser$: Observable<User[]>;
+  currentObject$: Observable<User[]>;
+  user: User;
+  // refresh data subject reactive
+  refreshDataClickSubject = new Subject();
+  model$: Observable<{ properties: Properties[]}>;
+  modelUser$: Observable<{ user: User[]}>;
+
 
   constructor(
     private menu: MenuController,
@@ -100,21 +112,23 @@ export class AgDashboardPage implements OnInit {
     private alertCtrl: AlertController,
     public toastController: ToastController,
     private callNumber: CallNumber,
-    private tokenSession: TokenSessionStorageService,
     private alertService: AlertService,
     private authService: AuthService,
     private propertyService: PropertiesService,
     private messageService: MessagesService,
+    private networkService: NetworkService,
     private connectionService: ConnectionService
   ) {
+      this.id = this.authService.currentUserValue.user; 
+      console.log(this.authService.currentUserValue.user.id);
+      
     this.menu.enable(true);
     this.collapse_trigger_prop.next('collapse');
     this.collapse_trigger_mess.next('collapse');
   }
 
   receiveMessage(data) {
-    this.users = this.tokenSession.getUser();
-    this.agent_id = this.users.user.role_id;
+    this.agent_id =  this.id.role_id;
     console.log(data);
 
     //call service/api to post message
@@ -172,82 +186,89 @@ export class AgDashboardPage implements OnInit {
       }
     );
   }
-  async loadingFunction() {
-    this.loading = await this.loadingController.create({
-      message: 'Veuillez patienter...',
-      spinner: 'crescent',
-      duration: 2000
-    });
-    await this.loading.present();
-  }
-  ngOnInit() {
-    // this.authService.getToken().then(() => {
-    //   console.log(this.authService.isLoggedIn);
-    //   if(this.authService.isLoggedIn) {
-    //     this.router.navigateByUrl('/ag-dashboard');
-    //     this.alertService.presentToast('Vous étes déjà connecté :)', 'success')
-    //   } else {
-    //     this.router.navigateByUrl('/login');
-    //     this.alertService.presentToast('Vous étes déconnecté :)', 'danger')
-    //   }
-    // });
-    if (this.tokenSession.getUser()['token']) {
-      this.isLoggedIn = true;
-      this.users = this.tokenSession.getUser();
-      this.token = this.tokenSession.getUser()['token'];
-      console.log(this.token);
-      this.currentUser = this.users.user;
-    }
-    if (this.currentUser.role_id == 2) {
-      this.role = 'agent';
-    } else {
-      this.role = 'user';
-    }
-    console.log(this.currentUser.id)
-
-    this.loadingFunction();
+  async ngOnInit() {
+    // Agent properties not paginated
+    this.propertyService.getAgentPropertiesNoPaginate()
+   .subscribe( (data: Properties[]) => {
+     this.cpt_agent_properties = data['properties'].length;
+   })
+    // Agent profile infos
+    this.agentInfos();
     // Agent properties
-    this.propertyService.getPosts().subscribe( (properties: Properties[]) => {
-      console.log([...properties]);
-    })
-
-    this.propertyService.getAgentProperties(this.currentUser.id, this.currentPage).subscribe(async (data: Properties[]) => {
-      this.propertiesList = data;
-      this.displayedList = [...this.propertiesList];
-      console.log(this.propertiesList)
-
-    });
+    this.propsList()
     // Agent Messages
-    this.messageService.getAgentMessages().subscribe(async (data: any) => {
+    this.messageList()
+
+    this.getAgentProperties(); 
+  }
+  async agentInfos() {
+    const refreshDataClick$ = this.refreshDataClickSubject.asObservable();
+   const refreshTrigger$ = refreshDataClick$.pipe(
+     startWith({})
+   );
+  //  Agent profile infos
+   this.currentObject$ = this.authService.userInfos();
+   this.currentUser$ = refreshTrigger$.pipe(
+    mergeMap(() => this.currentObject$)
+  )
+  this.currentUser$.subscribe((data) => {
+    this.currentUser = data;
+    console.log(this.currentUser);
+    
+  }) 
+  this.currentPage = 1;
+  this.modelUser$ = merge(
+    refreshTrigger$.pipe(map(() => ({ user: []}))),
+    this.currentUser$.pipe(map(user => ({ user: user})))
+  );  
+  }
+  async messageList() {
+     // Agent Messages
+     this.messageService.getAgentMessages().subscribe(async (data: any) => {
       this.messagesList = data;
       console.log(this.messagesList);
     })
   }
+  async propsList() {
+    console.log(this.id);
+    
+    const refreshDataClick$ = this.refreshDataClickSubject.asObservable();
+    const refreshTrigger$ = refreshDataClick$.pipe(
+      startWith({})
+    );
+    this.propertyList$ = this.propertyService.getAgentProperties(this.id.id, this.currentPage);
+    // Agent properties
+    this.propList$ = refreshTrigger$.pipe(
+      mergeMap(() => this.propertyList$)
+    )
+    this.propList$.subscribe((data) => {
+      this.showData = true;
+      this.displayedList = data;
+    }) 
+    this.currentPage = 1;
+    this.model$ = merge(
+      refreshTrigger$.pipe(map(() => ({ properties: []}))),
+      this.propList$.pipe(map(properties => ({ properties: properties})))
+    );  
+  }
+ 
   ionViewWillEnter() {
     // this.refreshDataClickSubject.next();
     console.log("TabX is enter")
-    return this.connectionService.monitor().subscribe(isConnected => {
-      this.isConnected = isConnected;
-      console.log(this.isConnected);
-      
-      if (this.isConnected) {
+    return this.connectionService.monitor().subscribe(() => {
+      if (this.networkService.isConnected) {
         this.showLoadMoreButton = true;
         this.currentPage = 1;
-        this.status = "ONLINE";
-        console.log( this.status);
-        this.alertService.presentToast(this.status,'success')
         this.ngOnInit();
       }
       else {
         this.showData = false;
-        this.status = "OFFLINE";
-        console.log( this.status);
-        this.alertService.presentToast(this.status,'danger')
       }
     })
   }
   doRefresh(event: any) {
     setTimeout(() => {
+      this.showLoadMoreButton = true;
       this.currentPage = 1;
       this.ngOnInit();
       event.target.complete();  // This is a must for us to perform the method
@@ -314,22 +335,20 @@ export class AgDashboardPage implements OnInit {
   }
 
   logout() {
-    this.authService.logout().subscribe(
-      data => {
-        this.alertService.presentToast('Vous étes déconnecté :)', 'danger');        
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        this.router.navigate(['/app-flow']);
-      }
-    );
+    this.authService.logout();
   }
   onCallCustomer(phone: any) {
     return this.callNumber.callNumber(phone.toString(), true)
       .then(res => console.log('Launched dialer! Number called = ' + phone.toString(), res))
       .catch(err => console.log('Error launching dialer ! Number called = ' + phone.toString(), err))
+  }
+  getAgentProperties() {
+   this.propertyService.getAgentProperties(this.id.id, this.currentPage)
+   .subscribe( (data: Properties[]) => {
+     this.propertiesList$ = data;
+     this.showData = true;
+     console.log(this.propertiesList$);
+   })
   }
   async loadMorePosts(event) {
     const toast = await this.toastController.create({
@@ -342,14 +361,61 @@ export class AgDashboardPage implements OnInit {
         icon: 'close'
       }]
     });
-      this.loader = true;
       this.currentPage++;
-      this.propertyService.getAgentProperties(this.currentUser.id,this.currentPage).subscribe(async (data: Properties[]) => {
-        this.propertiesList = this.propertiesList.concat(data);
-        this.displayedList = [...this.propertiesList];
-        console.log(this.displayedList);
+      console.log(this.id.id);
+      
+      this.propertyList$ = this.propertyService.getAgentProperties(this.id.id, this.currentPage)
+      const refreshDataClick$ = this.refreshDataClickSubject.asObservable();
+      const refreshTrigger$ = refreshDataClick$.pipe(
+        startWith({})
+      );
+      this.propList$ = refreshTrigger$.pipe(
+        mergeMap(() => this.propertyList$)
+      )
+      // console.log(this.propertyList$);
+      
+      this.propList$.subscribe(async (data) => {
+        console.log(data);
         
-        this.loader = false;
+        this.propertiesList$ = this.propertiesList$.concat(data);
+        this.displayedList = this.propertiesList$;
+
+         
+        if (event !== null) {
+          event.target.complete();
+        }
+
+        if (data.length < 10) {
+          await toast.present().then();
+          event.target.disabled = true;
+        }
+      }, (err) => {
+        console.log(err);
+      });
+  }
+  async loadMorePostsButton(event) {
+    const toast = await this.toastController.create({
+      message: 'Fin de liste :)',
+      animated: true,
+      duration: 5000,
+      buttons: [{
+        text: 'Done',
+        role: 'cancel',
+        icon: 'close'
+      }]
+    });
+      this.currentPage++;
+      this.propertyList$ = this.propertyService.getAgentProperties(this.id.id, this.currentPage)
+      const refreshDataClick$ = this.refreshDataClickSubject.asObservable();
+      const refreshTrigger$ = refreshDataClick$.pipe(
+        startWith({})
+      );
+      this.propList$ = refreshTrigger$.pipe(
+        mergeMap(() => this.propertyList$)
+      )
+      this.propList$.subscribe(async (data) => {
+        this.propertiesList$ = this.propertiesList$.concat(data);
+        this.displayedList = this.propertiesList$;
         if (data.length < 10) {
           this.showLoadMoreButton = false;
           await toast.present().then();

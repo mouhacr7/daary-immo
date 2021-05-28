@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { StorageService } from './storage.service';
-import { TokenSessionStorageService } from './token-session-storage.service';
+import { HttpClient  } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { Properties } from '../models/properties';
 import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { Message } from '../models/message';

@@ -17,15 +17,15 @@
       <ion-label>Explorer</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button *ngIf="!this.display" tab="login" (click)="onClick($event)">
+    <ion-tab-button [tab]="this.auth" (click)="onClick($event)">
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label>Profile</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button *ngIf="this.display == true" tab="ag-dashboard" (click)="onClick($event)">
+    <!-- <ion-tab-button *ngIf="this.display" tab="ag-dashboard" (click)="onClick($event)">
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label>Profile</ion-label>
-    </ion-tab-button>
+    </ion-tab-button> -->
 
     <ion-tab-button tab="infos">
       <ion-icon name="information-circle-outline"></ion-icon>

@@ -1,9 +1,12 @@
 ion-header {
-  ion-toolbar, ion-item {
+
+  ion-toolbar,
+  ion-item {
     // --background: #f1f5f8;
     // background: #f1f5f8;
     padding: 0 10px;
   }
+
   ion-toolbar {
     .bordered {
       --border-radius: 10px;
@@ -17,19 +20,24 @@ ion-header {
   font-weight: bold;
   color: #000;
 }
+
 .subtitle-top {
-  font-size: 24px;  
+  font-size: 24px;
   color: #000;
 }
+
 ion-content {
   --background: linear-gradient(90deg, #009688 0%, #009688 35%, #009688 100%);
+
   .slides {
     margin-top: 0px;
     border-radius: 0 0 28px 28px;
     margin-inline: 0px !important;
   }
+
   ion-card {
     width: 100%;
+
     // box-shadow: none;
     // border-radius: 14px;
     // padding: 14px;
@@ -39,17 +47,18 @@ ion-content {
       height: 60px;
       border-radius: 50px;
       background: #FFFFFF;
-      box-shadow:  7px 7px 20px #dbdfe2, 
-             -7px -7px 20px #ffffff;
-            
+      box-shadow: 7px 7px 20px #dbdfe2,
+        -7px -7px 20px #ffffff;
+
       display: flex;
       align-items: center;
       justify-content: center;
       // img {
       //   width: 30px;
       // }
-      
+
     }
+
     .card_title {
       color: #fff;
       z-index: 4;
@@ -63,63 +72,76 @@ ion-content {
       font-weight: 700;
       line-height: 1.2;
     }
+
     .files {
-        // padding-top: 14px;
-        height: -webkit-fill-available;
-        width: -webkit-fill-available
+      // padding-top: 14px;
+      height: -webkit-fill-available;
+      width: -webkit-fill-available
     }
   }
+
   .container {
     padding: 6px 20px;
     color: #FFFFFF;
+
     ion-item {
-      --background: rgba(255,255,255,.1);
+      --background: rgba(255, 255, 255, .1);
       padding: 0;
       margin: 14px 0;
       --border-radius: 14px;
       color: #FFFFFF;
       font-weight: 600;
+
       ion-label {
         padding: 6px 0;
+
         h4 {
           font-weight: 600;
           font-size: 16px;
         }
+
         h6 {
-          color: rgba(255,255,255,.66);
+          color: rgba(255, 255, 255, .66);
         }
       }
     }
+
     h2 {
       padding-bottom: 8px;
     }
   }
 
 }
-.custom-font {
+
+.custom-card {
   // margin-inline: auto !important;
   font-family: 'San Francisco';
   margin: 5px 0px;
   border-radius: 0;
 }
-.logo-section{
+
+.logo-section {
   display: flex;
   // justify-content: center;
   align-items: center;
-  .logo-section__wrapper{
+
+  .logo-section__wrapper {
     text-align: center;
+
     // margin-right: 36px;
-      .logo-section__logo{
-          max-width: 78%;
-          display: block;
-          border-radius: 100%;
-          // text-align: ;
-      }
+    .logo-section__logo {
+      max-width: 78%;
+      display: block;
+      border-radius: 100%;
+      // text-align: ;
+    }
   }
 }
+
 .ellipsis {
   font-size: xx-large;
 }
+
 .title-col {
   font-size: -webkit-xxx-large;
   font-weight: bold;
@@ -129,8 +151,8 @@ ion-content {
 .property-title {
 
   font-weight: bold !important;
-    font-size: initial;
-    // color: black;
+  font-size: initial;
+  // color: black;
 }
 
 .p-desc {
@@ -154,7 +176,7 @@ ion-content {
   margin-top: -240px;
   margin-right: 0px;
   float: right;
-  background:#009688;
+  background: #009688;
   border-radius: 2px;
   font-size: large;
   padding: 13px;
@@ -175,7 +197,7 @@ ion-content {
 }
 
 .property-price {
-  color:  #009688;
+  color: #009688;
   letter-spacing: -2px;
   font-weight: bolder;
 }
@@ -196,7 +218,7 @@ ion-content {
   width: -webkit-fill-available;
   object-fit: fill;
   box-shadow: inset 1px 1px 150px #000;
-  
+
 }
 
 
@@ -301,12 +323,9 @@ ion-skeleton-text {
   color: #fff;
   box-sizing: border-box;
   font-family: monospace;
-  background: linear-gradient(
-360deg
-, transparent, transparent, #000000ad), linear-gradient(
-180deg
-, transparent, transparent, #00000070);
+  background: linear-gradient(360deg, transparent, transparent, #000000ad), linear-gradient(180deg, transparent, transparent, #00000070);
 }
+
 .box-filter-category {
   z-index: 3;
   position: relative;
@@ -319,9 +338,7 @@ ion-skeleton-text {
   color: #fff;
   box-sizing: border-box;
   font-family: monospace;
-  background:linear-gradient(
-180deg
-, transparent, transparent, #00000070);
+  background: linear-gradient(180deg, transparent, transparent, #00000070);
 }
 
 .card-category {
@@ -331,9 +348,10 @@ ion-skeleton-text {
 
 page-trips,
 .trips {
-	.card {
-		border-radius: 1rem
-	}
+  .card {
+    border-radius: 1rem
+  }
+
   .trip {
     overflow: hidden;
 
@@ -356,6 +374,7 @@ page-trips,
     }
   }
 }
+
 .bouncing-animation {
   &::after {
     content: "";
@@ -397,7 +416,7 @@ page-trips,
     animation-duration: 1s;
 
     @keyframes animateMultiLine {
-      0%{
+      0% {
         background-size:
           /* First line animation initial state: 80% width, 16px height */
           80% 16px,
@@ -407,7 +426,7 @@ page-trips,
           60% 16px;
       }
 
-      100%{
+      100% {
         background-size:
           /* First line animation final state: 100% width, 16px height */
           100% 16px,
@@ -420,23 +439,37 @@ page-trips,
   }
 }
 
-#loading{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  width: 150px;
-  height: 150px;
-  margin: -75px 0 0 -75px;
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
+@media (max-width: 1024px) {
+  .col-md {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
-    
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+
+  .custom-card {
+    font-family: "San Francisco";
+    margin: 5px 0px;
+    border-radius: 10px;
   }
+  .custom-card-content {
+    padding-bottom: 32px;
+
+  }
+}
+
+@media (max-width: 768px) {
+  .col-md {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  .custom-card {
+    font-family: "San Francisco";
+    margin: 5px 0px;
+    border-radius: 10px;
+  }
+
+  .custom-card-content {
+    padding-bottom: 32px;
+
+  }
+}

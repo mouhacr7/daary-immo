@@ -1,9 +1,11 @@
+import { LoggedGuard } from './guard/logged.guard';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AgUpdatePropertyComponent } from './components/ag-update-property/ag-update-property.component';
 import { PropertyResolverService } from './services/property-resolver.service';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guard/auth.guard';
-import { AgentResolverService } from './services/agent-resolver.service';
+import { AgentResolverService } from './services/dist/agent-resolver.service';
 import { MessageResolverService } from './services/message-resolver.service';
 import { IntroGuard } from './guard/intro.guard';
 
@@ -135,6 +137,10 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path:'page_not_found',
+    component: PageNotFoundComponent
   }
 ];
 

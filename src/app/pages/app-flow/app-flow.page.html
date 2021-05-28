@@ -99,9 +99,9 @@
   <div *ngIf="showData; else skeleton ion-margin-top">
     <ion-grid class="ion-margin-top" style="padding-left: 0px;padding-right: 0px;">
       <ion-row>
-        <ion-col *ngFor="let prop of displayedList" size-lg="6" size-md="6" size-sm="6" size="12"
+        <ion-col class="col-md" *ngFor="let prop of displayedList" size-lg="6" size-md="6" size-sm="6" size="12"
           style="padding-left: 0px;padding-right: 0px;">
-          <ion-card class="custom-font" (click)="propertyDetails(prop.id)">
+          <ion-card class="custom-card" (click)="propertyDetails(prop.id)">
             <span *ngIf="prop?.image != null">
               <img class="img-prop background border-bottom"
                 src="https://daary-immo.com/storage/property/{{prop.image || 'assets/images/default_property.jpg'}}"
@@ -155,11 +155,6 @@
       </ion-row>
     </ion-grid>
   </div>
-  <div class="d-flex justify-content-center" *ngIf="this.loading">
-    <div class="spinner-border" role="status">
-        <span class="sr-only" id="loading"></span>
-    </div>
-  </div>
   <div class="container-form-btn" *ngIf="this.showLoadMoreButton">
     <button class="form-btn custom-font" [class.spinner]="loading" [disabled]="loading" (click)="loadMorePostsButton($event)">
       Charger plus...
@@ -174,14 +169,14 @@
       <ion-row>
         <ion-col *ngFor="let item of [1, 2, 3, 4, 5, 6]" size-lg="6" size-md="6" size-sm="6" size="12">
           <div>
-            <ion-card class="custom-font">
+            <ion-card class="custom-card">
               <ion-grid fixed>
                 <ion-skeleton-text animated
                   style="line-height: 13px; width: 100%; height: 200px;--background-rgb: 230,40,50;--border-radius: 20px;">
                 </ion-skeleton-text>
                 <ion-row>
-                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-                  <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                  <ion-skeleton-text class="bouncing-animation" animated style="width: 80%"></ion-skeleton-text>
+                  <ion-skeleton-text class="bouncing-animation" animated style="width: 100%"></ion-skeleton-text>
                 </ion-row>
               </ion-grid>
               <ion-card-content>
@@ -199,7 +194,7 @@
                   height: 40px;"></ion-skeleton-text>
                   </ion-col>
                 </ion-row>
-                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                <ion-skeleton-text class="bouncing-animation" animated style="width: 100%"></ion-skeleton-text>
               </ion-card-content>
             </ion-card>
           </div>

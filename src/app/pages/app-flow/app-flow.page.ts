@@ -99,30 +99,20 @@ showLoadMoreButton: boolean = false;
       refreshTrigger$.pipe(map(() => ({ properties: []}))),
       this.propList$.pipe(map(properties => ({ properties: properties}))),
     );  
-    this.networkService.initializeNetworkEvents();
+
     this.getAllProperties()
   }
   
   ionViewWillEnter() {
-    // this.refreshDataClickSubject.next();
     console.log("TabX is enter")
-    return this.connectionService.monitor().subscribe(isConnected => {
-      this.isConnected = isConnected;
-      console.log(this.isConnected);
-      
-      if (this.isConnected) {
+    return this.connectionService.monitor().subscribe(() => {
+      if (this.networkService.isConnected) {
         this.showLoadMoreButton = true;
         this.currentPage = 1;
-        this.status = "ONLINE";
-        console.log( this.status);
-        this.alertService.presentToast(this.status,'success')
         this.ngOnInit();
       }
       else {
         this.showData = false;
-        this.status = "OFFLINE";
-        console.log( this.status);
-        this.alertService.presentToast(this.status,'danger')
       }
     })
   }
@@ -160,16 +150,12 @@ showLoadMoreButton: boolean = false;
     }
   } 
    getAllProperties() {
-    //  const properties$ = this.store.loadProperties();
-     
-    
     const loadProperties$ = this.propertiesServices.getPostsPaginated(this.currentPage)
    .subscribe( (data: Properties[]) => {
      this.propertiesList$ = data;
      this.showData = true;
      console.log(this.propertiesList$);
    })
-
   }
 
   propertyDetails(id: number) {
@@ -209,12 +195,9 @@ showLoadMoreButton: boolean = false;
       this.propList$.subscribe(async (data) => {
         this.propertiesList$ = this.propertiesList$.concat(data);
         this.displayedList = this.propertiesList$;
-
-         
         if (event !== null) {
           event.target.complete();
         }
-
         if (data.length < 10) {
           await toast.present().then();
           event.target.disabled = true;
@@ -259,7 +242,6 @@ showLoadMoreButton: boolean = false;
         console.log(err);
       });
   }
-
   categoryFilter(category: any) {
     let navigationExtras: NavigationExtras = {
       state: {

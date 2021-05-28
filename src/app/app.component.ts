@@ -1,22 +1,15 @@
-import { LoadingServiceService } from './services/loading-service.service';
 import { ThemeSwitcherService } from './services/theme-switcher.service';
 import {
   Component
 } from '@angular/core';
 import {
-  MenuController,
-  NavController,
   Platform
 } from '@ionic/angular';
 import {
-  TokenSessionStorageService
-} from './services/token-session-storage.service';
-import {
-  Plugins,
-  StatusBarStyle
+  Plugins
 } from '@capacitor/core';
 const {
-  StatusBar,
+
   SplashScreen
 } = Plugins;
 
@@ -28,25 +21,17 @@ const {
 export class AppComponent {
   showSplash: boolean = true;
   connectedStatus: boolean = false;
-  isLoggedIn: boolean = false;
+  isConnected = true;
+  status: string;
 
   constructor(
     private platform: Platform,
-    private navCtrl: NavController,
-    private menuCtrl: MenuController,
-    private tokenSession: TokenSessionStorageService,
     private themeSwitch: ThemeSwitcherService
   ) {
     this.initializeApp();
     this.themeSwitch.getThemeSwitch();
+    
   }
-  logout() {
-    this.tokenSession.signOut();
-    // window.location.reload();
-    this.navCtrl.navigateRoot('app-flow')
-    this.menuCtrl.close();
-  }
-  
   
   componentDidMount() {
     this.platform.ready().then(() => {

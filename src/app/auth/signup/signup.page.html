@@ -71,7 +71,7 @@
               </div>
 
               </ion-list>
-                <ion-button color="success" type="submit"  expand="block">M'inscrire</ion-button>
+                <ion-button color="success" [disabled]="!ionicForm.valid"  type="submit"  expand="block">M'inscrire</ion-button>
                 <p style="text-align: -webkit-center;
                 font-size: inherit;"> j'ai déjà un compte! <br> <span style="color: forestgreen; font-weight: bolder;" (click)="loginLoad()">Me connecter</span> </p>
             </form>

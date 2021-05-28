@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="currentUser">
     <ion-list>
       <ion-item lines="full">
         <ion-label position="floating">Nom</ion-label>
@@ -23,23 +23,7 @@
         <ion-input type="text" [(ngModel)]="currentUser.phone_number" name="content"  
         required></ion-input>
       </ion-item>
-
-      <ion-item lines="full">
-        <ion-label position="floating">Ma bio</ion-label>
-        <ion-input type="text" [(ngModel)]="currentUser.about" name="content"  
-        required></ion-input>
-      </ion-item>
-      
-      <ion-row>
-        <ion-col size="12" class="property-col" >
-          <h2>Image en avant</h2>
-          <input class="form-control" name="foto" type="file" (change)="uploadImage($event)" >
-          <div class="image-preview mb-3" *ngIf="img_preview && img_preview !== null">
-              <img [src]="img_preview" height="100px" />                 
-          </div>
-        </ion-col>
-      </ion-row>
-
+    
     </ion-list>
     <ion-row>
       <ion-col size="12">

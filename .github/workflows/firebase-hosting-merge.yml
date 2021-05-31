@@ -5,7 +5,7 @@ name: Deploy to Firebase Hosting on merge
 'on':
   push:
     branches:
-      - Reactive-store-management--step-2--Completed--Temporarly
+      - Reactive--daary-immo
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest

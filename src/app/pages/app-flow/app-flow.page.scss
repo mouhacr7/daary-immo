@@ -206,6 +206,7 @@ ion-content {
   font-size: 16px;
   font-weight: lighter;
   font-family: system-ui;
+  text-transform: lowercase;
 }
 
 .img-prop {
@@ -450,6 +451,7 @@ page-trips,
     margin: 5px 0px;
     border-radius: 10px;
   }
+
   .custom-card-content {
     padding-bottom: 32px;
 

@@ -95,7 +95,7 @@ export class AgDashboardPage implements OnInit {
   propList$: Observable<Properties[]>;
   // user data
   id: User;
-  currentUser: User[];
+  currentUser: any;
   currentUser$: Observable<User[]>;
   currentObject$: Observable<User[]>;
   user: User;

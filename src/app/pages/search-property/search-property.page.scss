@@ -10,13 +10,16 @@ ion-content {
       margin-left: 10px;
       margin-top: 10px;
 	}
-	.btn-type {
-		font-size: large;
-  }
   .number-room {
-    border: solid 2px;
-    border-color: #39d6b6;
-    border-radius: 10px;
+    font-size: large;
+    font-weight: bolder;
+    font-family: 'Klavika';
+    color: #009688;
+    letter-spacing: 1px;
+    text-align: center;
+    border: solid 3px;
+    border-color: #009688;
+    border-radius: 5px;
   }
   .native-input .sc-ion-input-ios{
     font-size: inherit;
@@ -28,6 +31,10 @@ ion-content {
   text-align: -webkit-center;
   padding-bottom: 25px;
 	}
+  .sc-ion-input-md-h {
+    --padding-top: 4px;
+    --padding-end: 0;
+}
     .submit-btn {
       margin: 48px 12px 12px;
 	}

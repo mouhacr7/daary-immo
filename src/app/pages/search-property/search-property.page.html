@@ -146,7 +146,7 @@
   </ion-row>
   <ion-item-divider>
   </ion-item-divider>
-  <h2 class="custom-font">Nombre de chambres</h2>
+  <h2 class="custom-font">Nombre de piéces</h2>
   <ion-row>
     <ion-col size="2">
       <ion-button class="btn-type" color="success" expand="block" [fill]="isPiece1?'solid':'outline'"
@@ -169,13 +169,12 @@
         (click)="fiveClick()" [color]="isPiece5?'success':'success'">5</ion-button>
     </ion-col>
     <ion-col style="margin-top: 4px;" size="2">
-      <ion-input class="number-room" type="number" [(ngModel)]="number_bed" (ionInput)="bedroomChange($event)"
-        placeholder="+"></ion-input>
+      <ion-input class="number-room" type="number" [(ngModel)]="number_bed" (ionInput)="bedroomChange($event)"></ion-input>
     </ion-col>
   </ion-row>
   <ion-item-divider>
   </ion-item-divider>
-  <h2 class="custom-font">Nombre de pièces</h2>
+  <h2 class="custom-font">Nombre de chambres</h2>
   <ion-row>
     <ion-col size="2">
       <ion-button class="btn-type" color="success" expand="block" [fill]="isRoom1?'solid':'outline'" (click)="oneRoom()"
@@ -198,8 +197,7 @@
         [color]="isRoom5?'success':'success'">5</ion-button>
     </ion-col>
     <ion-col style="margin-top: 4px;" size="2">
-      <ion-input class="number-room" type="number" [(ngModel)]="number_bath" (ionInput)="bathroomChange($event)"
-        placeholder="+"></ion-input>
+      <ion-input class="number-room" type="number" [(ngModel)]="number_bath" (ionInput)="bathroomChange($event)"></ion-input>
     </ion-col>
   </ion-row>
 </ion-content>
@@ -208,8 +206,7 @@
   <ion-toolbar no-border>
     <ion-row>
       <ion-col size="12">
-        <ion-button class="btn-search" color="success" expand="block" (click)="searchClick()">Lancer la recherche
-        </ion-button>
+        <ion-button class="btn-search" color="success" expand="block" (click)="searchClick()">Lancer la recherche</ion-button>
       </ion-col>
     </ion-row>
   </ion-toolbar>

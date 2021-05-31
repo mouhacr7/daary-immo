@@ -31,33 +31,31 @@
             </div>
             <!-- </div> -->
             <div class="box-filter">
-
             </div>
             <ion-card-content>
               <span class="property-title" *ngIf="this.existInfos(prop.title)">{{prop.title}}</span>
-              <div *ngIf="this.existInfos(prop.nearby)">
-                <p class="desc-location" [innerHTML]="prop.nearby"></p>
-              </div>
+              <p class="desc-location" [innerHTML]="prop.address"></p>
               <ion-row>
-                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(prop.bathroom)">
+                <ion-col size="3" center text-center class="col-align">
                   <ion-icon class="desc-icons" name="bed-outline"></ion-icon>
                   <p class="p-desc">Chambre(s)</p>
-                  <span class="icon-label ion-align-self-end">{{ prop.bathroom }}</span>
+                  <span
+                    class="icon-label ion-align-self-end">{{ this.existInfos(prop.bathroom) ? prop.bathroom : '-'}}</span>
                 </ion-col>
-                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(prop.bedroom)">
+                <ion-col size="3" center text-center class="col-align">
                   <ion-icon class="desc-icons" src="assets/icon/door.svg"></ion-icon>
                   <p class="p-desc">piece(s)</p>
-                  <span class="icon-label">{{ prop.bedroom }}</span>
+                  <span class="icon-label">{{ this.existInfos(prop.bedroom) ? prop?.bedroom : '-' }}</span>
                 </ion-col>
-                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(prop.area)">
+                <ion-col size="3" center text-center class="col-align">
                   <ion-icon class="desc-icons" src="assets/icon/area.svg"></ion-icon>
                   <p class="p-desc">Surface</p>
-                  <span class="icon-label">{{ prop.area}}</span>
+                  <span class="icon-label">{{ this.existInfos(prop.area) ? prop?.area : '-'}}</span>
                 </ion-col>
-                <ion-col size="3" center text-center class="col-align" *ngIf="this.existInfos(prop.douche)">
+                <ion-col size="3" center text-center class="col-align">
                   <ion-icon class="desc-icons" src="assets/icon/toilet.svg"></ion-icon>
                   <p class="p-desc">Douche(s)</p>
-                  <span class="icon-label">{{prop?.douche}}</span>
+                  <span class="icon-label">{{ this.existInfos(prop.douche) ? prop?.douche : '-'}}</span>
                 </ion-col>
               </ion-row>
 
@@ -76,7 +74,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
   <ng-template #skeleton>
     <ion-grid>
       <ion-row>

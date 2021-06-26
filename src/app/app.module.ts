@@ -16,9 +16,7 @@ import { ValuesPipe } from './pipes/values.pipe';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { ComponentsModule } from './components/components.module';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 // app.module.ts
 
 @NgModule({
@@ -34,9 +32,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     AppRoutingModule,
     ComponentsModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    MatExpansionModule,
-    MatProgressSpinnerModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     CallNumber,

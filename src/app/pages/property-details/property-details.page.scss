@@ -372,8 +372,16 @@
     box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.8);
   }
 
-
-
+.send-message {
+  display: contents;
+}
+.btn-call {
+  font-size: large;
+}
+.carac {
+  font-size: 24px;
+    font-weight: 600;
+}
 .user-meta {
     .playername {
         font-size: 24px;

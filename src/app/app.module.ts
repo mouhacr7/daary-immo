@@ -17,6 +17,7 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
+import { MatCarouselModule } from '@ngmodule/material-carousel'; // ---------- Important
 // app.module.ts
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ComponentsModule } from './components/components.module';
     FormsModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
+    MatCarouselModule, // ---------- Important
     AppRoutingModule,
     ComponentsModule,
     HttpClientModule,

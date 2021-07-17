@@ -23,6 +23,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { map, startWith, mergeMap } from 'rxjs/operators';
 import { merge, Observable, Subject } from 'rxjs';
 import { ConnectionService } from 'ng-connection-service';
+import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel'; // -------- important
 
 @Component({
   selector: 'app-app-flow',
@@ -56,9 +57,15 @@ export class AppFlowPage implements OnInit {
   bathroom: boolean = true;
   area: boolean = true;
   douches: boolean = true;
-  slidesOptions = {
-    slidesPerView: 3.5
+
+slidesOptions = {
+  slidesPerView: 3.5,
+  centeredSlides: true,
+  loop: true,
+  spaceBetween: 10,
+  // autoplay:true,
 }
+
 propertyList$: Observable<Properties[]>;
 propList$: Observable<Properties[]>;
 refreshDataClickSubject = new Subject();

@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Paramétres</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <ion-list>
+          <ion-item>
+            <ion-icon name="invert-mode-outline" slot="start"></ion-icon>
+            <ion-label>Mode sombre</ion-label>
+            <ion-toggle (ionChange)="onClick($event, state_toggle)" [(ngModel)]="state_toggle" slot="end" color="success"></ion-toggle>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col size="12">
+        <ion-list>
+          <ion-item (click)="onClickLanguage($event)">
+            <ion-icon name="language-outline" slot="start"></ion-icon>
+            <ion-label>Changer de langue</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col size="12">
+        <ion-list>
+          <ion-item>
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            <ion-label>Daary-immo Version 4.0.0</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

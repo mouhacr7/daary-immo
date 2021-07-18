@@ -1,0 +1,85 @@
+<ion-header>
+	<ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+		<ion-title>Créer votre compte</ion-title>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <svg class="back-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#228b22" d="M68.6,-33.5C81.6,-17.2,79.6,13.8,65.7,37.6C51.8,61.3,25.9,77.8,2.1,76.6C-21.7,75.4,-43.5,56.5,-54.2,34.6C-65,12.7,-64.8,-12.3,-53.9,-27.4C-43,-42.4,-21.5,-47.6,3.2,-49.4C27.9,-51.2,55.7,-49.7,68.6,-33.5Z" transform="translate(100 100)" />
+</svg>
+
+<ion-grid fixed class="ion-padding">
+  <ion-row>
+    <ion-col size="12"> 
+      <p>
+        Créer un compte pour synchroniser vos recherches 
+        et vos favoris entre vos différents appareils.
+      </p>
+    </ion-col>
+   </ion-row>
+   <ion-row>
+     <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+           <ion-card-title>Inscrivez-vous</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form [formGroup]="ionicForm" (ngSubmit)="register(ionicForm.value)" novalidate>
+             
+              <ion-list>
+                <ion-item lines="full">
+                  <ion-label position="floating">Nom</ion-label>
+                  <ion-input formControlName="name" type="text"></ion-input>
+                </ion-item>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
+                  Nom est requis.
+                </span>
+                <ion-item lines="full">
+                  <ion-label position="floating">Téléphone</ion-label>
+                  <ion-input formControlName="phone_number" type="number" pattern="\d*"></ion-input>
+                </ion-item>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.minlength">
+                  Téléphone doit comporter au minimum 8 caractéres. 
+                </span>
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phone_number.errors?.required">
+                  Numéro est requis.
+                </span>
+                <ion-item lines="full">
+                  <ion-label position="floating">Mot de passe</ion-label>
+                  <ion-input formControlName="password" type="password"></ion-input>
+                </ion-item>
+                
+                <ion-item lines="full">
+                  <ion-label position="floating">Mot de passe de Confirmation</ion-label>
+                  <ion-input formControlName="password_confirmation" type="password"></ion-input>
+                </ion-item>
+                
+                <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+                  Mot de passe est requis.
+                </span>
+                <div class="error ion-padding"  *ngIf="errorControl.password_confirmation && errorControl.password_confirmation.invalid" >
+                  <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
+                    Le mot de passe doit comporter au minimum 6 caractéres. 
+                  </span>
+                  <span class="error ion-padding"  *ngIf="errorControl.password_confirmation.errors.confirmedValidator">
+                    Les deux mots de passe sont différents.
+                  </span>
+              </div>
+
+              </ion-list>
+                <ion-button color="success" [disabled]="!ionicForm.valid"  type="submit"  expand="block">M'inscrire</ion-button>
+                <p style="text-align: -webkit-center;
+                font-size: inherit;"> j'ai déjà un compte! <br> <span style="color: forestgreen; font-weight: bolder;" (click)="loginLoad()">Me connecter</span> </p>
+            </form>
+            <br>
+          </ion-card-content>
+        </ion-card>
+     </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>

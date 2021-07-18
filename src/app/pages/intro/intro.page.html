@@ -1,0 +1,60 @@
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+<ion-content class="ion-text-center custom-font">
+
+  <ion-slides mode="ios" pager="true" scrollbar="ios">
+    <ion-slide class="step-one">
+      <h1 class="brand">Recherche de domicile personnalisée</h1>
+      <ion-img src="assets/images/intro/step_one.png"></ion-img> 
+      <p>
+        Nous vous montrons les appartements qui correspondent le mieux à vos préférences, 
+        même les endroits que vous n’avez pas pensé rechercher.
+      </p>
+    <ion-row>
+        <ion-col size="12">
+          <ion-button class="btn-next" color="light" expand="block" (click)="next()">Suivant</ion-button>
+        </ion-col>
+    </ion-row>
+    </ion-slide>
+    <ion-slide class="step-two">
+      <h1 class="brand">Catégories de maisons et d'appartements</h1>
+      <ion-img src="assets/images/intro/step_two.png"></ion-img> 
+      <p>
+        Les correspondances sont regroupées en catégories qui ont du sens 
+        afin que vous puissiez obtenir rapidement un aperçu de toutes vos options.
+      </p>
+    <ion-row>
+        <ion-col size="12">
+          <ion-button class="btn-next" color="light" expand="block" (click)="next()">Suivant</ion-button>
+        </ion-col>
+    </ion-row>
+    </ion-slide>
+    <ion-slide class="step-three">
+      <h1 class="brand">Trouvez la propriété de votre choix</h1>
+      <ion-img src="assets/images/intro/step_three.png"></ion-img> 
+      <p>
+        Chaque appartement à louer a une tonne de photos de haute qualité, la disponibilité et les prix à jour.
+      </p>
+    <ion-row>
+        <ion-col size="12">
+          <ion-button class="btn-next" color="light" expand="block" (click)="next()">Suivant</ion-button>
+        </ion-col>
+    </ion-row>
+    </ion-slide>
+    <ion-slide class="step-four">
+      <h1 class="brand">Contactez immédiatement un agent</h1>
+      <ion-img src="assets/images/intro/step_four.png"></ion-img> 
+      <p>
+        Vous avez la possiblité de rentrer en contact avec un agent 
+        pour avoir plus d'informations sur votre propriété choisie.
+      </p>
+    <ion-row>
+        <ion-col size="12">
+          <ion-button class="btn-next" color="light" expand="block" (click)="finish()">Terminer</ion-button>
+        </ion-col>
+    </ion-row>
+    </ion-slide>
+    
+  </ion-slides>
+
+</ion-content>

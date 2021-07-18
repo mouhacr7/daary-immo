@@ -1,0 +1,15 @@
+<ion-card>
+  <ion-item-divider class="custom-font divider-back">
+    {{ "Mes propriétés " | uppercase }}
+</ion-item-divider>
+<ion-row class="row-prop" *ngFor="let prop of propertiesList">
+  <ion-col size="3">
+      <img class="prop-img" src="https://daary-immo.com/storage/property/{{prop.image}}">
+  </ion-col>
+  <ion-col size="9">    
+    <p class="custom-font prop-title">{{prop?.title}}</p>
+    <span class="prop-price">{{prop.price}}</span>
+    <p class="prop-city">{{prop.city}}</p>
+  </ion-col>
+</ion-row>
+</ion-card>

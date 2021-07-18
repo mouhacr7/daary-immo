@@ -1,0 +1,41 @@
+.btn-type {
+  font-size: small;
+}
+.number-room {
+border: solid;
+border-color: forestgreen;
+}
+.submit-btn {
+margin: 48px 12px 12px;
+}
+.type-row {
+  font-size: 15px;
+}
+.property-icon {
+
+z-index: 4;
+text-align: center;
+font-size: xx-large;
+border: solid;
+border-width: 1px;
+border-color: currentColor;
+padding: 12px;
+border-radius: 34%;
+// background: #228b2259;
+}
+.property-item {
+display: inline-grid !important;
+}
+.property-col {
+text-align: center !important;
+
+}
+
+.label-price-a {
+display: flow-root;
+}
+
+.btn-search {
+font-size: large;
+font-weight: bold;
+}

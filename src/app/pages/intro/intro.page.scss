@@ -1,0 +1,51 @@
+.custom-font {
+    font-family: 'Josefin Sans', sans-serif;
+  }
+
+ion-content {
+    height: 100%;
+
+    ion-slides {
+        height: -webkit-fill-available;
+    }
+    ion-slide {
+        height: 100vh;
+        flex-direction: column;
+        text-align: center;
+    }
+    ion-img {
+        max-width: 80vw;
+        max-height: 50vh;
+    }
+    p {
+        padding: 1em;
+    }
+    .button-native {
+        border-radius: 30px !important;
+    }
+    .brand {
+        font-size: 2rem;
+        text-align: center;
+        font-weight: bolder;
+    }
+    .btn-next {
+        font-size: x-large;
+        font-weight: bolder;
+    }
+    .step-one {
+        background: #23b574;
+        color: #ffffff;
+    }
+    .step-two {
+        background: #f39c11;
+        color: #ffffff;
+    }
+    .step-three {
+        background: #e84c3d;
+        color: #ffffff;
+    }
+    .step-four {
+        background: #666978;
+        color: #ffffff;
+    }
+}

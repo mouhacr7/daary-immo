@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-title>Résultats</ion-title> -->
+    <ion-title>{{categorieTitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="showData; else skeleton ion-margin-top">
+    <ion-grid class="ion-margin-top" style="padding-left: 0px;padding-right: 0px;">
+      <ion-row>
+        <ion-col class="col-md" *ngFor="let prop of propertiesList" size-lg="6" size-md="6" size-sm="6" size="12"
+          style="padding-left: 0px;padding-right: 0px;">
+          <ion-card class="custom-card" (click)="propertyDetails(prop.id)">
+            <span *ngIf="prop?.image != null">
+              <img class="img-prop background border-bottom"
+                src="https://daary-immo.com/storage/property/{{prop.image || 'assets/images/default_property.jpg'}}"
+                alt="ion">
+            </span>
+            <span *ngIf="prop?.image == null">
+              <img class="img-prop" src="assets/images/default_property.jpg" alt="ion">
+            </span>
+            <!-- <div class="background-filter rlt"> -->
+            <div>
+              <ion-badge class="box-price">{{this.formatNumber(prop?.price)}} MRU</ion-badge>
+            </div>
+            <div>
+              <ion-badge class="box-purpose">A {{prop?.purpose}}</ion-badge>
+            </div>
+            <!-- </div> -->
+            <div class="box-filter">
+            </div>
+            <ion-card-content>
+              <span class="property-title" *ngIf="this.existInfos(prop.title)">{{prop.title}}</span>
+              <p class="desc-location" [innerHTML]="prop.address"></p>
+              <ion-row>
+                <ion-col size="3" center text-center class="col-align">
+                  <ion-icon class="desc-icons" name="bed-outline"></ion-icon>
+                  <p class="p-desc">Chambre(s)</p>
+                  <span
+                    class="icon-label ion-align-self-end">{{ this.existInfos(prop.bathroom) ? prop.bathroom : '-'}}</span>
+                </ion-col>
+                <ion-col size="3" center text-center class="col-align">
+                  <ion-icon class="desc-icons" src="assets/icon/door.svg"></ion-icon>
+                  <p class="p-desc">piece(s)</p>
+                  <span class="icon-label">{{ this.existInfos(prop.bedroom) ? prop?.bedroom : '-' }}</span>
+                </ion-col>
+                <ion-col size="3" center text-center class="col-align">
+                  <ion-icon class="desc-icons" src="assets/icon/area.svg"></ion-icon>
+                  <p class="p-desc">Surface</p>
+                  <span class="icon-label">{{ this.existInfos(prop.area) ? prop?.area : '-'}}</span>
+                </ion-col>
+                <ion-col size="3" center text-center class="col-align">
+                  <ion-icon class="desc-icons" src="assets/icon/toilet.svg"></ion-icon>
+                  <p class="p-desc">Douche(s)</p>
+                  <span class="icon-label">{{ this.existInfos(prop.douche) ? prop?.douche : '-'}}</span>
+                </ion-col>
+              </ion-row>
+
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="oops" *ngIf="this.noResults">
+          <img src="assets/images/oops.png" alt="File not found">
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ng-template #skeleton>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let item of [1, 2, 3, 4, 5, 6]" size-lg="6" size-md="6" size-sm="6" size="12">
+          <div>
+            <ion-card class="custom-font">
+              <ion-grid fixed>
+                <ion-skeleton-text animated
+                  style="line-height: 13px; width: 100%; height: 200px;--background-rgb: 230,40,50;--border-radius: 20px;">
+                </ion-skeleton-text>
+                <ion-row>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                </ion-row>
+              </ion-grid>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col center text-center class="col-align">
+                    <ion-skeleton-text animated style="width: 75%;
+                  height: 40px;"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+</ion-content>

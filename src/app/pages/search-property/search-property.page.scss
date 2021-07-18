@@ -1,0 +1,69 @@
+ion-content {
+
+	.custom-font {
+		font-family: 'Josefin Sans', sans-serif;
+	  }
+    .error-message
+    {
+      color: red;
+      font-size: 14px;
+      margin-left: 10px;
+      margin-top: 10px;
+	}
+  .number-room {
+    font-size: large;
+    font-weight: bolder;
+    font-family: 'Klavika';
+    color: #009688;
+    letter-spacing: 1px;
+    text-align: center;
+    border: solid 3px;
+    border-color: #009688;
+    border-radius: 5px;
+  }
+  .native-input .sc-ion-input-ios{
+    font-size: inherit;
+    text-align: -webkit-center;
+    padding-bottom: 25px;
+  }
+	.sc-ion-input-ios-h {
+	font-size: inherit;
+  text-align: -webkit-center;
+  padding-bottom: 25px;
+	}
+  .sc-ion-input-md-h {
+    --padding-top: 4px;
+    --padding-end: 0;
+}
+    .submit-btn {
+      margin: 48px 12px 12px;
+	}
+  }
+  .property-icon {
+   
+    z-index: 4;
+	text-align: center;
+    font-size: xxx-large;
+    border: solid;
+    border-width: 1px;
+    border-color: currentColor;
+    padding: 12px;
+	border-radius: 34%;
+	// background: #228b2259;
+  }
+  .property-item {
+	display: inline-grid !important;
+  }
+  .property-col {
+	text-align: center !important;
+	
+  }
+ 
+  .label-price-a {
+	  display: flow-root;
+	}
+	
+.btn-search {
+  font-size: large;
+  font-weight: bold;
+}

@@ -1,0 +1,306 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title >Mise a jour propriete</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card style="padding: 8px;">
+    <div *ngIf="this.step1" >
+      <ion-row>
+        <ion-col size="6">
+          <ion-button class="btn-type" color="success" expand="block" [fill]="isSaleClicked?'solid':'outline'"
+            (click)="saleClick()" [color]="isSaleClicked?'success':'success'">Achat</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isRentClicked?'solid':'outline'"
+            (click)="rentClick()" [color]="isRentClicked?'success':'success'">Location</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider>
+      </ion-item-divider>
+      <ion-row>
+        <ion-col size="12">
+          <h5 >Titre du bien</h5>
+          <ion-item>
+            <ion-input autocorrect="on" autofocus="on" [(ngModel)]="property.title" clearInput="true" clearOnEdit="true"
+              inputmode="text" placeholder="Titre du bien... " required="true"></ion-input>
+            <ion-icon name="reader-outline" fill="outline" color="success" slot="end"></ion-icon>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider>
+      </ion-item-divider>
+      <ion-row>
+        <ion-col size="12">
+          <h5 >Localisation du bien</h5>
+          <ion-item>
+            <ion-input autocorrect="on" autofocus="on" [(ngModel)]="property.city" clearInput="true" clearOnEdit="true"
+              inputmode="text" placeholder="Quartier, ville, département..." required="true"></ion-input>
+            <ion-icon name="location" fill="outline" color="success" slot="end"></ion-icon>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <h5 >Addresse du bien</h5>
+          <ion-item>
+            <ion-input autocorrect="on" autofocus="on" [(ngModel)]="property.address" clearInput="true" clearOnEdit="true"
+              inputmode="text" placeholder="Addresse..." required="true"></ion-input>
+            <ion-icon name="location" fill="outline" color="success" slot="end"></ion-icon>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <h5 >Description du bien</h5>
+          <ion-item>
+            <ion-input autocorrect="on" autofocus="on" [(ngModel)]="property.description" clearInput="true" clearOnEdit="true"
+              inputmode="text" placeholder="Description..." required="true"></ion-input>
+              
+            <ion-icon name="document-text-outline" fill="outline" color="success" slot="end"></ion-icon>
+          </ion-item>
+        </ion-col>
+        <ion-item-divider>
+        </ion-item-divider>
+        <ion-col size="4">
+          <ion-button class="btn-type" color="success" expand="block" disabled>Precedent</ion-button>
+        </ion-col>
+        <ion-col size="4">
+
+        </ion-col>
+        <ion-col size="4">
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStep1()">Suivant</ion-button>
+        </ion-col>
+        <ion-item-divider>
+        </ion-item-divider>
+      </ion-row>
+    </div>
+    <div *ngIf="this.step2" >
+      <h5 >Type de bien</h5>
+      <ion-row class="type-row">
+        <ion-col size="4" class="property-col" (click)="onClickApp()">
+          <ion-item class="property-item">
+            <ion-icon [style.background]="isAppartClicked? '#228b2259' : ''" class="property-icon"
+            src="assets/icon/apartment.svg"></ion-icon>
+          </ion-item>
+          <p>Appartement</p>
+        </ion-col>
+        <ion-col size="4" class="property-col" (click)="onClickHouse()">
+          <ion-item class="property-item">
+            <ion-icon [style.background]="isHouseClicked? '#228b2259' : ''" class="property-icon" src="assets/icon/house.svg">
+            </ion-icon>
+          </ion-item>
+          <p>Maison</p>
+        </ion-col>
+        <ion-col size="4" class="property-col" (click)="onClickLand()" *ngIf="!this.onRent">
+          <ion-item class="property-item">
+            <ion-icon [style.background]="isLandClicked? '#228b2259' : ''" class="property-icon" src="assets/icon/land.svg">
+            </ion-icon>
+          </ion-item>
+          <p>Terrain</p>
+        </ion-col>
+        <ion-col size="4" class="property-col" (click)="onClickShop()">
+          <ion-item class="property-item">
+            <ion-icon [style.background]="isShopClicked? '#228b2259' : ''" class="property-icon" src="assets/icon/shop.svg">
+          </ion-icon>
+        </ion-item>
+        <p>Boutique</p>
+      </ion-col>
+      <ion-col size="4" class="property-col" (click)="onClickBuilding()">
+        <ion-item class="property-item">
+          <ion-icon [style.background]="isBuildingClicked? '#228b2259' : ''" class="property-icon"
+            src="assets/icon/building.svg"></ion-icon>
+          </ion-item>
+          <p>Immeuble</p>
+        </ion-col>
+        <ion-col size="4" class="property-col" (click)="onClickOffice()">
+          <ion-item class="property-item">
+            <ion-icon [style.background]="isOfficeClicked? '#228b2259' : ''" class="property-icon"
+            src="assets/icon/office.svg"></ion-icon>
+          </ion-item>
+          <p>Bureau</p>
+        </ion-col>
+        <ion-col size="4" class="property-col" (click)="onClickStudio()">
+          <ion-item class="property-item">
+            <ion-icon [style.background]="isStudioClicked? '#228b2259' : ''" class="property-icon"
+            src="assets/icon/studio.svg"></ion-icon>
+          </ion-item>
+          <p>Studio</p>
+        </ion-col>
+        <ion-item-divider>
+        </ion-item-divider>
+        <ion-col size="4">
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStepBack1()">Precedent</ion-button>
+        </ion-col>
+        <ion-col size="4">
+      
+        </ion-col>
+        <ion-col size="4">
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStep2()">Suivant</ion-button>
+        </ion-col>
+        <ion-item-divider>
+        </ion-item-divider>
+      </ion-row>
+    </div>
+    <div *ngIf="this.step3" >
+        <ion-col size="12" >
+          <h5 >Image en avant</h5>
+          <input class="form-control" name="foto" type="file" (change)="uploadImage($event)">
+          <div class="image-preview mb-3" *ngIf="img_preview && img_preview !== null">
+            <img [src]="img_preview" height="100px" />
+          </div>
+        </ion-col>
+        <ion-col size="12" *ngIf="!this.onTerrain">
+          <h5 >Plan du terrain</h5>
+          <input class="form-control" name="plan" type="file" (change)="uploadFloor($event)">
+          <div class="image-preview mb-3" *ngIf="floor_preview && floor_preview !== null">
+            <img [src]="floor_preview" height="100px" />
+          </div>
+        </ion-col>
+        <ion-col size="12" >
+          <h5 >Gallerie photos des propriétés</h5>
+          <input class="form-control" name="gallaryimage[]" type="file" accept="image/*" multiple
+          (change)="uploadGallery($event)">
+        </ion-col>
+        <ion-row *ngIf="!this.onTerrain">
+          <ion-item-divider>
+          </ion-item-divider>
+          
+          <ion-col size="12">
+            <h5 >Type de cuisine</h5>
+          </ion-col>
+        <ion-col size="4">
+          <ion-button class="btn-type" color="success" expand="block" [fill]="isIntClicked?'solid':'outline'"
+          (click)="intClick()" [color]="isIntClicked?'success':'success'">Interne</ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isExtClicked?'solid':'outline'"
+          (click)="extClick()" [color]="isExtClicked?'success':'success'">Externe</ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isIntExtClicked?'solid':'outline'"
+          (click)="intextClick()" [color]="isIntExtClicked?'success':'success'">Int.&Ext</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider>
+      </ion-item-divider>
+      <h5 >Budget</h5>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label class="label-price" position="floating">Prix de la propriété</ion-label>
+            <ion-input [(ngModel)]="property.price" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-item-divider>
+        </ion-item-divider>
+        <ion-col size="4">
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStepBack2()">Precedent</ion-button>
+        </ion-col>
+        <ion-col size="4">
+      
+        </ion-col>
+        <ion-col size="4">
+          <ion-button class="btn-type" color="success" expand="block" (click)="onStep3()">Suivant</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider>
+      </ion-item-divider>
+    </div>
+    <div *ngIf="this.step4" >
+      <ion-row>
+        <ion-col size="12">
+          <h5 >Surface</h5>
+          <ion-item>
+            <ion-input [(ngModel)]="property.area" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider *ngIf="!this.onTerrain">
+      </ion-item-divider>
+      <ion-row *ngIf="!this.onTerrain">
+        <ion-col size="12">
+          <h5 >Nombre de douches</h5>
+          <ion-item>
+            <ion-input [(ngModel)]="property.douche" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider *ngIf="!this.onTerrain">
+      </ion-item-divider>
+      <h5  *ngIf="!this.onTerrain">Nombre de pièces</h5>
+      <ion-row *ngIf="!this.onTerrain">
+        <ion-col size="2">
+          <ion-button class="btn-type" color="success" expand="block" [fill]="isPiece1?'solid':'outline'"
+          (click)="oneClick()" [color]="isPiece1?'success':'success'">1</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isPiece2?'solid':'outline'"
+          (click)="twoClick()" [color]="isPiece2?'success':'success'">2</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isPiece3?'solid':'outline'"
+          (click)="threeClick()" [color]="isPiece3?'success':'success'">3</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isPiece4?'solid':'outline'"
+          (click)="fourClick()" [color]="isPiece4?'success':'success'">4</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isPiece5?'solid':'outline'"
+          (click)="fiveClick()" [color]="isPiece5?'success':'success'">5</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-input class="number-room" type="number" [(ngModel)]="number_bed" (ionInput)="bedroomChange($event)"
+          placeholder="10"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider *ngIf="!this.onTerrain">
+      </ion-item-divider>
+      <h5  *ngIf="!this.onTerrain">Nombre de chambres</h5>
+      <ion-row *ngIf="!this.onTerrain">
+        <ion-col size="2">
+          <ion-button class="btn-type" color="success" expand="block" [fill]="isRoom1?'solid':'outline'" (click)="oneRoom()"
+          [color]="isRoom1?'success':'success'">1</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isRoom2?'solid':'outline'" (click)="twoRoom()"
+          [color]="isRoom2?'success':'success'">2</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isRoom3?'solid':'outline'"
+          (click)="threeRoom()" [color]="isRoom3?'success':'success'">3</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isRoom4?'solid':'outline'" (click)="fourRoom()"
+          [color]="isRoom4?'success':'success'">4</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button class="btn-type" color="danger" expand="block" [fill]="isRoom5?'solid':'outline'" (click)="fiveRoom()"
+          [color]="isRoom5?'success':'success'">5</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-input class="number-room" type="number" [(ngModel)]="number_bath" (ionInput)="bathroomChange($event)"
+          placeholder="10"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-item-divider>
+        </ion-item-divider>
+        <ion-col size="12">
+          <ion-button class="btn-type" color="success" fill='outline' expand="block"  (click)="onStepBack3()">Precedent</ion-button>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button class="btn-search" (click)="sendUpload()" color="success" expand="block">Modifier la propriété
+          </ion-button>
+        </ion-col>
+        <ion-item-divider>
+        </ion-item-divider>
+      </ion-row>
+    </div>
+  </ion-card>
+</ion-content>

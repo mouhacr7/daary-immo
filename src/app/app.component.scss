@@ -1,16 +1,52 @@
+/* menu styling */
+
+ion-tab-bar{
+  --color-selected: #009688 !important;
+  height: 60px !important;
+  border: 1px solid;
+  border-color: darkgray;
+}
+ion-menu{
+  ion-item,
+  ion-list, .list-md,
+  ion-content{
+      --background: var(--dark-color);
+      --ion-background-color: var(--dark-color);
+  }
+}
+
+.logo-section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .logo-section__wrapper{
+      text-align: center;
+      .logo-section__logo{
+          display: block;
+          border-radius: 100%;
+          max-width: 76% !important;
+      }
+  }
+}
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }
-
+.custom-font {
+  font-family: 'Josefin Sans', sans-serif;
+}
 ion-menu.md ion-content {
   --padding-start: 8px;
   --padding-end: 8px;
-  --padding-top: 20px;
-  --padding-bottom: 20px;
+  // --padding-top: 20px;
+  // --padding-bottom: 20px;
 }
 
 ion-menu.md ion-list {
   padding: 20px 0;
+}
+ion-item-divider {
+  background: forestgreen !important;
 }
 
 ion-menu.md ion-note {
@@ -28,6 +64,7 @@ ion-menu.md ion-list#inbox-list {
 
 ion-menu.md ion-list#inbox-list ion-list-header {
   font-size: 22px;
+  font-family: 'Josefin Sans', sans-serif;
   font-weight: 600;
 
   min-height: 20px;
@@ -76,6 +113,7 @@ ion-menu.ios ion-list {
 ion-menu.ios ion-note {
   line-height: 24px;
   margin-bottom: 20px;
+  
 }
 
 ion-menu.ios ion-item {
@@ -85,7 +123,7 @@ ion-menu.ios ion-item {
 }
 
 ion-menu.ios ion-item.selected ion-icon {
-  color: var(--ion-color-primary);
+  color:  #39d6b6 !important;
 }
 
 ion-menu.ios ion-item ion-icon {
@@ -105,6 +143,10 @@ ion-menu.ios ion-note {
 
 ion-menu.ios ion-note {
   margin-bottom: 8px;
+  font-size: large;
+}
+.button-inner {
+  color:  #39d6b6  !important;
 }
 
 ion-note {
@@ -115,5 +157,45 @@ ion-note {
 }
 
 ion-item.selected {
-  --color: var(--ion-color-primary);
+  color:  #39d6b6 !important;
+}
+
+.splash {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1abc9c;
+}
+
+.spinner {
+  width: 100px;
+  height: 60px;
+  background-color: #fff;
+
+  margin: 100px auto;
+  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes sk-rotateplane {
+  0% { 
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+  } 50% { 
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+  } 100% { 
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
 }

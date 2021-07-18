@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>réponse message</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+      <ion-item-divider class="custom-font divider-back">{{ "Ecrire un message" | uppercase }}</ion-item-divider>
+        <ion-row class="row-prop"> 
+            <p >A: {{message.name}} <{{message.email}}></p>
+            <p >Numéro de téléphone: {{message.phone}}</p>
+            <strong class="custom-font prop-title">
+              Message:
+            </strong>
+            <form [formGroup]="ionicForm" (ngSubmit)="sendMessage()" novalidate>
+             
+              <ion-list>
+                <ion-item lines="full">
+                  <ion-label position="floating">Numéro de téléphone</ion-label>
+                  <ion-input formControlName="phone" type="number"></ion-input>
+                </ion-item>
+              
+                <ion-item lines="full">
+                  <ion-label position="floating">Méssage</ion-label>
+                  <ion-input formControlName="my_message" type="text"></ion-input>
+                </ion-item>
+              </ion-list>
+                
+                <ion-button class="custom-font" color="success" type="submit" [disabled]="!ionicForm.valid" expand="block">Envoyer message</ion-button>   
+            </form>
+            
+          </ion-row>
+        </div>
+</ion-content>

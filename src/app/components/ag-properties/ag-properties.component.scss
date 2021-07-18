@@ -1,0 +1,50 @@
+.custom-font {
+    font-family: 'Josefin Sans', sans-serif;
+  }
+  .row-agent {
+    justify-content: center;
+    border-bottom: solid 1px;
+  }
+  .row-prop {
+    border-bottom: solid 1px;
+    text-align: -webkit-left;
+  }
+  .divider-back {
+      background-color: #222428;
+      color: white;
+      padding: 10PX;
+  } 
+  .icon-contact {
+    font-size: x-large;
+    padding-right: 10px;
+  }
+  .agent-name {
+      font-size: x-large;
+      padding-top: 10px;
+      color: black !important;
+  }
+  .agent-email {
+    font-size: large;
+  }
+  .agent-phone {
+    font-size: large;
+    padding-top: 10px;
+  }
+
+  .prop-img {
+    font-size: medium;
+    height: 104px;
+    width: -webkit-fill-available;
+  }
+  .prop-title {
+    font-size: medium;
+    color: black;
+    font-weight: bolder;
+  }
+  .prop-price {
+    font-size: x-large;
+    color: black;
+  }
+  .prop-city {
+    font-size: medium;
+  }

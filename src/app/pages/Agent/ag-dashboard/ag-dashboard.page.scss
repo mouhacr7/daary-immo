@@ -1,0 +1,141 @@
+
+
+.custom-card {
+  text-align: -webkit-center;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: -webkit-fill-available;
+}
+.custom-avatar {
+  display: contents;
+}
+.custom-img {
+  max-width: 50%;
+}
+.avatar-edit {
+  max-width: 43%;
+}
+.label-padd {
+  margin-top: 16px;
+  margin-bottom: 21px;
+  padding-right: 21px;
+
+}
+.arrow-down-icon {
+  font-size: x-large;
+  color: whit;
+}
+.personal-agent {
+  font-size: large;
+}
+.icon-personal {
+  font-size: xx-large;
+}
+.btn-type {
+  font-size: large;
+}
+// .sc-ion-input-ios-h {
+// 	--placeholder-color: initial;
+// 	--placeholder-font-style: initial;
+// 	--placeholder-font-weight: initial;
+// 	--placeholder-opacity: .5;
+// 	padding-left: 8px;
+// }
+  .submit-btn {
+    margin: 48px 12px 12px;
+}
+.property-icon {
+ 
+  z-index: 4;
+text-align: center;
+  font-size: xxx-large;
+  border: solid;
+  border-width: 1px;
+  border-color: currentColor;
+  padding: 12px;
+border-radius: 34%;
+// background: #228b2259;
+}
+.property-item {
+display: inline-grid !important;
+}
+.property-col {
+text-align: center !important;
+
+}
+.prop-title {
+  font-weight: bolder;
+  font-size: smaller;
+}
+.prop-img {
+  font-size: medium;
+  height: 63px;
+  width: -webkit-fill-available;
+}
+.prop-price {
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.label-price-a {
+  display: flow-root;
+}
+
+.btn-search {
+font-size: large;
+  font-weight: bold;
+}
+.row-prop {
+  border-bottom: inset;
+}
+
+.prop-button {
+  width: -webkit-fill-available !important;
+  font-size: x-small
+}
+.fab {
+  --background: #302f2f !important;
+}
+.container-form-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.form-btn {
+  display: flex;
+  font-family: revert;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 24px;
+  min-width: 160px;
+  height: 42px;
+  background-color: #009688;
+  border-radius: 5px;
+  font-size: 12px;
+  letter-spacing: -1px;
+  color: #FFFFFF;
+  border: 2px solid;
+  transition: all 0.4s;
+  box-shadow: 0 10px 30px 0px rgb(57 71 82 / 50%);
+}
+
+.form-btn:hover {
+  background-color: #28333b;
+  box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.8);
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.user-meta {
+  .playername {
+      font-size: 24px;
+      font-weight: 600;
+  }
+  .country {
+    font-size: larger;
+    margin: 0 auto;
+    padding-bottom: 7px;
+  }
+}

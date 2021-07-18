@@ -1,0 +1,211 @@
+.custom-card {
+  text-align: -webkit-center;
+}
+.custom-avatar {
+  display: contents;
+}
+.custom-img {
+  max-width: 50%;
+}
+.avatar-edit {
+  max-width: 43%;
+}
+.arrow-down-icon {
+  margin: 17px;
+  font-size: x-large;
+}
+.personal-agent {
+  font-size: large;
+}
+.icon-personal {
+  font-size: xx-large;
+}
+.btn-type {
+  font-size: large;
+}
+// .sc-ion-input-ios-h {
+// 	--placeholder-color: initial;
+// 	--placeholder-font-style: initial;
+// 	--placeholder-font-weight: initial;
+// 	--placeholder-opacity: .5;
+// 	padding-left: 8px;
+// }
+  .submit-btn {
+    margin: 48px 12px 12px;
+}
+.property-icon {
+ 
+  z-index: 4;
+text-align: center;
+  font-size: xxx-large;
+  border: solid;
+  border-width: 1px;
+  border-color: currentColor;
+  padding: 12px;
+border-radius: 34%;
+// background: #228b2259;
+}
+.property-item {
+display: inline-grid !important;
+}
+.property-col {
+text-align: center !important;
+}
+.row-prop {
+  border-bottom: inset;
+}
+
+.prop-button {
+  width: -webkit-fill-available !important;
+  font-size: x-small
+}
+.personal-agent {
+  font-size: large;
+}
+.icon-personal {
+  font-size: xx-large;
+}
+.fav-col {
+    padding: 15px;
+    font-size: -webkit-xxx-large;
+    font-weight: bold;
+}
+.custom-font {
+    font-family: 'Josefin Sans', sans-serif;
+  }
+.custom-card {
+    text-align: -webkit-center;
+  }
+  .custom-avatar {
+    display: contents;
+  }
+  .img-prop {
+    max-width: 100%;
+    filter: brightness(0.799999) !important;
+  }
+  .fav-like {
+   
+    z-index: 4;
+    position: relative;
+    margin-top: -60px;
+    margin-right: 10px;
+    float: right;
+    //background: rgba(255, 255, 255, 0.57);
+    // border-radius: 18px;
+    font-size: xx-large;
+    padding: 7px;
+    
+  }
+  .fav-unlike {
+   
+    z-index: 4;
+    position: relative;
+    margin-top: -60px;
+    margin-right: 10px;
+    float: right;
+    background: rgba(255, 255, 255, 0.57);
+    border-radius: 18px;
+    font-size: xx-large;
+    padding: 7px;
+    
+  }
+
+   ion-card {
+    position: relative;
+    text-align: center;
+    }
+
+    .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.5em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+    }
+
+    .card-subtitle {
+      font-size: 1.4em;
+      position: absolute;
+      top: 52%;
+      width: 100%;
+      color: #fff;
+    }
+
+  // Card design 
+  .property-title {
+  
+    font-weight: bold !important;
+    font-size: x-large;
+  }
+  .property-type {
+    font-weight: bold !important;
+    font-size: large !important;
+  }
+  .icon-label {
+    font-size: x-large;
+    font-weight: bolder;
+    color: forestgreen;
+  }
+  .property-price {
+      color: forestgreen;
+  }
+  .desc-location {
+      font-size: 16px;
+  }
+  .img-prop {
+    height: 240px !important;
+    border-bottom-right-radius: 30px !important;
+    border-bottom-left-radius: 30px;
+    width: -webkit-fill-available;
+  }
+  .desc-icons {
+
+    position: relative;
+    float: right;
+    font-size: 30px;
+    // display: inline-flex !important;
+    
+  }
+  .row-align {
+    display: -webkit-box;
+  }
+  .col-align {
+    display: -webkit-inline-box;
+  }
+  // fin Card design
+  .ionicon {
+    stroke: forestgreen !important;
+    display: block;
+    height: 100%;
+    width: 100%;
+    }   
+  
+  ion-toolbar {
+    p {
+      padding: 40px 0 20px 0;
+      font-weight: 600;
+    }
+  
+    .back-circle {
+      z-index: -1;
+      width: 200px; 
+      height: 200px;
+      background: #e5ecf1;
+      position: absolute;
+      border-radius: 50%;
+      margin-left: auto;
+   
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      bottom: 0;
+  
+    }
+  
+  
+  }
+
+  .fab {
+    --background: #302f2f !important;
+  }

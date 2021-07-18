@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="custom-font">Trouver un agent</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="showData; else skeleton">
+  <ion-card>
+     <ion-row class="row-agent" *ngFor="let agent of agentsList" routerLink="/contact-agent/{{agent['id']}}">
+    <ion-col size="4">
+        <img class="prop-img" src="assets/images/avatar.png">
+    </ion-col>
+    <ion-col size="8">    
+      <p class="custom-font agent-title">{{agent['name']}}</p>
+      <span class="agent-price">{{agent['phone_number']}}</span>
+      <br>
+      <p class="agent-price">{{agent['email']}}</p>
+    </ion-col>
+  </ion-row>
+  </ion-card>
+</div>
+  <ng-template #skeleton>
+    <div *ngFor="let item of [1, 2, 3, 4, 5, 6, 7]">
+      <ion-card>
+        <ion-row class="row-agent">
+          <ion-col size="4">
+            <ion-avatar>
+              <ion-skeleton-text animated style="width: 172%; height: 140%;"></ion-skeleton-text>
+            </ion-avatar>
+            </ion-col>
+            <ion-col size="8">    
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+              <br>
+              <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </ion-col>
+      </ion-row>
+    </ion-card>
+    </div>
+  </ng-template>
+</ion-content>

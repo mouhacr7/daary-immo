@@ -1,0 +1,37 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button tab="app-flow">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Acceuil</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="favorites">
+      <ion-icon name="heart-outline"></ion-icon>
+      <ion-label>Favoris</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="search-property">
+      <ion-icon name="search-outline"></ion-icon>
+      <ion-label>Explorer</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [tab]="this.auth" (click)="onClick($event)">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
+
+    <!-- <ion-tab-button *ngIf="this.display" tab="ag-dashboard" (click)="onClick($event)">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button> -->
+
+    <ion-tab-button tab="infos">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <ion-label>Infos</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+</ion-tabs>

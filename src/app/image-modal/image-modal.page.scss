@@ -1,0 +1,34 @@
+.close-fake {
+  --background: transparent;
+
+  ion-icon {
+  font-size: 2rem;
+  }
+
+  margin-top: 40px;
+}
+.img-prop {
+  height:310px !important;
+  width: -webkit-fill-available;
+  object-fit: fill;
+}
+.card-modal {
+  position: absolute;
+  width: -webkit-fill-available;
+  margin-top: 68px;
+}
+
+.icon-close {
+  font-size: -webkit-xxx-large;
+}
+::ng-deep .sc-ion-modal-md-h {
+  --width: 100%;
+  --height: 50%;
+  --background: #fff0;
+}
+
+::ng-deep .sc-ion-modal-ios-h {
+  --width: 100%;
+  --height: 75%;
+  --background: #fff0;
+}

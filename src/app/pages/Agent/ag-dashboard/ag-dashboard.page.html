@@ -1,0 +1,280 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mon profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher ion-refresh-native slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-down" pullingText="Tirer pour recharger la page"
+      refreshingSpinner="crescent" refreshingText="Chargement...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid style="padding: 0;">
+    <ion-row>
+      <ion-col size-lg="6" size-md="6" size-sm="6" size="12">
+        <ion-card class="custom-card" color="light">
+          <ion-avatar class="custom-avatar">
+            <img class="custom-img" src="assets/images/avatar.png">
+          </ion-avatar>
+          <ion-card-header *ngIf="currentUser">
+            <div class="user-meta ion-text-center">
+              <h3 class="playername">Bonjour {{ currentUser.username }}</h3>
+              <h5 class="country">Email : {{ currentUser.email }}</h5>
+              <h5 class="country">Numero : {{ currentUser.phone_number }}</h5>
+            </div>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col style="padding-left: 0px;padding-right: 0px;" size-lg="6" size-md="6" size-sm="6" size="12">
+        <!-- Espace Agent -->
+        <div>
+          <ion-list lines="full">
+            <ion-list-header color="dark" lines="full" slot="start">
+              <ion-label (click)="toggleUp('personal')"
+                class="d-flex justify-content-between align-items-center label-padd" data-target="#personalDetails"
+                data-toggle="collapse">
+                <h2 class="custom-font">Espace agent</h2>
+                <ion-icon (click)="toggleUp('personal')" *ngIf="!isPersonalUp"
+                  class="arrow-down-icon justify-self-start" data-target="#personalDetails" data-toggle="collapse"
+                  name="chevron-down-outline" size="medium" slot="icon-only"></ion-icon>
+                <ion-icon (click)="toggleUp('personal')" *ngIf="isPersonalUp" class="arrow-down-icon justify-self-start"
+                  data-target="#personalDetails" data-toggle="collapse" name="chevron-up-outline" size="medium"
+                  slot="icon-only"></ion-icon>
+              </ion-label>
+            </ion-list-header>
+
+            <div class="collapse show" id="personalDetails">
+              <ion-grid fixed>
+                <ion-row class="row-align">
+                  <ion-col size="6" class="ion-align-self-start">
+                    <ion-card class="custom-font custom-card" (click)="scrollProperties(target)" color="dark">
+                      <ion-card-content>
+                        <ion-icon class="icon-personal" name="business-outline"></ion-icon><br>
+                        <h1 class="custom-font personal-agent">Propriétés</h1>
+                        <h1>{{cpt_agent_properties }}</h1>
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-col>
+                  <ion-col size="6" class="ion-align-self-start">
+                    <ion-card class="custom-font custom-card" (click)="scrollMessages(target)">
+                      <ion-card-content>
+                        <ion-icon class="icon-personal" name="mail-unread-outline"></ion-icon><br>
+                        <h1 class="custom-font personal-agent">Messages</h1>
+                        <h1>{{ messagesList.length }}</h1>
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+          </ion-list>
+        </div>
+        <!-- Profile-->
+        <div>
+          <ion-list lines="full">
+            <ion-list-header color="dark" lines="full" slot="start">
+              <ion-label (click)="toggleUp('profile')"
+                class="d-flex justify-content-between align-items-center label-padd" data-target="#profileDetails"
+                data-toggle="collapse">
+                <h2 class="custom-font">Profil</h2>
+                <ion-icon (click)="toggleUp('upload')" *ngIf="!isProfileUp" class="arrow-down-icon ustify-self-start"
+                  data-target="#profileDetails" data-toggle="collapse" name="chevron-down-outline" size="medium"
+                  slot="icon-only"></ion-icon>
+                <ion-icon (click)="toggleUp('upload')" *ngIf="isProfileUp" class="arrow-down-icon justify-self-start"
+                  data-target="#profileDetails" data-toggle="collapse" name="chevron-up-outline" size="medium"
+                  slot="icon-only"></ion-icon>
+              </ion-label>
+            </ion-list-header>
+  
+  
+            <ion-item class="collapse" id="profileDetails">
+              <ion-card class="custom-card">
+                <app-ag-update-profile (updateDataEvent)="receiveUpdatedDate($event)"></app-ag-update-profile>
+              </ion-card>
+            </ion-item>
+  
+          </ion-list>
+        </div>
+          <!-- Insérer une propriété -->
+        <div>
+        <ion-list lines="full">
+          <ion-list-header color="dark" lines="full" slot="start">
+            <ion-label (click)="toggleUp('upload')" class="d-flex justify-content-between align-items-center label-padd"
+              data-target="#uploadDetails" data-toggle="collapse">
+              <h2 class="custom-font">Insérer une propriété</h2>
+              <ion-icon (click)="toggleUp('upload')" *ngIf="!isUploadUp" class="arrow-down-icon justify-self-start"
+                data-target="#uploadDetails" data-toggle="collapse" name="chevron-down-outline" size="medium"
+                slot="icon-only"></ion-icon>
+              <ion-icon (click)="toggleUp('upload')" *ngIf="isUploadUp" class="arrow-down-icon justify-self-start"
+                data-target="#uploadDetails" data-toggle="collapse" name="chevron-up-outline" size="medium"
+                slot="icon-only"></ion-icon>
+            </ion-label>
+          </ion-list-header>
+          <app-ag-upload class="collapse" id="uploadDetails" (locationEvent)="receiveMessage($event)"></app-ag-upload>
+        </ion-list>
+    
+        </div>
+           <!-- Messages-->
+        <div>
+          <ion-list lines="full">
+            <ion-list-header color="dark" lines="full" slot="start">
+              <ion-label (click)="toggleUp('messages')"
+                class="d-flex justify-content-between align-items-center label-padd" data-target="#messagesDetails"
+                data-toggle="collapse">
+                <h2 class="custom-font">Messages</h2>
+                <ion-icon (click)="toggleUp('messages')" *ngIf="!isMessagesUp" class="arrow-down-icon justify-self-start"
+                  data-target="#messagesDetails" data-toggle="collapse" name="chevron-down-outline" size="medium"
+                  slot="icon-only"></ion-icon>
+                <ion-icon (click)="toggleUp('messages')" *ngIf="isMessagesUp" class="arrow-down-icon ustify-self-start"
+                  data-target="#messagesDetails" data-toggle="collapse" name="chevron-up-outline" size="medium"
+                  slot="icon-only"></ion-icon>
+              </ion-label>
+            </ion-list-header>
+  
+  
+            <ion-item [class]="this.collapse_trigger_mess.getValue()" id="messagesDetails">
+              <ion-card class="custom-card">
+                <div class="container">
+                  <ion-row class="row-prop" *ngFor="let message of messagesList , let i = index">
+                    <ion-col size="12">
+                      <p class="custom-font prop-title"><strong>{{i + 1}}. </strong>{{message.name}} - {{message.phone}}
+                      </p>
+                      <span class="">{{message.message}}</span>
+                    </ion-col>
+                    <ion-col size="3">
+  
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-button color="warning" class="prop-button" (click)="onCallCustomer(message.phone)">
+                        <ion-icon slot="start" name="call-outline"></ion-icon>
+                        Appeler
+                      </ion-button>
+                    </ion-col>
+                    <ion-col size="3">
+  
+                    </ion-col>
+                  </ion-row>
+                </div>
+              </ion-card>
+            </ion-item>
+  
+          </ion-list>
+        </div>
+         <!-- Liste des propriétés -->
+        <div>
+          <ion-list lines="full">
+            <ion-list-header color="dark" lines="full" slot="start">
+              <ion-label (click)="toggleUp('propreties')"
+                class="d-flex justify-content-between align-items-center label-padd" data-target="#propretiesDetails"
+                data-toggle="collapse">
+                <h2 class="custom-font">Propriétés</h2>
+                <ion-icon (click)="toggleUp('propreties')" *ngIf="!isPropretiesUp"
+                  class="arrow-down-icon justify-self-start" data-target="#propretiesDetails" data-toggle="collapse"
+                  name="chevron-down-outline" size="medium" slot="icon-only"></ion-icon>
+                <ion-icon (click)="toggleUp('propreties')" *ngIf="isPropretiesUp"
+                  class="arrow-down-icon ustify-self-start" data-target="#propretiesDetails" data-toggle="collapse"
+                  name="chevron-up-outline" size="medium" slot="icon-only"></ion-icon>
+              </ion-label>
+            </ion-list-header>
+  
+            <div #target>
+              <ion-item [class]="this.collapse_trigger_prop.getValue()" id="propretiesDetails">
+                <ion-card class="custom-card">
+                  <div class="container">
+                    <ion-row class="row-prop" *ngFor="let prop of displayedList , index as i">
+                      <ion-col size="4">
+                        <span *ngIf="prop?.image == null">
+                          <img class="img-prop" src="assets/images/default_property.jpg" alt="ion">
+                        </span>
+                        <span *ngIf="prop?.image != null">
+                          <img class="prop-img" src="https://daary-immo.com/storage/property/{{prop.image}}">
+                        </span>
+                      </ion-col>
+                      <ion-col size="8">
+                        <p class="custom-font prop-title"><strong>{{i + 1}}. </strong>{{prop?.title}}</p>
+                        <span class="prop-price">{{prop.price}} MRU - </span><span class="prop-city">{{prop.city}}</span>
+                      </ion-col>
+                      <ion-col size="4">
+                  <ion-button color="warning" class="prop-button" (click)="propertyDetails(prop.id)">
+                          <ion-icon slot="start" name="eye-outline"></ion-icon>
+                          Voir
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="4">
+                        <ion-button color="tertiary" class="prop-button" routerLink="/update-property/{{prop.id}}">
+                          <ion-icon slot="start" name="create-outline"></ion-icon>
+                          Modifier
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="4">
+                        <ion-button color="danger" class="prop-button" (click)="deleteAlertConfirm(prop.id)">
+                          <ion-icon slot="start" name="trash-outline"></ion-icon>
+                          Retirer
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                    <div class="container-form-btn" *ngIf="this.showLoadMoreButton">
+                      <button class="form-btn custom-font" (click)="loadMorePostsButton($event)">
+                        Charger plus...
+                      </button>
+                    </div>
+                    <ion-infinite-scroll threshold="150px" (ionInfinite)="loadMorePosts($event)">
+                      <ion-infinite-scroll-content color="light" loadingSpinner="crescent" loadingText="Chargement...">
+                      </ion-infinite-scroll-content>
+                    </ion-infinite-scroll>
+                  </div>
+                </ion-card>
+              </ion-item>
+            </div>
+          </ion-list>
+        </div>
+         <!-- Changer de mot de passe -->
+        <div>
+          <ion-list lines="full">
+            <ion-list-header color="dark" lines="full" slot="start">
+              <ion-label (click)="toggleUp('edit_password')"
+                class="d-flex justify-content-between align-items-center label-padd" data-target="#passwordDetails"
+                data-toggle="collapse">
+                <h2 class="custom-font">Modifier mot de passe</h2>
+                <ion-icon (click)="toggleUp('edit_password')" *ngIf="!isPasswordUp"
+                  class="arrow-down-icon justify-self-start" data-target="#passwordDetails" data-toggle="collapse"
+                  name="chevron-down-outline" size="medium" slot="icon-only"></ion-icon>
+                <ion-icon (click)="toggleUp('edit_password')" *ngIf="isPasswordUp"
+                  class="arrow-down-icon ustify-self-start" data-target="#passwordDetails" data-toggle="collapse"
+                  name="chevron-up-outline" size="medium" slot="icon-only"></ion-icon>
+              </ion-label>
+            </ion-list-header>
+            <ion-item class="collapse" id="passwordDetails">
+              <ion-card class="custom-card">
+                <app-ag-edit-password (editPasswordEvent)="receiveDataEditPassword($event)"></app-ag-edit-password>
+              </ion-card>
+            </ion-item>
+  
+          </ion-list>
+        </div>
+
+        <div>
+          <ion-list>
+            <ion-item (click)="logout()">
+              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-label>
+                Se déconnecter
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- </form> -->
+ 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="fab" (click)="ScrollToTop()">
+      <!-- Advanced: explicity set the icon for each platform -->
+      <ion-icon name="chevron-up-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
